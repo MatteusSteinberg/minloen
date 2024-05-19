@@ -1,8 +1,15 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.ts",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc --project ./",
+    "copy": "cp package.json && cp yarn.lock",
+    "dev": "yarn server",
+    "server": "nodemon server.ts",
+    "start:prod": "node build/server.js"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
