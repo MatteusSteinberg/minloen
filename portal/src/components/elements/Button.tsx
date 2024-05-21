@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 interface IButton {
     background: "primary" | "primaryLight" | "primarySupport" | "secondarySupport" | "tertiarySupport" | "error" | "success" | "gradient" | "text" | "border" | "white" | "black"
@@ -7,16 +7,13 @@ interface IButton {
     icon?: React.ReactNode
     children: React.ReactNode
     onClick?: () => void
-    hover: 
 }
 
 const Button = ({ background, color, variant, icon, onClick, children }: IButton) => {
     return (
-        <button className={`bg-${background}, text-${color}, variant-${variant}, `}>
-            {icon && icon}
-            <span>
-                {children}
-            </span>
+        <button className={`text-${color} rounded-2xl border-solid border-[1px] border-${background} py-[17px] px-16 ${variant === "filled" && `bg-${background}`} ${variant === "outline" && "bg-transparent"} flex justify-center align items-center gap-3`}>
+            {icon && <div className={`text-${color} w-[20px] h-[20px]`}>{icon}</div>}
+            <span className="uppercase font-small-semibold">{children}</span>
         </button>
     )
 }
