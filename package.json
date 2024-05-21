@@ -9,7 +9,7 @@
     "api"
   ],
   "scripts": {
-    "portal": "cd frontend && yarn start",
+    "portal": "cd portal && yarn start",
     "api": "cd api && yarn dev",
     "test": "react-scripts test"
   }
