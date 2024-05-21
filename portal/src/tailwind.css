@@ -1,0 +1,31 @@
+@import url("https://use.typekit.net/xea5ciz.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    overflow: auto;
+    -webkit-text-size-adjust: 100%;
+    font-feature-settings: "clig" off, "liga" off;
+  }
+
+  body {
+    line-height: 1;
+    width: 100%;
+    @apply text-text;
+    font-size: 16px;
+    @apply font-default;
+    @apply bg-primarySupport;
+  }
+}
