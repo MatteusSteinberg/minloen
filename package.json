@@ -7,5 +7,10 @@
   "workspaces": [
     "frontend",
     "api"
-  ]
+  ],
+  "scripts": {
+    "portal": "cd frontend && yarn start",
+    "api": "cd api && yarn dev",
+    "test": "react-scripts test"
+  }
 }
