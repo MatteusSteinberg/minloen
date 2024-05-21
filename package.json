@@ -5,7 +5,7 @@
   "repository": "https://github.com/MatteusSteinberg/minloen.git",
   "license": "MIT",
   "workspaces": [
-    "frontend",
+    "portal",
     "api"
   ],
   "scripts": {
