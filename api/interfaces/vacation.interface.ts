@@ -5,6 +5,7 @@ export interface IVacation {
   user: Types.ObjectId
   type: string
   dateFrom: Date
+  organization: Types.ObjectId
   dateTo: Date
   updatedAt?: Date
   createdAt?: Date
