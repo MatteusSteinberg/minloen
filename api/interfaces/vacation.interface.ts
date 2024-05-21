@@ -2,7 +2,7 @@ import { Types } from "mongoose"
 
 export interface IVacation {
   id?: any
-  employee: Types.ObjectId
+  user: Types.ObjectId
   type: string
   dateFrom: Date
   dateTo: Date

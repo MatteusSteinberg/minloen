@@ -3,7 +3,7 @@ import { IDriving } from "../interfaces/driving.interface"
 
 const drivingSchema = new Schema<IDriving>(
   {
-    employee: {
+    user: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",

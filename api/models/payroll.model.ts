@@ -3,7 +3,7 @@ import { IPayroll } from "../interfaces/payroll.interface"
 
 const payrollSchema = new Schema<IPayroll>(
   {
-    employee: {
+    user: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
@@ -24,8 +24,8 @@ const payrollSchema = new Schema<IPayroll>(
       type: Date,
       required: true,
     },
-    file: {
-      type: Schema.Types.ObjectId,
+    files: {
+      type: [Schema.Types.ObjectId],
       required: true,
       ref: "File",
     },

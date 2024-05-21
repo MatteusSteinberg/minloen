@@ -41,12 +41,12 @@ const userSchema = new Schema<IUserDoc, IUserModel>(
     organization: {
       type: Schema.Types.ObjectId,
       ref: "Organization",
-      role: {
-        type: String,
-        enum: ["admin", "user"],
-        default: "user",
-      },
     },
+    organizationRole: {
+      type: String,
+      enum: ["admin", "user"],
+      default: "user",
+    }
   },
   {
     timestamps: true,
@@ -67,7 +67,7 @@ userSchema.static(
 userSchema.pre("save", async function (next) {
   const user = this
   if (user.isModified("password")) {
-    user.password = await bcrypt.hash(user.password, 8)
+    user.password = await bcrypt.hash(user.password, 10)
   }
   next()
 })

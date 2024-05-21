@@ -3,7 +3,7 @@ import { IVacation } from "../interfaces/vacation.interface"
 
 const vacationSchema = new Schema<IVacation>(
   {
-    employee: {
+    user: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",

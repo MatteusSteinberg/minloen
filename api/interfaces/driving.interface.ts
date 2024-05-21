@@ -2,7 +2,7 @@ import { Types } from "mongoose"
 
 export interface IDriving {
   id?: any
-  employee: Types.ObjectId
+  user: Types.ObjectId
   from: string
   to: string
   date: Date

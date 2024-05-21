@@ -13,10 +13,8 @@ export interface IUser {
     expriryAt: Date
     usedAt?: Date
   }
-  organization?: {
-    id: any
-    role: "admin" | "user"
-  }
+  organization?: any
+  organizationRole?: "admin" | "user"
 }
 
 export type IUserDoc = IUser & Document
