@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { IVacation } from "../interfaces/vacation.interface";
+import { Schema, model } from "mongoose"
+import { IVacation } from "../interfaces/vacation.interface"
 
 const vacationSchema = new Schema<IVacation>(
   {
@@ -24,8 +24,8 @@ const vacationSchema = new Schema<IVacation>(
   {
     timestamps: true,
   }
-);
+)
 
-const vacationModel = model<IVacation>("Vacation", vacationSchema);
+const vacationModel = model<IVacation>("Vacation", vacationSchema)
 
-export default vacationModel;
+export default vacationModel

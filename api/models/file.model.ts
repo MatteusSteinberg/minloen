@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { IFile } from "../interfaces/file.interface";
+import { Schema, model } from "mongoose"
+import { IFile } from "../interfaces/file.interface"
 
 const fileSchema = new Schema<IFile>(
   {
@@ -20,8 +20,8 @@ const fileSchema = new Schema<IFile>(
   {
     timestamps: true,
   }
-);
+)
 
-const fileModel = model<IFile>("File", fileSchema);
+const fileModel = model<IFile>("File", fileSchema)
 
-export default fileModel;
+export default fileModel

@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
-import { Schema, Types, model } from "mongoose";
-import { IUserDoc, IUserModel } from "../interfaces/user.interface";
+import bcrypt from "bcrypt"
+import { Schema, Types, model } from "mongoose"
+import { IUserDoc, IUserModel } from "../interfaces/user.interface"
 
 const userSchema = new Schema<IUserDoc, IUserModel>(
   {
@@ -51,7 +51,7 @@ const userSchema = new Schema<IUserDoc, IUserModel>(
   {
     timestamps: true,
   }
-);
+)
 
 userSchema.static(
   "isEmailTaken",
@@ -59,19 +59,19 @@ userSchema.static(
     email: string,
     excludeUserId: Types.ObjectId
   ): Promise<boolean> {
-    const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
-    return !!user;
+    const user = await this.findOne({ email, _id: { $ne: excludeUserId } })
+    return !!user
   }
-);
+)
 
 userSchema.pre("save", async function (next) {
-  const user = this;
+  const user = this
   if (user.isModified("password")) {
-    user.password = await bcrypt.hash(user.password, 8);
+    user.password = await bcrypt.hash(user.password, 8)
   }
-  next();
-});
+  next()
+})
 
-const userModel = model<IUserModel>("User", userSchema);
+const userModel = model<IUserModel>("User", userSchema)
 
-export default userModel;
+export default userModel

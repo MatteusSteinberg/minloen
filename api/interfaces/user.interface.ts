@@ -1,26 +1,26 @@
-import { Document, Model, Types } from "mongoose";
+import { Document, Model, Types } from "mongoose"
 
 export interface IUser {
-  id?: any;
-  name: string;
-  email: string;
-  password?: string;
-  updatedAt?: Date;
-  createdAt?: Date;
+  id?: any
+  name: string
+  email: string
+  password?: string
+  updatedAt?: Date
+  createdAt?: Date
   forgottenPassword?: {
-    token: string;
-    createdAt: Date;
-    expriryAt: Date;
-    usedAt?: Date;
-  };
+    token: string
+    createdAt: Date
+    expriryAt: Date
+    usedAt?: Date
+  }
   organization?: {
-    id: any;
-    role: "admin" | "user";
-  };
+    id: any
+    role: "admin" | "user"
+  }
 }
 
-export type IUserDoc = IUser & Document;
+export type IUserDoc = IUser & Document
 
 export interface IUserModel extends Model<IUserDoc> {
-  isEmailTaken(email: string, excludeUserId?: Types.ObjectId): Promise<boolean>;
+  isEmailTaken(email: string, excludeUserId?: Types.ObjectId): Promise<boolean>
 }

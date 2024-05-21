@@ -1,14 +1,14 @@
-import "dotenv/config";
-import express from "express";
-import { connect } from "./lib/db";
-import registerRoutes from "./routes/register-routes";
+import "dotenv/config"
+import express from "express"
+import { connect } from "./lib/db"
+import registerRoutes from "./routes/register-routes"
 
-const app = express();
+const app = express()
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080
 
-registerRoutes(app);
+registerRoutes(app)
 
-connect();
+connect()
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`))

@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { IPayroll } from "../interfaces/payroll.interface";
+import { Schema, model } from "mongoose"
+import { IPayroll } from "../interfaces/payroll.interface"
 
 const payrollSchema = new Schema<IPayroll>(
   {
@@ -33,8 +33,8 @@ const payrollSchema = new Schema<IPayroll>(
   {
     timestamps: true,
   }
-);
+)
 
-const payrollModel = model<IPayroll>("Payroll", payrollSchema);
+const payrollModel = model<IPayroll>("Payroll", payrollSchema)
 
-export default payrollModel;
+export default payrollModel

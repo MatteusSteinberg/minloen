@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { IOrganization } from "../interfaces/organization.interface";
+import { Schema, model } from "mongoose"
+import { IOrganization } from "../interfaces/organization.interface"
 
 const organizationSchema = new Schema<IOrganization>(
   {
@@ -13,11 +13,11 @@ const organizationSchema = new Schema<IOrganization>(
   {
     timestamps: true,
   }
-);
+)
 
 const organizationModel = model<IOrganization>(
   "Organization",
   organizationSchema
-);
+)
 
-export default organizationModel;
+export default organizationModel

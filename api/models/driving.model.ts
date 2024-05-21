@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { IDriving } from "../interfaces/driving.interface";
+import { Schema, model } from "mongoose"
+import { IDriving } from "../interfaces/driving.interface"
 
 const drivingSchema = new Schema<IDriving>(
   {
@@ -28,8 +28,8 @@ const drivingSchema = new Schema<IDriving>(
   {
     timestamps: true,
   }
-);
+)
 
-const drivingModel = model<IDriving>("Driving", drivingSchema);
+const drivingModel = model<IDriving>("Driving", drivingSchema)
 
-export default drivingModel;
+export default drivingModel

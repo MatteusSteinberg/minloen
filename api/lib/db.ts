@@ -1,43 +1,44 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose, { ConnectOptions } from "mongoose"
 
-mongoose.set("debug", process.env.NODE_ENV !== "production");
+mongoose.set("debug", process.env.NODE_ENV !== "production")
 
-mongoose.set("autoIndex", true);
+mongoose.set("autoIndex", true)
 
-mongoose.set("maxTimeMS", 10000);
+mongoose.set("maxTimeMS", 10000)
 
-let connection: typeof import("mongoose") | undefined;
+let connection: typeof import("mongoose") | undefined
 
 async function disconnect() {
-  console.log("Close mongodb connection");
+  console.log("Close mongodb connection")
 
-  await connection?.disconnect();
+  await connection?.disconnect()
 
-  connection = undefined;
+  connection = undefined
 }
 
 async function connect(cb?: () => Promise<void>) {
   if (connection == null) {
     const options: ConnectOptions = {
       serverSelectionTimeoutMS: 2000,
-    };
-
-    let uri = process.env.DB_URI as string;
-
-    if (!uri) {
-      throw "DB_URI is not configured";
     }
 
-    process.env.LOG && console.log("connection to", uri);
+    let uri = process.env.DB_URI as string
 
-    connection = await mongoose.connect(uri, options);
+    if (!uri) {
+      throw "DB_URI is not configured"
+    }
 
-    console.log("Connected to MongoDB!");
+    process.env.LOG && console.log("connection to", uri)
 
-    if (cb) await cb();
+    connection = await mongoose.connect(uri, options)
+
+    console.log("Connected to MongoDB!")
+
+    if (cb) await cb()
   }
 
-  return connection;
+  return connection
 }
 
-export { connect, disconnect };
+export { connect, disconnect }
+
