@@ -1,0 +1,11 @@
+{
+  "name": "minloen",
+  "version": "1.0.0",
+  "private": "true",
+  "repository": "https://github.com/MatteusSteinberg/minloen.git",
+  "license": "MIT",
+  "workspaces": [
+    "frontend",
+    "api"
+  ]
+}
