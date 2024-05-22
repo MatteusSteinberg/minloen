@@ -1,19 +1,40 @@
 import React from "react"
 
 interface IButton {
-    background: "primary" | "primaryLight" | "primarySupport" | "secondarySupport" | "tertiarySupport" | "error" | "success" | "gradient" | "text" | "border" | "white" | "black"
-    color: "primary" | "primaryLight" | "primarySupport" | "secondarySupport" | "tertiarySupport" | "error" | "success" | "gradient" | "text" | "border" | "white" | "black"
-    variant: "filled" | "outline"
+    background: "primary" | "primaryLight" | "primarySupport" | "secondarySupport"
+    color: "text" | "white"
     icon?: React.ReactNode
     children: React.ReactNode
     onClick?: () => void
 }
 
-const Button = ({ background, color, variant, icon, onClick, children }: IButton) => {
+const Button = ({ background, color, icon, onClick, children }: IButton) => {
     return (
-        <button className={`text-${color} rounded-2xl border-solid border-[1px] border-${background} py-[17px] px-16 ${variant === "filled" && `bg-${background}`} ${variant === "outline" && "bg-transparent"} flex justify-center align items-center gap-3`}>
-            {icon && <div className={`text-${color} w-[20px] h-[20px]`}>{icon}</div>}
-            <span className="uppercase font-small-semibold">{children}</span>
+        <button onClick={onClick}>
+            {background === "primary" && (
+                <div className={`text-${color} rounded-2xl border-solid border-[1px] bg-primary border-primary py-[17px] px-16 flex justify-center align items-center gap-3`}>
+                    {icon && <div className={`text-${color} w-[20px] h-[20px]`}>{icon}</div>}
+                    <span className="uppercase font-small-semibold">{children}</span>
+                </div>
+            )}
+            {background === "primaryLight" && (
+                <div className={`text-${color} rounded-2xl border-solid border-[1px] bg-primaryLight border-primaryLight py-[17px] px-16 flex justify-center align items-center gap-3`}>
+                    {icon && <div className={`text-${color} w-[20px] h-[20px]`}>{icon}</div>}
+                    <span className="uppercase font-small-semibold">{children}</span>
+                </div>
+            )}
+            {background === "primarySupport" && (
+                <div className={`text-${color} rounded-2xl border-solid border-[1px] bg-primarySupport border-primarySupport py-[17px] px-16 flex justify-center align items-center gap-3`}>
+                    {icon && <div className={`text-${color} w-[20px] h-[20px]`}>{icon}</div>}
+                    <span className="uppercase font-small-semibold">{children}</span>
+                </div>
+            )}
+            {background === "secondarySupport" && (
+                <div className={`text-${color} rounded-2xl border-solid border-[1px] bg-secondarySupport border-secondarySupport py-[17px] px-16 flex justify-center align items-center gap-3`}>
+                    {icon && <div className={`text-${color} w-[20px] h-[20px]`}>{icon}</div>}
+                    <span className="uppercase font-small-semibold">{children}</span>
+                </div>
+            )}
         </button>
     )
 }
