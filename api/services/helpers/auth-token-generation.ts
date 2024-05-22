@@ -2,7 +2,7 @@ import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import jwt from "jsonwebtoken"
 import { HydratedDocument } from "mongoose"
-import { IUser } from "../../interfaces/user.interface"
+import { IUser } from "../../../interfaces/user.interface"
 
 dayjs.extend(utc)
 export interface IAuthToken {

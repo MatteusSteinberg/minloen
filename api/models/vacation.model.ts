@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose"
-import { IVacation } from "../interfaces/vacation.interface"
+import { IVacation } from "../../interfaces/vacation.interface"
 
 const vacationSchema = new Schema<IVacation>(
   {
