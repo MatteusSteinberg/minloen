@@ -6,6 +6,9 @@ import Sidebar from "./components/globals/Sidebar"
 
 // Pages
 const Dashboard = lazy(() => import("./routes/dashboard"))
+const PaymentDocuments = lazy(() => import("./routes/lønsedler"))
+const DrivingCompensation = lazy(() => import("./routes/kørsel"))
+const Absence = lazy(() => import("./routes/fravær"))
 const Login = lazy(() => import("./routes/login"))
 const Signup = lazy(() => import("./routes/signup"))
 
@@ -19,6 +22,9 @@ interface IAppRoute {
 
 const routes: Array<IAppRoute> = [
     { path: "/", element: <Dashboard />, layout: true },
+    { path: "/lønsedler", element: <PaymentDocuments />, layout: true },
+    { path: "/kørsel", element: <DrivingCompensation />, layout: true },
+    { path: "/fravær", element: <Absence />, layout: true },
     { path: "/signup", element: <Signup />, layout: false },
     { path: "/login", element: <Login />, layout: false },
 ]
@@ -30,7 +36,7 @@ const Routing = () => {
     const showLayout = route?.layout
 
     return (
-        <main className={`relative flex items-start justify-between w-full ${showLayout && "p-6"} min-h-dvh`}>
+        <main className={`relative flex items-start justify-between w-full ${showLayout && "p-6 gap-6"} min-h-dvh`}>
             {showLayout && (
                 <aside className="max-w-[320px] relative w-full min-h-[calc(100dvh-48px)]">
                     <Sidebar />

@@ -35,6 +35,10 @@
         background-color: transparent;
     }
 
+    .bg-gradientmain {
+        background: linear-gradient(90deg, rgba(36, 40, 51, 0.5) 0%, rgba(50, 51, 55, 0.5) 53.86%);
+    }
+
     .font-h1 {
         font-size: 72px;
         line-height: 76px;
