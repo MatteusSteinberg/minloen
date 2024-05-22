@@ -5,7 +5,7 @@ FROM node:lts-alpine
 #ENV NODE_ENV production
 
 # Setting up the work directory
-WORKDIR /frontend
+WORKDIR /portal
 
 # Installing dependencies
 COPY package.json yarn.lock ./

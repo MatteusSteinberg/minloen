@@ -38,8 +38,12 @@ const userSchema = new Schema<IUserDoc, IUserModel>(
         type: Date,
       },
     },
-    organization: {
+    activeOrganizations: {
       type: Schema.Types.ObjectId,
+      ref: "Organization",
+    },
+    organizations: {
+      type: [Schema.Types.ObjectId],
       ref: "Organization",
     },
     organizationRole: {

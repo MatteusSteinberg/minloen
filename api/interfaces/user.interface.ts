@@ -13,7 +13,8 @@ export interface IUser {
     expriryAt: Date
     usedAt?: Date
   }
-  organization?: any
+  organizations?: Array<Types.ObjectId>
+  activeOrganizations?: any
   organizationRole?: "admin" | "user"
 }
 

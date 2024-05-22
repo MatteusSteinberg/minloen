@@ -1,6 +1,7 @@
 export interface IOrganization {
-  id?: any
-  name: string
-  updatedAt?: Date
-  createdAt?: Date
+  id?: any;
+  name: string;
+  active?: boolean
+  updatedAt?: Date;
+  createdAt?: Date;
 }
