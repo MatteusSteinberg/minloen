@@ -23,7 +23,7 @@ const Button = ({ background, color, icon, onClick, children }: IButton) => {
   }
 
   return (
-    <button onClick={innerOnClick}>
+    <button type="button" onClick={innerOnClick}>
       {background === "primary" && (
         <div className={`text-${color} rounded-2xl border-solid border-[1px] bg-primary border-primary py-[17px] px-16 flex justify-center align items-center gap-3`}>
           {icon && <div className={`text-${color} w-[20px] h-[20px]`}>{icon}</div>}

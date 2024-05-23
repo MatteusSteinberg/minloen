@@ -10,6 +10,7 @@ export namespace User {
 
     const userDoc: HydratedDocument<IUser> = await userModel.create({
       ...user,
+      organizationRole: "admin",
       activeOrganization: organization._id,
       organizations: [organization._id],
     })

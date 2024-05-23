@@ -20,7 +20,9 @@ const Form = (props: Props) => {
   }
 
   const onSubmit = async () => {
-
+    const result = await create(form)
+    console.log(result)
+    await authenticate(form?.adminEmail || "", form.password || "")
   }
 
   return (
@@ -34,7 +36,7 @@ const Form = (props: Props) => {
             <Input onChange={updateForm("name")} name="companyName" type="text" label="Virksomhedsnavn" icon={<BuildingOfficeIcon />} placeholder="Virksomhed ApS..." />
           </div>
           <div className="mb-2">
-            <Input name="cvr" type="text" label="CVR" icon={<Square2StackIcon />} placeholder="1234..." />
+            <Input onChange={updateForm("cvr")} name="cvr" type="text" label="CVR" icon={<Square2StackIcon />} placeholder="1234..." />
           </div>
           <div className="items-start justify-between gap-2 mb-2 sm:flex">
             <Input onChange={updateForm("firstName")} name="firstName" type="text" label="Fornavn" placeholder="John..." />

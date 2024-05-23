@@ -77,7 +77,7 @@ export const useAPI = <T>({ url, params, id, opts }: IUseApi) => {
     ...opts
   }
 
-  url = `${process.env.REACT_APP_API || ''}/api${url}` + (id && `/${id}`)
+  url = `${process.env.REACT_APP_API || ''}/api${url}` + (id ? `/${id}` : "")
 
   const queryString = useMemo(() => {
     const qStr = new URLSearchParams(params || {}).toString().trim()

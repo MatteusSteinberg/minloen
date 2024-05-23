@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { HydratedDocument, Types } from "mongoose"
+import { HydratedDocument } from "mongoose"
 import { IOrganization } from "../../../interfaces/organization.interface"
 import organizationModel from "../../models/organization.model"
 
@@ -18,7 +18,7 @@ export default class Organization {
         name,
         cvr
       })
-      this.organizationId = (this.organization.id as Types.ObjectId).toHexString()
+      this.organizationId = this.organization._id.toHexString()
     }
   }
 
