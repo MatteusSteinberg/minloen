@@ -1,4 +1,5 @@
 import { BuildingOfficeIcon, LockClosedIcon, Square2StackIcon, UserIcon } from "@heroicons/react/24/outline"
+import Button from "../../elements/Button"
 import Input from "../../elements/Input"
 
 type Props = {}
@@ -44,9 +45,9 @@ const Form = (props: Props) => {
                         <Input name="confirmPassword" type="password" label="Bekræft adgangskode" icon={<LockClosedIcon />} placeholder="1234..." />
                     </div>
                     <div className="flex justify-center">
-                        {/* <Button background="primaryLight" color="text" variant="filled">
+                        <Button background="primaryLight" color="text">
                             Opret dig
-                        </Button> */}
+                        </Button>
                     </div>
                 </form>
             </div>
