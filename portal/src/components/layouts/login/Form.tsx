@@ -1,5 +1,6 @@
 import { LockClosedIcon, UserIcon } from "@heroicons/react/24/outline"
 import { Link } from "react-router-dom"
+import Button from "../../elements/Button"
 import Input from "../../elements/Input"
 
 type Props = {}
@@ -34,9 +35,9 @@ const Form = (props: Props) => {
                         <Input name="password" type="password" label="Password" icon={<LockClosedIcon />} placeholder="1234..." />
                     </div>
                     <div className="flex justify-center">
-                        {/* <Button background="primaryLight" color="text" variant="filled">
+                        <Button background="primaryLight" color="text">
                             Log ind
-                        </Button> */}
+                        </Button>
                     </div>
                 </form>
             </div>
