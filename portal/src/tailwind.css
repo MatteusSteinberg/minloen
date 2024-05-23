@@ -30,6 +30,18 @@
     }
 }
 
+a.active {
+    @apply border-solid
+    border-[1px]
+    border-[rgba(51,54,62,0.50)]
+    bg-gradientmain
+    text-white;
+}
+
+a.active svg {
+    @apply stroke-primaryLight;
+}
+
 @layer utilities {
     .bg-transparent {
         background-color: transparent;
@@ -37,6 +49,16 @@
 
     .bg-gradientmain {
         background: linear-gradient(90deg, rgba(36, 40, 51, 0.5) 0%, rgba(50, 51, 55, 0.5) 53.86%);
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
     }
 
     .font-h1 {
@@ -156,4 +178,7 @@
         font-weight: 600;
         font-family: "Mundial", sans-serif;
     }
+}
+
+@layer components {
 }

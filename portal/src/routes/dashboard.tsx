@@ -2,7 +2,7 @@ type Props = {}
 
 const dashboard = (props: Props) => {
     return (
-        <div className="bg-secondarySupport w-full rounded-[24px] min-h-[calc(100dvh-48px)] h-full">
+        <div className="bg-secondarySupport">
             <h1>Dashboard</h1>
         </div>
     )

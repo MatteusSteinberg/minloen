@@ -1,20 +1,76 @@
-import { ClipboardDocumentIcon, FaceFrownIcon, Square3Stack3DIcon, Squares2X2Icon, TruckIcon, UsersIcon } from "@heroicons/react/24/outline"
-import { useState } from "react"
-import { NavLink } from "react-router-dom"
+import { ChevronDownIcon, ClipboardDocumentIcon, FaceFrownIcon, MoonIcon, Squares2X2Icon, SunIcon, TruckIcon } from "@heroicons/react/24/outline"
+import React, { useState } from "react"
+import { Link, NavLink } from "react-router-dom"
+import ProfileImage from "../../assets/images/jonas1.png"
 
-type Props = {}
+interface ILinkProps {
+    link: string
+    icon: React.ReactNode
+    text: string
+}
 
-const Sidebar = (props: Props) => {
-    const [showSidebar, setShowSidebar] = useState(false)
+const Links: ILinkProps[] = [
+    {
+        link: "/",
+        icon: <Squares2X2Icon className="inline-block w-6 h-6" />,
+        text: "Overview",
+    },
+    {
+        link: "/lønsedler",
+        icon: <ClipboardDocumentIcon className="inline-block w-6 h-6" />,
+        text: "Lønsedler",
+    },
+    {
+        link: "/kørsel",
+        icon: <TruckIcon className="inline-block w-6 h-6" />,
+        text: "Kørsel",
+    },
+    {
+        link: "/fravær",
+        icon: <FaceFrownIcon className="inline-block w-6 h-6" />,
+        text: "Sygedage / Fravær",
+    },
+]
+
+const AdminLinks: ILinkProps[] = [
+    {
+        link: "/dashboard",
+        icon: <Squares2X2Icon className="inline-block w-6 h-6" />,
+        text: "Dashboard",
+    },
+    {
+        link: "/medarbejdere",
+        icon: <ClipboardDocumentIcon className="inline-block w-6 h-6" />,
+        text: "Medarbejdere",
+    },
+]
+
+interface ISidebar {
+    showSidebar: boolean
+    setShowSidebar: (value: boolean) => void
+}
+
+const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
+    const [hideAdmin, setHideAdmin] = useState(false)
+    const [isDarkMode, setIsDarkMode] = useState(false)
 
     const toggleSidebar = () => {
         setShowSidebar(!showSidebar)
     }
 
+    const toggleTheme = () => {
+        setIsDarkMode(!isDarkMode)
+        if (isDarkMode) {
+            document.documentElement.classList.remove("dark")
+        } else {
+            document.documentElement.classList.add("dark")
+        }
+    }
+
     return (
-        <div className="pt-[22px]">
-            <div className="flex flex-col justify-start gap-10">
-                <div className="flex items-center justify-between px-[10px]">
+        <>
+            <div className={`absolute top-0 left-0 right-0 flex items-center pr-6 h-[120px] pl-7 ${showSidebar ? "justify-between" : "justify-center"}`}>
+                {showSidebar && (
                     <svg width="167" height="38" viewBox="0 0 167 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M38.3456 19C38.3456 29.4934 29.7601 38 19.1693 38C9.58797 38 1.64786 31.0378 0.221254 21.9408L4.29602 22.7999C5.99935 29.3641 12.0126 34.2148 19.1693 34.2148C27.6502 34.2148 34.5253 27.4029 34.5253 19C34.5253 10.5971 27.6502 3.78516 19.1693 3.78516C10.6884 3.78516 3.81323 10.5971 3.81323 19C3.81323 19.0949 3.81411 19.1896 3.81585 19.284L0 18.4795C0.278292 8.22675 8.75414 0 19.1693 0C29.7601 0 38.3456 8.50659 38.3456 19Z" fill="#CDE4BA" />
                         <path
@@ -31,41 +87,95 @@ const Sidebar = (props: Props) => {
                         />
                         <path d="M154.802 29.8835H151.346V13.2816H154.819V15.3741C155.378 14.5267 156.966 12.9357 159.967 12.9357C164.574 12.9357 167 15.7718 167 19.8013V29.8835H163.545V20.5276C163.545 17.7779 162.026 16.1869 159.426 16.1869C156.878 16.1869 154.802 17.7779 154.802 20.5276V29.8835Z" fill="white" />
                     </svg>
-                    <button className="h-[20px] w-[20px] bg-[#6C7275] rounded-[3px] relative" onClick={() => toggleSidebar()}>
-                        <div className={`w-[8px] h-[calc(100%-4px)] bg-secondarySupport absolute top-1/2 -translate-y-1/2 rounded-[2px] ${showSidebar ? "right-[3px]" : "left-[2px]"} `} />
-                    </button>
+                )}
+                <button className="h-[20px] w-[20px] bg-[#6C7275] rounded-[3px] relative" onClick={() => toggleSidebar()}>
+                    <div className={`w-[8px] h-[calc(100%-4px)] bg-secondarySupport absolute top-1/2 -translate-y-1/2 rounded-[2px] ${showSidebar ? "right-[3px]" : "left-[2px]"} `} />
+                </button>
+            </div>
+            <div className="h-full overflow-y-auto grow scroll-smooth no-scrollbar">
+                <div className={showSidebar ? "px-0" : "px-2"}>
+                    {Links.map((link: ILinkProps, index: number) => (
+                        <NavLink to={link.link} className={`w-full flex items-center h-12 font-normal text-[15px] font-default text-[rgba(232,236,239,.75)] rounded-lg transition-colors hover:text-white ${showSidebar ? "px-5" : "px-3"}`}>
+                            {link.icon}
+                            {showSidebar && <span className="ml-5 -mt-[3px]">{link.text}</span>}
+                        </NavLink>
+                    ))}
                 </div>
-                <div className="flex flex-col items-start justify-start gap-1">
-                    <NavLink to="/" className={({ isActive }) => "flex items-center justify-start w-full text-white gap-[14px] font-standard-normal py-[14px] px-[16px] rounded-lg bg-gradientmain border-[1px] border-solid border-[rgba(51,54,62,0.15)]"}>
-                        <Squares2X2Icon className="w-[26px] h-[26px]" />
-                        <span>Overview</span>
-                    </NavLink>
-                    <NavLink to="/lønsedler" className="flex items-center justify-start w-full text-white gap-[14px] font-standard-normal py-[14px] px-[16px] rounded-lg">
-                        <ClipboardDocumentIcon className="w-[26px] h-[26px]" />
-                        <span>Lønsedler</span>
-                    </NavLink>
-                    <NavLink to="/kørsel" className="flex items-center justify-start w-full text-white gap-[14px] font-standard-normal py-[14px] px-[16px] rounded-lg">
-                        <TruckIcon className="w-[26px] h-[26px]" />
-                        <span>Kørsel</span>
-                    </NavLink>
-                    <NavLink to="/fravær" className="flex items-center justify-start w-full text-white gap-[14px] font-standard-normal py-[14px] px-[16px] rounded-lg">
-                        <FaceFrownIcon className="w-[26px] h-[26px]" />
-                        <span>Sygedage / Fravær</span>
-                    </NavLink>
-                    <div className="bg-border h-[1px] w-full my-6 opacity-10" />
-                    <p className="font-small-medium text-[#6C7275] mb-3">Admin navigation</p>
-                    <NavLink to="/" className={({ isActive }) => "flex items-center justify-start w-full text-white gap-[14px] font-standard-normal py-[14px] px-[16px] rounded-lg bg-gradientmain border-[1px] border-solid border-[rgba(51,54,62,0.15)]"}>
-                        <Square3Stack3DIcon className="w-[26px] h-[26px]" />
-                        <span>Dashboard</span>
-                    </NavLink>
-                    <NavLink to="/lønsedler" className="flex items-center justify-start w-full text-white gap-[14px] font-standard-normal py-[14px] px-[16px] rounded-lg">
-                        <UsersIcon className="w-[26px] h-[26px]" />
-                        <span>Medarbejdere</span>
-                    </NavLink>
+                <div className="my-4 h-[1px] bg-border opacity-10 -mx-2 md:mx-0" />
+                <div className="pb-6 mb-auto">
+                    <button onClick={() => setHideAdmin(!hideAdmin)} className="flex items-center h-12 font-light text-[13px] font-default text-[rgba(232,236,239,.75)] rounded-lg transition-colors hover:text-white px-[23px]">
+                        <ChevronDownIcon className={`stroke-2 inline-block w-5 h-5 transition-transform duration-150 ${hideAdmin ? "rotate-180" : "rotate-0"}`} />
+                        {showSidebar && <span className="ml-5 -mt-[3px]">Admin navigation</span>}
+                    </button>
+                    <div className={`${hideAdmin ? "invisible" : "visible"} ${showSidebar ? "px-0" : "px-2"}`}>
+                        {AdminLinks.map((link: ILinkProps, index: number) => (
+                            <NavLink to={link.link} className={`w-full flex items-center h-12 font-normal text-[15px] font-default text-[rgba(232,236,239,.75)] rounded-lg transition-colors hover:text-white ${showSidebar ? "px-5" : "px-3"}`}>
+                                {link.icon}
+                                {showSidebar && <span className="ml-5 -mt-[3px]">{link.text}</span>}
+                            </NavLink>
+                        ))}
+                    </div>
                 </div>
             </div>
-            <div className="flex flex-col justify-start gap-2"></div>
-        </div>
+            <div className="absolute left-0 bottom-0 right-0 pb-6 bg-primarySupport px-4 before:absolute before:left-0 before:right-0 before:bottom-full before:h-10 before:bg-gradient-to-t before:from-[#131617] before:to-[rgba(19,22,23,0)] before:pointer-events-none md:px-3">
+                <div className={`mb-3 rounded-[14px] ${showSidebar ? "bg-secondarySupport shadow-[0_1.25rem_1.5rem_0_rgba(0,0,0,0.5)]" : "bg-transparent shadow-none flex justify-center"}`}>
+                    {showSidebar ? (
+                        <div className="p-2.5 rounded-xl">
+                            <div className="flex items-start justify-between px-2.5 py-2.5 pb-4.5">
+                                <div className="flex items-center">
+                                    <div className="relative w-10 h-10">
+                                        <div className="absolute -right-0.75 -bottom-0.75 w-4.5 h-4.5 bg-primary-2 rounded-full border-4 border-n-6 overflow-hidden">
+                                            <img src={ProfileImage} alt="profile" />
+                                        </div>
+                                    </div>
+                                    <div className="ml-4 mr-4">
+                                        <p className="text-white font-standard-normal base2">Tobias Thien Tran</p>
+                                        <p className="text-white font-small-normal caption1 opacity-30">ttt@flc.dk</p>
+                                    </div>
+                                </div>
+                                <p className="px-3 py-1 rounded-full font-default text-[12px] font-bold bg-primaryLight leading-[15px] uppercase">Free</p>
+                            </div>
+                            <Link className="border-solid border-2 border-[rgb(52,56,57)] bg-transparent text-white font-standard-medium py-3 mt-4 w-full rounded-[14px] flex justify-center hover:bg-[rgb(52,56,57)] transition-colors duration-150" to="/">
+                                Upgrade til Pro
+                            </Link>
+                        </div>
+                    ) : (
+                        <div className="relative w-10 h-10">
+                            <div className="absolute -right-0.75 -bottom-0.75 w-4.5 h-4.5 rounded-full overflow-hidden">
+                                <img src={ProfileImage} alt="profile" />
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <div className={`relative flex justify-center w-full p-1 bg-secondarySupport rounded-xl ${showSidebar && "before:absolute before:left-1 before:top-1 before:bottom-1 before:w-[calc(50%-0.25rem)] before:bg-primarySupport before:rounded-[0.625rem] before:transition-all"} ${isDarkMode ? "before:translate-x-full" : "before:translate-x-0"}`}>
+                    {showSidebar ? (
+                        <>
+                            <button onClick={() => toggleTheme()} className={`relative flex items-center justify-center font-standard-medium transition-colors z-1 group basis-1/2 hover:text-white ${!isDarkMode ? "text-white" : "text-[#6C7275]"} ${showSidebar ? "h-10" : "h-16"}`}>
+                                <SunIcon className={`inline-block w-6 h-6 mr-3 transition-colors group-hover:stroke-white ${!isDarkMode ? "stroke-white" : "stroke-[#6C7275]"}`} />
+                                {showSidebar && <span className="-mt-1">Light</span>}
+                            </button>
+                            <button onClick={() => toggleTheme()} className={`relative flex items-center justify-center font-standard-medium transition-colors z-1 group basis-1/2 hover:text-white ${isDarkMode ? "text-white" : "text-[#6C7275]"}  ${showSidebar ? "h-10" : "h-16"}`}>
+                                <MoonIcon className={`inline-block w-6 h-6 mr-3 transition-colors group-hover:stroke-white ${isDarkMode ? "stroke-white" : "stroke-[#6C7275]"}`} />
+                                {showSidebar && <span className="-mt-1">Dark</span>}
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            {isDarkMode && (
+                                <button onClick={() => toggleTheme()} className={`relative items-center justify-center font-standard-medium transition-colors z-1 hover:text-white ${isDarkMode ? "text-white" : "text-[#6C7275]"} ${showSidebar ? "h-10" : "h-16"}`}>
+                                    <SunIcon className={`inline-block w-7 h-7 transition-colors group-hover:stroke-white ${isDarkMode ? "stroke-white" : "stroke-[#6C7275]"}`} />
+                                </button>
+                            )}
+                            {!isDarkMode && (
+                                <button onClick={() => toggleTheme()} className={`relative flex items-center  font-standard-medium transition-colors z-1 hover:text-white ${!isDarkMode ? "text-white" : "text-[#6C7275]"} ${showSidebar ? "h-10" : "h-16"}`}>
+                                    <MoonIcon className={`inline-block w-7 h-7 transition-colors group-hover:stroke-white ${!isDarkMode ? "stroke-white" : "stroke-[#6C7275]"}`} />
+                                </button>
+                            )}
+                        </>
+                    )}
+                </div>
+            </div>
+        </>
     )
 }
 
