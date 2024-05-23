@@ -18,8 +18,4 @@ export namespace User {
     return userDoc
   }
 
-  const registerOrgUser = () => {
-
-  }
-
 }

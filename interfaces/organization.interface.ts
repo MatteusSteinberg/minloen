@@ -8,11 +8,11 @@ export interface IOrganization {
 }
 
 export interface IOrganizationRegister {
-  name: string,
-  cvr: string,
-  firstName: string,
-  lastName: string,
-  adminEmail: string,
-  password: string,
-  passwordRepeat: string
+  name?: string,
+  cvr?: string,
+  firstName?: string,
+  lastName?: string,
+  adminEmail?: string,
+  password?: string,
+  passwordRepeat?: string
 }
