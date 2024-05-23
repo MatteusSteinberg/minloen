@@ -39,9 +39,9 @@ const Routing = () => {
     const showLayout = route?.layout || notfound
 
     return (
-        <main className={`${notfound && "w-full"} ${showLayout && !notfound ? "pr-6 bg-primarySupport h-screen" : "relative flex items-start justify-between w-full min-h-dvh"} ${showLayout && showSidebar ? "pl-80" : "pl-24"}`}>
+        <main className={`${notfound && "w-full"} ${showLayout && !notfound ? "md:pl-24 pr-6 p-0 bg-primarySupport h-screen" : "relative flex items-start justify-between w-full min-h-dvh"} ${showLayout && showSidebar ? "md:pl-24 lg:pl-80" : "pl-0"}`}>
             {showLayout && !notfound && (
-                <aside className={`fixed top-0 bottom-0 left-0 z-20 flex flex-col invisible opacity-0 pt-[120px] md:visible md:opacity-100 md:transition-opacity ${showSidebar ? "w-80 pb-[232px] px-4" : "w-16 pb-[120px] md:w-24 px-0 md:px-4 md:pb-[152px]"} `}>
+                <aside className={`fixed top-0 bottom-0 left-0 z-20 flex flex-col invisible opacity-0 pt-[120px] md:visible md:opacity-100 md:transition-opacity bg-primarySupport ${showSidebar ? "w-80 pb-[232px] px-4" : "w-16 pb-[120px] md:w-24 px-0 md:px-4 md:pb-[152px]"} `}>
                     <Sidebar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
                 </aside>
             )}

@@ -117,20 +117,20 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                     </div>
                 </div>
             </div>
-            <div className="absolute left-0 bottom-0 right-0 pb-6 bg-primarySupport px-4 before:absolute before:left-0 before:right-0 before:bottom-full before:h-10 before:bg-gradient-to-t before:from-[#131617] before:to-[rgba(19,22,23,0)] before:pointer-events-none md:px-3">
+            <div className="absolute left-0 bottom-0 right-0 pb-6 bg-primarySupport px-3 before:absolute before:left-0 before:right-0 before:bottom-full before:h-10 before:bg-gradient-to-t before:from-[#131617] before:to-[rgba(19,22,23,0)] before:pointer-events-none md:px-4">
                 <div className={`mb-3 rounded-[14px] ${showSidebar ? "bg-secondarySupport shadow-[0_1.25rem_1.5rem_0_rgba(0,0,0,0.5)]" : "bg-transparent shadow-none flex justify-center"}`}>
                     {showSidebar ? (
                         <div className="p-2.5 rounded-xl">
                             <div className="flex items-start justify-between px-2.5 py-2.5 pb-4.5">
                                 <div className="flex items-center">
                                     <div className="relative w-10 h-10">
-                                        <div className="absolute -right-0.75 -bottom-0.75 w-4.5 h-4.5 bg-primary-2 rounded-full border-4 border-n-6 overflow-hidden">
+                                        <div className="absolute -right-0.75 -bottom-0.75 w-4.5 h-4.5 bg-primary-2 rounded-full border-4 overflow-hidden">
                                             <img src={ProfileImage} alt="profile" />
                                         </div>
                                     </div>
                                     <div className="ml-4 mr-4">
-                                        <p className="text-white font-standard-normal base2">Tobias Thien Tran</p>
-                                        <p className="text-white font-small-normal caption1 opacity-30">ttt@flc.dk</p>
+                                        <p className="text-white truncate font-standard-normal">Tobias Thien Tran</p>
+                                        <p className="text-white font-small-normal opacity-30">ttt@flc.dk</p>
                                     </div>
                                 </div>
                                 <p className="px-3 py-1 rounded-full font-default text-[12px] font-bold bg-primaryLight leading-[15px] uppercase">Free</p>
