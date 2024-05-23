@@ -1,14 +1,23 @@
 import bcrypt from "bcrypt"
 import { Schema, Types, model } from "mongoose"
-import { IUserDoc, IUserModel } from "../../interfaces/user.interface"
+import { IUser } from "../../interfaces/user.interface"
 
-const userSchema = new Schema<IUserDoc, IUserModel>(
+const userSchema = new Schema<IUser>(
   {
-    name: {
+    firstName: {
       type: String,
       trim: true,
-      index: true,
       required: true,
+    },
+    lastName: {
+      type: String,
+      trim: true,
+      required: false
+    },
+    name: {
+      type: String,
+      required: false,
+      trim: true,
     },
     email: {
       type: String,
@@ -38,7 +47,7 @@ const userSchema = new Schema<IUserDoc, IUserModel>(
         type: Date,
       },
     },
-    activeOrganizations: {
+    activeOrganization: {
       type: Schema.Types.ObjectId,
       ref: "Organization",
     },
@@ -76,6 +85,6 @@ userSchema.pre("save", async function (next) {
   next()
 })
 
-const userModel = model<IUserModel>("User", userSchema)
+const userModel = model<IUser>("User", userSchema)
 
 export default userModel

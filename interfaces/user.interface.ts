@@ -1,8 +1,13 @@
 import { Document, Model, Types } from "mongoose"
+import { IOrganization } from "./organization.interface"
 
 export interface IUser {
   id?: any
+  firstName: string
+  lastName: string
+  /** Combination of firstName and lastName */
   name: string
+
   email: string
   password?: string
   updatedAt?: Date
@@ -14,7 +19,7 @@ export interface IUser {
     usedAt?: Date
   }
   organizations?: Array<Types.ObjectId>
-  activeOrganizations?: any
+  activeOrganization?: Types.ObjectId | IOrganization | string
   organizationRole?: "admin" | "user"
 }
 

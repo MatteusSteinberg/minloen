@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios"
 import _defaults from "lodash/defaults"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { URLSearchParams } from "url"
 
 export interface IRequestResult {
   data?: any,
