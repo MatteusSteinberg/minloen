@@ -162,13 +162,13 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                     ) : (
                         <>
                             {isDarkMode && (
-                                <button onClick={() => toggleTheme()} className={`relative items-center justify-center font-standard-medium transition-colors z-1 hover:text-white ${isDarkMode ? "text-white" : "text-[#6C7275]"} ${showSidebar ? "h-10" : "h-16"}`}>
-                                    <SunIcon className={`inline-block w-7 h-7 transition-colors group-hover:stroke-white ${isDarkMode ? "stroke-white" : "stroke-[#6C7275]"}`} />
+                                <button onClick={() => toggleTheme()} className={`relative items-center justify-center font-standard-medium transition-colors z-1 hover:text-white ${isDarkMode ? "text-white" : "text-[#6C7275]"} h-14`}>
+                                    <SunIcon className={`inline-block w-6 h-6 transition-colors group-hover:stroke-white ${isDarkMode ? "stroke-white" : "stroke-[#6C7275]"}`} />
                                 </button>
                             )}
                             {!isDarkMode && (
-                                <button onClick={() => toggleTheme()} className={`relative flex items-center  font-standard-medium transition-colors z-1 hover:text-white ${!isDarkMode ? "text-white" : "text-[#6C7275]"} ${showSidebar ? "h-10" : "h-16"}`}>
-                                    <MoonIcon className={`inline-block w-7 h-7 transition-colors group-hover:stroke-white ${!isDarkMode ? "stroke-white" : "stroke-[#6C7275]"}`} />
+                                <button onClick={() => toggleTheme()} className={`relative flex items-center  font-standard-medium transition-colors z-1 hover:text-white ${!isDarkMode ? "text-white" : "text-[#6C7275]"} h-14`}>
+                                    <MoonIcon className={`inline-block w-6 h-6 transition-colors group-hover:stroke-white ${!isDarkMode ? "stroke-white" : "stroke-[#6C7275]"}`} />
                                 </button>
                             )}
                         </>
