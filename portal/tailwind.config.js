@@ -21,8 +21,6 @@ module.exports = {
       success: "#58C383",
       white: "#FFFFFF",
       black: "#000000",
-      gradient:
-        "linear-gradient(90deg, rgba(36, 40, 51, 0.50) 0%, rgba(50, 51, 55, 0.50) 53.86%)",
     },
     fontFamily: {
       default: ["Mundial", "sans-serif"],
