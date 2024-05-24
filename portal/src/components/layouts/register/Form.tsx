@@ -13,11 +13,14 @@ const Form = (props: Props) => {
   const { authenticate } = useAuth()
   const [form, setForm] = useState<IOrganizationRegister>({})
 
-  const { create } = useAPI({ url: '/organization/register', opts: { autoGet: false } })
+  const { create, error } = useAPI({ url: '/organization/register', opts: { autoGet: false } })
 
-  const updateForm = (path: keyof IOrganizationRegister) => (ev: React.ChangeEvent<HTMLInputElement>) => {
-    setForm(f => ({ ...f, [path]: ev.target.value }))
-  }
+  const formPathHandler = (path: keyof IOrganizationRegister, onError: string) => ({
+    onChange: (ev: React.ChangeEvent<HTMLInputElement>) => {
+      setForm(f => ({ ...f, [path]: ev.target.value }))
+    },
+    error: error?.path === path ? onError : undefined
+  })
 
   const onSubmit = async () => {
     const result = await create(form)
@@ -34,21 +37,28 @@ const Form = (props: Props) => {
         </div>
         <form>
           <div className="mb-2">
-            <Input onChange={updateForm("name")} name="companyName" type="text" label="Virksomhedsnavn" icon={<BuildingOfficeIcon />} placeholder="Virksomhed ApS..." />
+            <Input
+              {...formPathHandler("name", "Virksomhedsnavn er påkrævet")}
+              name="companyName"
+              type="text"
+              label="Virksomhedsnavn"
+              icon={<BuildingOfficeIcon />}
+              placeholder="Virksomhed ApS..."
+            />
           </div>
           <div className="mb-2">
-            <Input onChange={updateForm("cvr")} name="cvr" type="text" label="CVR" icon={<Square2StackIcon />} placeholder="1234..." />
+            <Input {...formPathHandler("cvr", "Venligst indtast et legitimt CVR-nummer")} name="cvr" type="text" label="CVR" icon={<Square2StackIcon />} placeholder="1234..." />
           </div>
           <div className="items-start justify-between gap-2 mb-2 sm:flex">
-            <Input onChange={updateForm("firstName")} name="firstName" type="text" label="Fornavn" placeholder="John..." />
-            <Input onChange={updateForm("lastName")} name="lastName" type="text" label="Efternavn" placeholder="Doe..." />
+            <Input {...formPathHandler("firstName", "Fornavn er påkrævet")} name="firstName" type="text" label="Fornavn" placeholder="John..." />
+            <Input {...formPathHandler("lastName", "Efternavn er påkrævet")} name="lastName" type="text" label="Efternavn" placeholder="Doe..." />
           </div>
           <div className="mb-2">
-            <Input onChange={updateForm("adminEmail")} name="adminEmail" type="email" label="Administrator E-mail" icon={<UserIcon />} placeholder="AnneAnnesen@outlook.dk" />
+            <Input {...formPathHandler("adminEmail", "Venligst indtast en legitimt e-mail")} name="adminEmail" type="email" label="Administrator E-mail" icon={<UserIcon />} placeholder="AnneAnnesen@outlook.dk" />
           </div>
           <div className="items-start justify-between gap-2 mb-2 sm:flex">
-            <Input onChange={updateForm("password")} name="password" type="password" label="Adgangskode" icon={<LockClosedIcon />} placeholder="1234..." />
-            <Input onChange={updateForm("passwordRepeat")} name="confirmPassword" type="password" label="Bekræft adgangskode" icon={<LockClosedIcon />} placeholder="1234..." />
+            <Input {...formPathHandler("password", "Kodeord skal være mindst 8 karaktere, have bogstaver, tal og specialtegn.")} name="password" type="password" label="Adgangskode" icon={<LockClosedIcon />} placeholder="1234..." />
+            <Input {...formPathHandler("passwordRepeat", "Kodeord skal være ens")} name="confirmPassword" type="password" label="Bekræft adgangskode" icon={<LockClosedIcon />} placeholder="1234..." />
           </div>
           <div className="flex justify-center">
             <Button onClick={onSubmit} background="primaryLight" color="text">

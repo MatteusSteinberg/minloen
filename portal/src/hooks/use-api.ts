@@ -19,7 +19,7 @@ export const requestWithoutBody = async (url: string, method: "get" | "delete", 
   } catch (error) {
     if (error instanceof AxiosError) {
       return {
-        error: error.response?.data?.error,
+        error: error.response?.data,
         statusCode: error.status ?? 500
       }
     }
@@ -41,8 +41,9 @@ export const requestWithBody = async (url: string, method: "put" | "patch" | "po
     }
   } catch (error) {
     if (error instanceof AxiosError) {
+      console.log(error.response?.data)
       return {
-        error: error.response?.data?.error,
+        error: error.response?.data,
         statusCode: error.status ?? 500
       }
     }
@@ -148,6 +149,7 @@ export const useAPI = <T>({ url, params, id, opts }: IUseApi) => {
 
   return {
     data: requestData?.data,
+    error: requestData?.error,
     setData,
     loading,
     get,

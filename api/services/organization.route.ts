@@ -17,7 +17,6 @@ export const register = baseHandler(async ({ body }) => {
     lastName: ["required"],
     adminEmail: ["required", "email"],
     password: ["required", "password"],
-    passwordRepeat: ["required", "password"],
   }, newOrganization)
 
   if (result) {
@@ -25,7 +24,7 @@ export const register = baseHandler(async ({ body }) => {
   }
 
   if (newOrganization.password !== newOrganization.passwordRepeat) {
-    return { data: "Passwords do not match", status: StatusCodes.BadRequest }
+    return { data: { path: "passwordRepeat" }, status: StatusCodes.BadRequest }
   }
 
   if (await organizationModel.exists({ cvr: newOrganization.cvr })) {

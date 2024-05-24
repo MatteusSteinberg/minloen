@@ -29,7 +29,7 @@ function validate(value: any, validator: validators): boolean {
       return EmailValidator.validate(value)
     }
     case "numberonly": {
-      return _.isFinite(value)
+      return _.isInteger(value * 1)
     }
     case "password": {
       // Letters, numbers and special symbols + length of 8 or higher
