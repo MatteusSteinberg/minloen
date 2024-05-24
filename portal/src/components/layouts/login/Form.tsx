@@ -12,13 +12,21 @@ const Form = (props: Props) => {
 
   const { authenticate } = useAuth()
   const [form, setForm] = useState<{ email?: string, password?: string }>({})
+  const [error, setError] = useState(false)
 
   const updateForm = (path: "email" | "password") => (ev: React.ChangeEvent<HTMLInputElement>) => {
     setForm(f => ({ ...f, [path]: ev.target.value }))
+    if (error) {
+      setError(false)
+    }
   }
 
   const onSubmit = async () => {
-    await authenticate(form?.email || "", form.password || "")
+    const error = await authenticate(form?.email || "", form.password || "")
+
+    if (error) {
+      setError(true)
+    }
   }
 
   return (
@@ -29,10 +37,10 @@ const Form = (props: Props) => {
         </div>
         <form>
           <div className="mb-2">
-            <Input onChange={updateForm("email")} name="e-mail" type="email" label="E-mail" icon={<UserIcon />} placeholder="AnneAnnesen@outlook.dk" />
+            <Input error={error ? " " : ""} onChange={updateForm("email")} name="e-mail" type="email" label="E-mail" icon={<UserIcon />} placeholder="AnneAnnesen@outlook.dk" />
           </div>
           <div className="mb-2">
-            <Input onChange={updateForm("password")} name="password" type="password" label="Password" icon={<LockClosedIcon />} placeholder="1234..." />
+            <Input error={error ? "Forkert e-mail eller kodeord" : ""} onChange={updateForm("password")} name="password" type="password" label="Password" icon={<LockClosedIcon />} placeholder="1234..." />
           </div>
           <div className="flex justify-center">
             <Button onClick={onSubmit} background="primaryLight" color="text">
