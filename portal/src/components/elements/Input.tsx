@@ -12,13 +12,14 @@ interface IInput {
     children?: React.ReactNode
     label?: string
     icon?: React.ReactNode
+    spacing?: boolean
 }
 
-const Input = ({ name, autocomplete, children, error, label, onChange, placeholder, type, value, icon }: IInput) => {
+const Input = ({ name, autocomplete, children, error, label, onChange, placeholder, type, value, icon, spacing }: IInput) => {
     return (
-        <div className="relative block w-full mb-4">
+        <div className={`relative block w-full ${spacing ? "mb-4" : "mb-0"}`}>
             <label className="block mb-3 text-white">{label}</label>
-            <div className={`p-0 relative rounded-[14px] w-full h-[68px] border-[1px] border-solid ${error ? "border-error" : "border-[#33363E]"} bg-[#212122]`}>
+            <div className={`p-0 relative rounded-[14px] w-full h-[68px] border-[1px] border-solid ${error ? "border-error" : "border-[#33363E]"} bg-[rgba(33,33,34,0.2)]`}>
                 {icon && <div className="absolute top-1/2 left-4 -translate-y-1/2 flex items-center h-6 w-6 text-[rgba(255,255,255,0.3)]">{icon}</div>}
                 <input className={`w-full h-full text-white bg-transparent outline-0 ${icon ? "pr-4 pl-12" : "px-5"} placeholder:text-[rgba(255,255,255,0.3)] placeholder:font-normal`} name={name} onChange={onChange} placeholder={placeholder} type={type} value={value} />
                 {error && (
