@@ -1,8 +1,9 @@
-import { lazy } from "react"
+import { lazy, useState } from "react"
 
 // Components
 import { Route, Routes, matchPath, useLocation } from "react-router-dom"
 import Sidebar from "./components/globals/Sidebar"
+import Error404 from "./routes/404"
 
 // Pages
 const Dashboard = lazy(() => import("./routes/dashboard"))
@@ -30,23 +31,28 @@ const routes: Array<IAppRoute> = [
 ]
 
 const Routing = () => {
+    const [showSidebar, setShowSidebar] = useState(true)
     const { pathname } = useLocation()
 
+    const notfound = !routes.some((x) => matchPath(x.path, pathname))
     const route = routes.find((x) => (!x.exact ? matchPath(x.path, pathname) : x.path === pathname))
-    const showLayout = route?.layout
+    const showLayout = route?.layout || notfound
 
     return (
-        <main className={`relative flex items-start justify-between w-full ${showLayout && "p-6 gap-6"} min-h-dvh`}>
+        <main className={`${notfound && "w-full"} ${showLayout && !notfound ? "md:pl-24 pr-6 p-0 bg-primarySupport h-screen" : "relative flex items-start justify-between w-full min-h-dvh"} ${showLayout && showSidebar ? "md:pl-24 lg:pl-80" : "pl-0"}`}>
             {showLayout && (
-                <aside className="max-w-[320px] relative w-full min-h-[calc(100dvh-48px)]">
-                    <Sidebar />
+                <aside className={`fixed top-0 bottom-0 left-0 z-20 flex flex-col invisible opacity-0 pt-[120px] md:visible md:opacity-100 md:transition-opacity bg-primarySupport ${showSidebar ? "w-80 pb-[232px] px-4" : "w-16 pb-[120px] md:w-24 px-0 md:px-4 md:pb-[152px]"} `}>
+                    <Sidebar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
                 </aside>
             )}
-            <Routes>
-                {routes.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.element} />
-                ))}
-            </Routes>
+            <div className={`flex min-h-screen ${showLayout ? "py-0 md:py-6" : " w-full"} min-h-screen-ios`}>
+                <Routes>
+                    {routes.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.element} />
+                    ))}
+                    <Route path="*" element={<Error404 />} />
+                </Routes>
+            </div>
         </main>
     )
 }
