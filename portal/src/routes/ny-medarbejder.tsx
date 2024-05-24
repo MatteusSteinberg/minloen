@@ -23,7 +23,7 @@ const NewCoworker = (props: Props) => {
                     </div>
                     <div className="relative flex items-start justify-between gap-4">
                         <div className="relative flex flex-col w-2/5 gap-4">
-                            <div className="p-8 bg-primarySupport rounded-3xl">
+                            <div className="p-8 bg-primarySupport rounded-3xl shadow-custom">
                                 <h2 className="mb-4 text-white font-large-normal">Medarbejder bilede</h2>
                                 <div>
                                     <input type="file" ref={profileInputRef} className="hidden" />
@@ -43,7 +43,7 @@ const NewCoworker = (props: Props) => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="flex items-center justify-between p-8 bg-primarySupport rounded-3xl">
+                            <div className="flex items-center justify-between p-8 bg-primarySupport rounded-3xl shadow-custom ">
                                 <p className="text-white font-large-normal">Færdiggør tilføjelse</p>
                                 <Button background="primaryLight" color="text">
                                     Tilføj medarbejder
@@ -51,7 +51,7 @@ const NewCoworker = (props: Props) => {
                             </div>
                         </div>
                         <div className="relative flex flex-col w-3/5 h-full gap-4">
-                            <div className="p-8 bg-primarySupport rounded-3xl">
+                            <div className="p-8 bg-primarySupport rounded-3xl shadow-custom ">
                                 <div className="mb-4">
                                     <h2 className="text-white font-large-normal">Personfetler</h2>
                                     <p className="text-white opacity-50 font-small-normal">Information omkring medarbejder</p>
@@ -59,11 +59,10 @@ const NewCoworker = (props: Props) => {
                                 <div className="flex flex-col items-center justify-start gap-1">
                                     <Input name="firstName" type="text" placeholder="Indtast fornavn" />
                                     <Input name="lastName" type="text" placeholder="Indtast Efternavn" />
-                                    <Input name="email" type="email" placeholder="Indtast E-mail" />
                                     <Input name="cpr" type="number" placeholder="Indtast CPR-nummer" />
                                 </div>
                             </div>
-                            <div className="p-8 bg-primarySupport rounded-3xl">
+                            <div className="p-8 bg-primarySupport rounded-3xl shadow-custom ">
                                 <div className="mb-4">
                                     <h2 className="text-white font-large-normal">Kontaktoplysninger</h2>
                                     <p className="text-white opacity-50 font-small-normal">Medarbejder kontaktoplysninger</p>
@@ -76,7 +75,6 @@ const NewCoworker = (props: Props) => {
                                     </div>
                                     <div className="flex flex-col items-start justify-start w-full gap-1 mb-4">
                                         <p className="text-white font-standard-normal">Privat</p>
-                                        <Input name="privateEmail" type="text" placeholder="E-mail" />
                                         <Input name="homePhone" type="tel" placeholder="Hjemme tlf." />
                                         <Input name="privatePhone" type="tel" placeholder="Privat tlf." />
                                     </div>
@@ -88,7 +86,7 @@ const NewCoworker = (props: Props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="p-8 bg-primarySupport rounded-3xl">
+                            <div className="p-8 bg-primarySupport rounded-3xl shadow-custom">
                                 <div className="mb-4">
                                     <h2 className="text-white font-large-normal">Bruger oplysninger</h2>
                                     <p className="text-white opacity-50 font-small-normal">Brugeroplysninger til at logge ind</p>

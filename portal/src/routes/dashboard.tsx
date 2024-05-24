@@ -1,3 +1,4 @@
+import Dropdown from "../components/elements/Dropdown"
 import Header from "../components/globals/Header"
 
 type Props = {}
@@ -10,6 +11,7 @@ const dashboard = (props: Props) => {
                     <div className="">
                         <Header title="Hejsa Tobias!" />
                     </div>
+                    <Dropdown />
                 </div>
             </div>
         </div>
