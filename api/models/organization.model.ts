@@ -1,13 +1,18 @@
 import { Schema, model } from "mongoose"
-import { IOrganization } from "../interfaces/organization.interface"
+import { IOrganization } from "../../interfaces/organization.interface"
 
 const organizationSchema = new Schema<IOrganization>(
   {
     name: {
       type: String,
       trim: true,
-      index: true,
       required: true,
+    },
+    cvr: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true
     },
     active: {
       type: Boolean,

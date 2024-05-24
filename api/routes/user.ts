@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register } from "../services/user.route";
+import { login, me, register } from "../services/user.route";
 
 const userRouter = express.Router()
 
@@ -9,6 +9,7 @@ userRouter.post('/login', login)
 userRouter.post('/register', register)
 
 // GET
+userRouter.get('/', me)
 
 // PATCH
 

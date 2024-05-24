@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose"
-import { IDriving } from "../interfaces/driving.interface"
+import { IDriving } from "../../interfaces/driving.interface"
 
 const drivingSchema = new Schema<IDriving>(
   {
