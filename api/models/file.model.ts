@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose"
-import { IFile } from "../interfaces/file.interface"
+import { IFile } from "../../interfaces/file.interface"
 
 const fileSchema = new Schema<IFile>(
   {

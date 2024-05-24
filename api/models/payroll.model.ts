@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose"
-import { IPayroll } from "../interfaces/payroll.interface"
+import { IPayroll } from "../../interfaces/payroll.interface"
 
 const payrollSchema = new Schema<IPayroll>(
   {
