@@ -12,7 +12,7 @@ export const login = baseHandler(async ({ body }) => {
   }).select('password')
 
   if (!user) {
-    return { error: "User not found", status: StatusCodes.Unauthorized }
+    return { error: "E-mail or Password is incorrect", status: StatusCodes.Unauthorized }
   }
 
   const isCorrect = await bcrypt.compare(password, user.password)
@@ -20,7 +20,7 @@ export const login = baseHandler(async ({ body }) => {
   if (isCorrect) {
     return { data: getAuthToken(user), status: StatusCodes.Ok }
   } else {
-    return { error: "User not found", status: StatusCodes.Unauthorized }
+    return { error: "E-mail or Password is incorrect", status: StatusCodes.Unauthorized }
   }
 })
 

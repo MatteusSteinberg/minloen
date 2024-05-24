@@ -21,8 +21,9 @@ const Form = (props: Props) => {
 
   const onSubmit = async () => {
     const result = await create(form)
-    console.log(result)
-    await authenticate(form?.adminEmail || "", form.password || "")
+    if (!result.error) {
+      await authenticate(form?.adminEmail || "", form.password || "")
+    }
   }
 
   return (
