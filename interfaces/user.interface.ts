@@ -10,6 +10,7 @@ export interface IUser {
 
   email: string
   password?: string
+
   updatedAt?: Date
   createdAt?: Date
   forgottenPassword?: {

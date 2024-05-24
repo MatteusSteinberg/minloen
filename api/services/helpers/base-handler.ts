@@ -11,6 +11,8 @@ export enum StatusCodes {
   BadRequest = 400,
   Unauthorized = 401,
   NotFound = 404,
+  /** Already exists */
+  Conflict = 409,
   ServerError = 500
 }
 
