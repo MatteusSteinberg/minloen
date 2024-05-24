@@ -1,5 +1,6 @@
 import { useRef } from "react"
 import Button from "../components/elements/Button"
+import Dropdown from "../components/elements/Dropdown"
 import Input from "../components/elements/Input"
 import Header from "../components/globals/Header"
 
@@ -95,10 +96,9 @@ const NewCoworker = (props: Props) => {
                                 <Input name="userPassword" type="text" placeholder="Adgangskode" />
                                 <div className="flex items-center justify-between mt-4">
                                     <p className="text-white font-large-normal">Medarbejder rettigheder</p>
-                                    <select name="userRights">
-                                        <option>Medarbejder</option>
-                                        <option>Administrator</option>
-                                    </select>
+                                    <div className=" min-w-[320px]">
+                                        <Dropdown name="userRights" options={["Administrator", "Medarbejder"]} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
