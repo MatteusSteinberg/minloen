@@ -29,3 +29,22 @@ export type IUserDoc = IUser & Document
 export interface IUserModel extends Model<IUserDoc> {
   isEmailTaken(email: string, excludeUserId?: Types.ObjectId): Promise<boolean>
 }
+
+export interface IUserAdd {
+  socialSecurityNumber?: string
+  firstName?: string
+  lastName?: string
+
+  email?: string
+  organizationRole?: "admin" | "user"
+
+  workemail?: string
+  workPhoneNumber?: string
+
+  homePhoneNumber?: string
+  privatePhoneNumber?: string
+
+  emergencyFirstName?: string
+  emergencyLastName?: string
+  emergencyPhoneNumber?: string
+}

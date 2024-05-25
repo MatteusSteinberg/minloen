@@ -53,7 +53,7 @@ export const register = baseHandler(async ({ body }) => {
 export const me = baseHandler(async ({ user }) => {
 
   const org = new Organization(user.activeOrganization as any)
-  await org.setup()
+  await org.load()
 
   return { data: org.organization.toObject({ virtuals: true }), status: StatusCodes.Ok }
 })

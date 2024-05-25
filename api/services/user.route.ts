@@ -1,7 +1,10 @@
 import bcrypt from "bcrypt";
+import { IUserAdd } from "../../interfaces/user.interface";
+import { validateObject } from "../lib/validator";
 import userModel from "../models/user.model";
 import getAuthToken from "./helpers/auth-token-generation";
 import baseHandler, { StatusCodes } from "./helpers/base-handler";
+import Organization from "./utils/organization";
 
 
 export const login = baseHandler(async ({ body }) => {
@@ -24,7 +27,7 @@ export const login = baseHandler(async ({ body }) => {
   }
 })
 
-export const register = baseHandler(async () => {
+export const register = baseHandler(async ({ }) => {
   return { data: "", status: StatusCodes.Created }
 })
 
@@ -33,4 +36,25 @@ export const me = baseHandler(async ({ user }) => {
   await user.populate("activeOrganization")
 
   return { data: user?.toObject({ virtuals: true }), status: StatusCodes.Ok }
-})
+}, "any")
+
+export const add = baseHandler(async ({ user, body }) => {
+  const newUser = body as IUserAdd
+
+  const valid = validateObject({
+    socialSecurityNumber: ["required"],
+    firstName: ["required"],
+    lastName: ["required"],
+    email: ["required", "email"],
+    organizationRole: ["required"]
+  }, newUser)
+
+  if (!valid) {
+    return { data: valid, status: StatusCodes.BadRequest }
+  }
+
+  const org = new Organization(user.activeOrganization as any)
+  await org.addUser(newUser)
+
+  return { data: "Success", status: StatusCodes.Created }
+}, "admin")

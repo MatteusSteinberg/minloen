@@ -54,11 +54,22 @@ export type HandlerRequest = {
   user: HydratedDocument<IUser> | undefined
 }
 
-const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, requiresAuth?: boolean) => {
+const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, requiresRole?: "admin" | "user" | "any") => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    if (requiresAuth && !(req as any).user) {
-      res.status(401).json({ message: "Method not allowed without being logged in." })
-      return
+    if (requiresRole && !(req as any).user) {
+      const user = (req.user as HydratedDocument<IUser>)
+      if (!user) {
+        res.status(401).json("Unauthorized")
+        return
+      }
+      if (user.organizationRole !== "admin" && requiresRole === "admin") {
+        res.status(401).json("Unauthorized")
+        return
+      }
+      if (user.organizationRole !== "user" && requiresRole === "user") {
+        res.status(401).json("Unauthorized")
+        return
+      }
     }
 
     try {
