@@ -281,6 +281,97 @@ function generateBalance(page: PDFPage) {
         opacity: 0.5,
         color: rgb(0, 0, 0),
     })
+    generateFooterLineTitel(page, "Feriepenge", "Yes", "Noo", "TOTAL")
+    generateFooterLine(page, "Feriepengegrundlag", 10000, 10000, 10000)
+    generateFooterSaldi(page)
+}
+
+function generateFooterLineTitel(page: PDFPage, text: string, optionOne?: string, optionTwo?: string, optionThree?: string) {
+    page.drawText(text, {
+        x: leftSideStartPix,
+        y: page.getHeight() - 670,
+        size: 8,
+        color: rgb(0, 0, 0),
+    })
+
+    if (optionOne) {
+        page.drawText(optionOne, {
+            x: leftSideStartPix + 90 * 1,
+            y: page.getHeight() - 670,
+            size: 8,
+            color: rgb(0, 0, 0),
+        })
+    }
+
+    if (optionTwo) {
+        page.drawText(optionTwo, {
+            x: leftSideStartPix + 90 * 1.7,
+            y: page.getHeight() - 670,
+            size: 8,
+            color: rgb(0, 0, 0),
+        })
+    }
+
+    if (optionThree) {
+        page.drawText(optionThree, {
+            x: leftSideStartPix + 90 * 2.45,
+            y: page.getHeight() - 670,
+            size: 8,
+            color: rgb(0, 0, 0),
+        })
+    }
+}
+
+function generateFooterLine(page: PDFPage, text: string, detailOne?: number, detailTwo?: number, detailThree?: number) {
+    page.drawText(text, {
+        x: leftSideStartPix,
+        y: page.getHeight() - 680,
+        size: 8,
+        color: rgb(0, 0, 0),
+    })
+
+    if (detailOne) {
+        page.drawText(detailOne.toString(), {
+            x: leftSideStartPix + 90 * 1,
+            y: page.getHeight() - 680,
+            size: 8,
+            color: rgb(0, 0, 0),
+        })
+    }
+
+    if (detailTwo) {
+        page.drawText(detailTwo.toString(), {
+            x: leftSideStartPix + 90 * 1.7,
+            y: page.getHeight() - 680,
+            size: 8,
+            color: rgb(0, 0, 0),
+        })
+    }
+
+    if (detailThree) {
+        page.drawText(detailThree.toString(), {
+            x: leftSideStartPix + 90 * 2.45,
+            y: page.getHeight() - 680,
+            size: 8,
+            color: rgb(0, 0, 0),
+        })
+    }
+}
+
+function generateFooterSaldi(page: PDFPage) {
+    page.drawText("SALDI", {
+        x: page.getWidth() - 200,
+        y: page.getHeight() - 670,
+        size: 8,
+        color: rgb(0, 0, 0),
+    })
+
+    page.drawText("I Ferieåret", {
+        x: page.getWidth() - 100,
+        y: page.getHeight() - 670,
+        size: 8,
+        color: rgb(0, 0, 0),
+    })
 }
 
 function generateFooter(page: PDFPage) {
