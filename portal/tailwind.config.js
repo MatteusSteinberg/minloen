@@ -17,7 +17,7 @@ module.exports = {
       secondarySupport: "#232627",
       tertiarySupport: "#8FB996",
       text: "#252525",
-      border: "#E7E7E9",
+      border: "rgba(231, 231, 233, 0.2)",
       error: "#C35865",
       success: "#58C383",
       white: "#FFFFFF",
