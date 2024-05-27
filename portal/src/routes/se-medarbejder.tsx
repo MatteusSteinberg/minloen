@@ -89,8 +89,8 @@ const SeeCoworker = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-start justify-between gap-4 mt-16">
-                        <DataTable tableData={coworkersData} />
-                        <DataTable tableData={coworkersData} />
+                        <DataTable title="Lønsedler" tableData={coworkersData} />
+                        <DataTable title="Kørsel" tableData={coworkersData} />
                     </div>
                 </div>
             </div>

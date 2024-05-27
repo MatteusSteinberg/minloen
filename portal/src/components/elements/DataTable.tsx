@@ -9,13 +9,14 @@ interface IDataTable {
     }
     button?: string
     actions?: boolean
+    title?: string
 }
 
-const DataTable = ({ tableData, button, actions }: IDataTable) => {
+const DataTable = ({ tableData, button, actions, title }: IDataTable) => {
     return (
         <div className="relative z-10 w-full h-full border border-solid shadow-custom rounded-2xl border-border">
             <div className="relative flex items-center justify-between h-full py-6 px-9 bg-primarySupport rounded-t-2xl">
-                <h2 className="text-white font-h4">Medarbejder oversigt</h2>
+                <h2 className="text-white font-medium-medium">{title ? title : "Indtast title"}</h2>
                 {button && (
                     <Link className="border-solid border-2 border-[rgb(52,56,57)] bg-transparent text-white font-standard-medium py-3 px-6 rounded-[14px] flex justify-center hover:bg-[rgb(52,56,57)] transition-colors duration-150" to={button}>
                         Tilføj medarbejder
@@ -43,7 +44,7 @@ const DataTable = ({ tableData, button, actions }: IDataTable) => {
                             <tr className="text-white bg-primarySupport font-small-normal border-b border-solid border-[#343839]">
                                 {tableData.headers.map((header, colIndex) => (
                                     <td key={colIndex} className="px-8 py-4">
-                                        {header === "Billede" && row[header] ? <img src={row[header]} alt={row.name || "Image"} className="w-10 h-10 rounded-full" /> : row[header]}
+                                        {header === "Billede" && row[header] ? <img src={`${row[header]}`} alt={row.name || "Image"} className="w-10 h-10 rounded-full" /> : row[header]}
                                     </td>
                                 ))}
                                 {actions && (
