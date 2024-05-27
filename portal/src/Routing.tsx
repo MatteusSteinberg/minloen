@@ -13,6 +13,8 @@ const Absence = lazy(() => import("./routes/fravær"))
 const Coworkers = lazy(() => import("./routes/medarbejdere"))
 const NewCoworker = lazy(() => import("./routes/ny-medarbejder"))
 const SeeCoworker = lazy(() => import("./routes/se-medarbejder"))
+const Paycheck = lazy(() => import("./routes/paycheck"))
+const UpcomingPaycheck = lazy(() => import("./routes/upcomingPaycheck"))
 const Login = lazy(() => import("./routes/login"))
 const Signup = lazy(() => import("./routes/signup"))
 
@@ -32,6 +34,8 @@ const routes: Array<IAppRoute> = [
     { path: "/medarbejdere", element: <Coworkers />, layout: true },
     { path: "/ny-medarbejder", element: <NewCoworker />, layout: true },
     { path: "/se-medarbejder", element: <SeeCoworker />, layout: true },
+    { path: "/opret-lønseddel", element: <Paycheck />, layout: true },
+    { path: "/opret-kommende-lønseddel", element: <UpcomingPaycheck />, layout: true },
     { path: "/signup", element: <Signup />, layout: false },
     { path: "/login", element: <Login />, layout: false },
 ]

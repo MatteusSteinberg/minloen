@@ -81,7 +81,7 @@ const Coworkers = () => {
                         <Header title="Dine medarbejdere" />
                     </div>
                     <div className="">
-                        <DataTable tableData={coworkersData} button="/ny-medarbejder" />
+                        <DataTable actions tableData={coworkersData} button="/ny-medarbejder" />
                     </div>
                 </div>
             </div>

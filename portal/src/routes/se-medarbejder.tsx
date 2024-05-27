@@ -2,6 +2,7 @@ import { CheckIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline"
 import DataTable from "../components/elements/DataTable"
 import Header from "../components/globals/Header"
 import Card from "../components/layouts/se-medarbejder/Card"
+import Options from "../components/layouts/se-medarbejder/Options"
 
 interface IAgreements {
     type: string
@@ -75,16 +76,7 @@ const SeeCoworker = () => {
                     <div>
                         <Header title="Tobias Thien Tran" history />
                     </div>
-                    <div className="flex items-center justify-between pb-3 mb-16 border-b border-solid border-border">
-                        <div className="flex items-center justify-center gap-4">
-                            <p className="text-white font-small-normal">Profil</p>
-                            <p className="text-primaryLight font-small-normal">Medarbejder</p>
-                        </div>
-                        <div className="flex items-center justify-center gap-4">
-                            <button className="text-white font-small-normal">Opret fast lønseddel</button>
-                            <button className="text-primaryLight font-small-normal">Opret tilpasset for kommende måned</button>
-                        </div>
-                    </div>
+                    <Options />
                     <div className="flex items-start justify-between">
                         <div className="flex flex-col items-start w-full">
                             <p className="text-white font-large-semibold">Aftaler</p>
