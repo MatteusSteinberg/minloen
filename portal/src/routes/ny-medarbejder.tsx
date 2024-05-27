@@ -1,12 +1,58 @@
-import { useRef, useState } from "react"
+import _ from "lodash"
+import React, { useRef, useState } from "react"
 import { IUserAdd } from "../../../interfaces/user.interface"
 import Button from "../components/elements/Button"
-import Dropdown from "../components/elements/Dropdown"
+import Dropdown, { DropdownOption } from "../components/elements/Dropdown"
 import Input from "../components/elements/Input"
 import Header from "../components/globals/Header"
 import { useAPI } from "../hooks/use-api"
 
 type Props = {}
+
+interface CoworkerSection {
+  form?: IUserAdd
+  title: string,
+  undertitle?: string
+  error?: string
+  onChange: (path: string, value: any) => void
+  fields: Array<{ placeholder: string, keyPath: string, name: string, type?: React.HTMLInputTypeAttribute | "boolean" | "dropdown", options?: Array<DropdownOption> }>,
+  children?: React.ReactNode
+}
+
+const Section = ({ title, undertitle, form, onChange, fields, children }: CoworkerSection) => {
+
+  const inputHandler = (keyPath: string) => ({
+    onChange: (ev: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(keyPath, ev.target.value)
+    },
+    value: _.get(form, keyPath)
+  })
+
+  return <div className="p-8 bg-primarySupport rounded-3xl shadow-custom ">
+    <div className="mb-4">
+      <h2 className="text-white font-large-normal">{title}</h2>
+      <p className="text-white opacity-50 font-small-normal">{undertitle}</p>
+    </div>
+    <div className="flex flex-col items-stretch justify-start gap-1">
+      {fields.map(v => <React.Fragment key={v.name}>
+        {v.type === "dropdown" && <Dropdown
+          name={v.name}
+          options={v.options || []}
+          placeholder={v.placeholder}
+          {...inputHandler(v.keyPath)}
+          onChange={(v) => onChange?.(v.keyPath, v)}
+        />}
+
+        {!["dropdown", "boolean"].includes(v.type as any) && <Input
+          type="text"
+          {...v}
+          {...inputHandler(v.keyPath)}
+        />}
+      </React.Fragment>)}
+    </div>
+    {children}
+  </div>
+}
 
 const NewCoworker = (props: Props) => {
   const profileInputRef = useRef<HTMLInputElement>(null)
@@ -23,6 +69,13 @@ const NewCoworker = (props: Props) => {
     },
     error: error?.path === path ? onError ?? "Noget gik galt" : undefined
   })
+
+  const handleSectionOnChange = (path: string, value: any) => {
+    setForm(f => {
+      f = _.set(f, path, value)
+      return f
+    })
+  }
 
   const handleOnSubmit = async () => {
     await create(form)
@@ -71,23 +124,15 @@ const NewCoworker = (props: Props) => {
               </div>
             </div>
             <div className="relative flex flex-col w-3/5 h-full gap-4">
-              <div className="p-8 bg-primarySupport rounded-3xl shadow-custom ">
-                <div className="mb-4">
-                  <h2 className="text-white font-large-normal">Personfetler</h2>
-                  <p className="text-white opacity-50 font-small-normal">Information omkring medarbejder</p>
-                </div>
-                <div className="flex flex-col items-center justify-start gap-1">
-                  <Input {...formPathHandler("firstName", "Fornavn er påkrævet")} name="firstName" type="text" placeholder="Indtast fornavn" />
-                  <Input {...formPathHandler("lastName", "Efternavn er påkrævet")} name="lastName" type="text" placeholder="Indtast Efternavn" />
-                  <Input {...formPathHandler("socialSecurityNumber", "CPR-nummer er påkrævet")} name="cpr" type="number" placeholder="Indtast CPR-nummer" />
-                </div>
-              </div>
-              <div className="p-8 bg-primarySupport rounded-3xl shadow-custom">
-                <div className="mb-4">
-                  <h2 className="text-white font-large-normal">Bruger oplysninger</h2>
-                  <p className="text-white opacity-50 font-small-normal">Brugeroplysninger til at logge ind</p>
-                </div>
-                <Input {...formPathHandler("email", "E-mail er påkrævet")} name="email" type="text" placeholder="E-mail" />
+              <Section
+                fields={[
+                  { keyPath: "email", name: "email", placeholder: "E-mail" }
+                ]}
+                form={form}
+                title="Bruger oplysninger"
+                undertitle="Brugeroplysninger til at logge ind"
+                onChange={handleSectionOnChange}
+              >
                 <div className="flex items-center justify-between mt-4">
                   <p className="text-white font-large-normal">Medarbejder rettigheder</p>
                   <div className=" min-w-[320px]">
@@ -99,32 +144,122 @@ const NewCoworker = (props: Props) => {
                     />
                   </div>
                 </div>
-              </div>
+              </Section>
+              <Section
+                fields={[
+                  { keyPath: "email", name: "email", placeholder: "E-mail" },
+                  { keyPath: "firstName", name: "Fornavn", placeholder: "Fornavn" },
+                  { keyPath: "lastName", name: "Efternavn", placeholder: "Efternavn" },
+                  { keyPath: "CPR-nummer", name: "cpr", placeholder: "CPR-nummer" },
+                  { keyPath: "phoneNumber", name: "phoneNumber", placeholder: "Telefon" }
+                ]}
+                form={form}
+                title="Personlige oplysninger"
+                undertitle="Personinformationer omkring medarbejderen"
+                onChange={handleSectionOnChange}
+              />
+              <Section
+                fields={[
+                  { keyPath: "workerNumber", name: "workerNumber", placeholder: "Medarbejdernummer" },
+                  { keyPath: "employmentDate", name: "employmentDate", placeholder: "Ansættelses dato" },
+                  { keyPath: "resignationDate", name: "resignationDate", placeholder: "Fratrædelses dato" },
+                  { keyPath: "position", name: "position", placeholder: "Stilling" }
+                ]}
+                form={form}
+                title="Ansættelses oplysninger"
+                undertitle="Medarbejders ansættelses oplysninger"
+                onChange={handleSectionOnChange}
+              />
+              <Section
+                fields={[
+                  { keyPath: "bankRegistrationNumber", name: "bankRegistrationNumber", placeholder: "Reg. nr." },
+                  { keyPath: "bankAccountNumber", name: "bankAccountNumber", placeholder: "Kontonummer" },
+                ]}
+                form={form}
+                title="Konto oplysninger"
+                undertitle="Medarbejders konto oplysninger"
+                onChange={handleSectionOnChange}
+              />
+              <Section
+                fields={[
+                  { keyPath: "standardHours", name: "standardHours", placeholder: "Normtimer" },
+                  { keyPath: "salary", name: "salary", placeholder: "Gage" },
+                ]}
+                form={form}
+                title="Gage"
+                undertitle="Medarbejders Gage"
+                onChange={handleSectionOnChange}
+              />
+              <Section
+                fields={[
+                  { keyPath: "hourlyWage", name: "hourlyWage", placeholder: "Timeløn" },
+                ]}
+                form={form}
+                title="Timeløn, individuel sats"
+                undertitle="Medarbejder timeløn"
+                onChange={handleSectionOnChange}
+              />
+              <Section
+                fields={[
+                  { keyPath: "ATP", name: "ATP", placeholder: "ATP-Ordning" },
+                ]}
+                form={form}
+                title="Løn oplysninger"
+                undertitle="Medarbejders løn oplysninger"
+                onChange={handleSectionOnChange}
+              />
+              <Section
+                fields={[
+                  { keyPath: "vacation.scheme", name: "vacationScheme", placeholder: "Ferieordning" },
+                  { keyPath: "vacation.recipient", name: "vacationRecipient", placeholder: "Feriepengemodtager" },
+                  { keyPath: "vacation.eachYear", name: "vacationEachYear", placeholder: "Ferie pr. år" }
+                ]}
+                form={form}
+                title="Ferie"
+                undertitle="Medarbejders ferie oplysninger"
+                onChange={handleSectionOnChange}
+              />
+              <Section
+                fields={[
+                  { keyPath: "pension.type", name: "Pension", placeholder: "Pension" },
+                  { keyPath: "pension.ownContributionPercentage", name: "pensionOwnContributionPercentage", placeholder: "Eget bidrag %" },
+                  { keyPath: "pension.ownAmount", name: "pensionOwnAmount", placeholder: "Eget beløb" },
+                  { keyPath: "pension.companyContributionPercentage", name: "companyContribution", placeholder: "Firma bidrag %" },
+                  { keyPath: "pension.companyAmount", name: "Firma beløb", placeholder: "Firma beløb" }
+                ]}
+                form={form}
+                title="Almindelig pension"
+                undertitle="Medarbejders almindelige pension"
+                onChange={handleSectionOnChange}
+              />
+              <Section
+                fields={[
+                  { keyPath: "eIncome.enabled", type: "boolean", name: "eIncomeEnabled", placeholder: "Tilkoblet eIndkomst" },
+                  { keyPath: "eIncome.productionUnit", name: "eIncomeProductionUnit", placeholder: "Produktionsenhed" },
+                  { keyPath: "eIncome.incomeType", name: "eIncomeIncometype", placeholder: "Indkomsttype" }
+                ]}
+                form={form}
+                title="eIndkomst"
+                undertitle="Tilkoblet eIndkomst"
+                onChange={handleSectionOnChange}
+              />
+              <Section
+                fields={[
+                  { keyPath: "workplacePension.institute", type: "dropdown", name: "pensionInstitute", placeholder: "Pensionsinstitut" },
+                  { keyPath: "workplacePension.agreementCode", name: "pensionAgreementCode", placeholder: "Overenskomstkode" },
+                  { keyPath: "workplacePension.ownContributionPercentage", name: "workplacePensionOwnContributionPercentage", placeholder: "Eget bidrag %" },
+                  { keyPath: "workplacePension.ownAmount", name: "workplacePensionOwnAmount", placeholder: "Eget beløb" },
+                  { keyPath: "workplacePension.companyContributionPercentage", name: "workplacePensionCompanyContribution", placeholder: "Firma bidrag %" },
+                  { keyPath: "workplacePension.companyAmount", name: "workplacePensionCompanyAmount", placeholder: "Firma beløb" }
+                ]}
+                form={form}
+                title="Arbejdsmarkeds pension"
+                undertitle="Medarbejders anden pension"
+                onChange={handleSectionOnChange}
+              />
+
               {form.organizationRole === "user" && <>
-                <div className="p-8 bg-primarySupport rounded-3xl shadow-custom ">
-                  <div className="mb-4">
-                    <h2 className="text-white font-large-normal">Kontaktoplysninger</h2>
-                    <p className="text-white opacity-50 font-small-normal">Medarbejder kontaktoplysninger</p>
-                  </div>
-                  <div className="flex flex-col items-center justify-start gap-1">
-                    <div className="flex flex-col items-start justify-start w-full gap-1 mb-4">
-                      <p className="text-white font-standard-normal">Arbejde</p>
-                      <Input {...formPathHandler("workemail")} name="workEmail" type="text" placeholder="E-mail" />
-                      <Input {...formPathHandler("workPhoneNumber")} name="workPhone" type="text" placeholder="Telefon" />
-                    </div>
-                    <div className="flex flex-col items-start justify-start w-full gap-1 mb-4">
-                      <p className="text-white font-standard-normal">Privat</p>
-                      <Input {...formPathHandler("homePhoneNumber")} name="homePhone" type="tel" placeholder="Hjemme tlf." />
-                      <Input {...formPathHandler("privatePhoneNumber")} name="privatePhone" type="tel" placeholder="Privat tlf." />
-                    </div>
-                    <div className="flex flex-col items-start justify-start w-full gap-1 mb-4">
-                      <p className="text-white font-standard-normal">Nødkontakt</p>
-                      <Input {...formPathHandler("emergencyFirstName")} name="emergencyFirstName" type="text" placeholder="Fornavn" />
-                      <Input {...formPathHandler("emergencyLastName")} name="emergencyLastName" type="text" placeholder="Efternavn" />
-                      <Input {...formPathHandler("emergencyPhoneNumber")} name="emergencyPrivatePhone" type="tel" placeholder="Privat tlf." />
-                    </div>
-                  </div>
-                </div>
+
               </>}
             </div>
           </div>

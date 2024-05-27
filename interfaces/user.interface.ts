@@ -31,20 +31,68 @@ export interface IUserModel extends Model<IUserDoc> {
 }
 
 export interface IUserAdd {
+  email?: string
+  organizationRole: "admin" | "user"
+
   socialSecurityNumber?: string
   firstName?: string
   lastName?: string
+  address?: string
+  phoneNumber?: string
 
-  email?: string
-  organizationRole?: "admin" | "user"
+  workerNumber?: string
+  employmentDate?: Date
+  resignationDate?: Date
+  position?: string
 
-  workemail?: string
-  workPhoneNumber?: string
+  bankRegistrationNumber?: string
+  bankAccountNumber?: string
 
-  homePhoneNumber?: string
-  privatePhoneNumber?: string
+  standardHours?: string
+  /** Gage */
+  salary?: string
 
-  emergencyFirstName?: string
-  emergencyLastName?: string
-  emergencyPhoneNumber?: string
+  /** Timeløn */
+  hourlyWage?: string
+
+  /** ATP-ordning */
+  ATP?: string
+
+  /** Ambidrag */
+  amContribution?: boolean
+
+  /** Ferieordning */
+  vacation?: {
+    scheme?: string
+    recipient?: string
+    eachYear?: string
+  }
+
+  pension?: {
+    type?: string
+    /** Eget bidrag % */
+    ownContributionPercentage?: number
+    /** Eget beløb */
+    ownAmount?: number
+    /** Firma bidrag % */
+    companyContributionPercentage?: number
+    /** Firma beløb */
+    companyAmount?: number
+  }
+
+  eIncome?: {
+    enabled?: boolean
+    productionUnit?: string
+    incomeType?: string
+  }
+
+  /** Arbejdsmarkeds pension */
+  workplacePension?: {
+    institute?: string
+    agreementCode?: string
+    ownContributionPercentage?: number
+    ownAmount?: number
+    companyContributionPercentage?: number
+    companyAmount?: number
+  }
 }
