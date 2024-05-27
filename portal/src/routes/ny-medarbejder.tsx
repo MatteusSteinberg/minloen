@@ -42,7 +42,14 @@ const Section = ({ title, undertitle, form, onChange, fields, children }: Cowork
           {...inputHandler(v.keyPath)}
           onChange={(v) => onChange?.(v.keyPath, v)}
         />}
-
+        {v.type === "boolean" && <div className="flex flex-row gap-2">
+          <span className="text-white">{v.placeholder}</span>
+          <input
+            name={v.name}
+            placeholder={v.placeholder}
+            type="checkbox"
+          />
+        </div>}
         {!["dropdown", "boolean"].includes(v.type as any) && <Input
           type="text"
           {...v}
@@ -126,7 +133,8 @@ const NewCoworker = (props: Props) => {
             <div className="relative flex flex-col w-3/5 h-full gap-4">
               <Section
                 fields={[
-                  { keyPath: "email", name: "email", placeholder: "E-mail" }
+                  { keyPath: "email", name: "email", placeholder: "E-mail" },
+                  { keyPath: "disabled", type: "boolean", name: "disabled", placeholder: "Deaktiver brugeren?" }
                 ]}
                 form={form}
                 title="Bruger oplysninger"
@@ -163,7 +171,8 @@ const NewCoworker = (props: Props) => {
                   { keyPath: "workerNumber", name: "workerNumber", placeholder: "Medarbejdernummer" },
                   { keyPath: "employmentDate", name: "employmentDate", placeholder: "Ansættelses dato" },
                   { keyPath: "resignationDate", name: "resignationDate", placeholder: "Fratrædelses dato" },
-                  { keyPath: "position", name: "position", placeholder: "Stilling" }
+                  { keyPath: "position", name: "position", placeholder: "Stilling" },
+                  { keyPath: "paymentArrangement", type: "dropdown", options: [{ value: "ahead", label: "Betales måneden forud" }, { value: "behind", label: "Betales måneden bagud" }], name: "paymentArrangement", placeholder: "Betalingsordning" }
                 ]}
                 form={form}
                 title="Ansættelses oplysninger"
@@ -201,7 +210,15 @@ const NewCoworker = (props: Props) => {
               />
               <Section
                 fields={[
-                  { keyPath: "ATP", name: "ATP", placeholder: "ATP-Ordning" },
+                  {
+                    keyPath: "ATP", name: "ATP", type: "dropdown", options: [
+                      { label: "A-indkomst (Kode 00)", value: "00" },
+                      { label: "Anden personlig indkomst (Kode 04)", value: "04" },
+                      { label: "B-indkomst (Kode 05)", value: "05" },
+                      { label: "Skattefri indkomst (kode 09)", value: "09" }
+                    ], placeholder: "ATP-Ordning"
+                  },
+                  { keyPath: "amContribution", name: "amContribution", type: "boolean", placeholder: "Er lønnen AM-Bidragsbidrag?" }
                 ]}
                 form={form}
                 title="Løn oplysninger"
@@ -210,8 +227,8 @@ const NewCoworker = (props: Props) => {
               />
               <Section
                 fields={[
-                  { keyPath: "vacation.scheme", name: "vacationScheme", placeholder: "Ferieordning" },
-                  { keyPath: "vacation.recipient", name: "vacationRecipient", placeholder: "Feriepengemodtager" },
+                  { keyPath: "vacation.scheme", type: "dropdown", options: [{ value: "vacationSavings", label: "Ferie opsparing" }, { value: "vacationWithPay", label: "Ferie med løn" }], name: "vacationScheme", placeholder: "Ferieordning" },
+                  { keyPath: "vacation.recipient", type: "dropdown", options: [{ value: "standard", label: "Feriekonto (Standard)" }, { value: "other", label: "Andet" }], name: "vacationRecipient", placeholder: "Feriepengemodtager" },
                   { keyPath: "vacation.eachYear", name: "vacationEachYear", placeholder: "Ferie pr. år" }
                 ]}
                 form={form}
@@ -221,7 +238,7 @@ const NewCoworker = (props: Props) => {
               />
               <Section
                 fields={[
-                  { keyPath: "pension.type", name: "Pension", placeholder: "Pension" },
+                  { keyPath: "pension.type", type: "dropdown", name: "Pension", placeholder: "Pension" },
                   { keyPath: "pension.ownContributionPercentage", name: "pensionOwnContributionPercentage", placeholder: "Eget bidrag %" },
                   { keyPath: "pension.ownAmount", name: "pensionOwnAmount", placeholder: "Eget beløb" },
                   { keyPath: "pension.companyContributionPercentage", name: "companyContribution", placeholder: "Firma bidrag %" },
@@ -245,7 +262,7 @@ const NewCoworker = (props: Props) => {
               />
               <Section
                 fields={[
-                  { keyPath: "workplacePension.institute", type: "dropdown", name: "pensionInstitute", placeholder: "Pensionsinstitut" },
+                  { keyPath: "workplacePension.institute", type: "dropdown", options: [{ value: "velliv", label: "Velliv" }, { value: "pfa", label: "PFA" }], name: "pensionInstitute", placeholder: "Pensionsinstitut" },
                   { keyPath: "workplacePension.agreementCode", name: "pensionAgreementCode", placeholder: "Overenskomstkode" },
                   { keyPath: "workplacePension.ownContributionPercentage", name: "workplacePensionOwnContributionPercentage", placeholder: "Eget bidrag %" },
                   { keyPath: "workplacePension.ownAmount", name: "workplacePensionOwnAmount", placeholder: "Eget beløb" },

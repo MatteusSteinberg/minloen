@@ -32,6 +32,7 @@ export interface IUserModel extends Model<IUserDoc> {
 
 export interface IUserAdd {
   email?: string
+  disabled?: boolean
   organizationRole: "admin" | "user"
 
   socialSecurityNumber?: string
@@ -44,6 +45,8 @@ export interface IUserAdd {
   employmentDate?: Date
   resignationDate?: Date
   position?: string
+  /** Betalingsordning */
+  paymentArrangement?: string
 
   bankRegistrationNumber?: string
   bankAccountNumber?: string
