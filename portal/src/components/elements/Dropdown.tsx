@@ -66,7 +66,7 @@ const Dropdown = ({ options, name, placeholder, error, label, onChange, spacing,
         </svg>
       </button>
       {isVisible && (
-        <div className={`${dropdownDirection} left-0 p-2 absolute rounded-[14px] text-white w-full h-auto inline-flex flex-col gap-2 items-start gap justify-start border-[1px] border-solid bg-[rgba(33,33,34,1)] border-[#33363E]`} ref={dropdownRef}>
+        <div className={`${dropdownDirection} z-40 left-0 p-2 absolute rounded-[14px] text-white w-full h-auto inline-flex flex-col gap-2 items-start gap justify-start border-[1px] border-solid bg-[rgba(33,33,34,1)] border-[#33363E]`} ref={dropdownRef}>
           {options.map((option) => (
             <div className="w-full px-3 py-3 transition-colors duration-300 rounded-lg cursor-pointer hover:bg-secondarySupport"
               onClick={onOptionClicked(option.value)}

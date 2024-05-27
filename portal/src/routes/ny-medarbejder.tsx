@@ -72,13 +72,6 @@ const NewCoworker = (props: Props) => {
     organizationRole: "user"
   })
 
-  const formPathHandler = (path: keyof IUserAdd, onError?: string) => ({
-    onChange: (ev: React.ChangeEvent<HTMLInputElement>) => {
-      setForm(f => ({ ...f, [path]: ev.target.value }))
-    },
-    error: error?.path === path ? onError ?? "Noget gik galt" : undefined
-  })
-
   const handleSectionOnChange = (path: string, value: any) => {
     setForm(f => {
       f = _.set(f, path, value)
@@ -143,8 +136,8 @@ const NewCoworker = (props: Props) => {
                 undertitle="Brugeroplysninger til at logge ind"
                 onChange={handleSectionOnChange}
               >
-                <div className="flex items-center justify-between mt-4">
-                  <p className="text-white font-large-normal">Medarbejder rettigheder</p>
+                <div className="flex items-center justify-between mt-5">
+                  <p className="text-white pt-2 font-large-normal">Medarbejder rettigheder</p>
                   <div className=" min-w-[320px]">
                     <Dropdown
                       value={form.organizationRole}
@@ -157,7 +150,6 @@ const NewCoworker = (props: Props) => {
               </Section>
               <Section
                 fields={[
-                  { keyPath: "email", name: "email", placeholder: "E-mail" },
                   { keyPath: "firstName", name: "Fornavn", placeholder: "Fornavn" },
                   { keyPath: "lastName", name: "Efternavn", placeholder: "Efternavn" },
                   { keyPath: "CPR-nummer", name: "cpr", placeholder: "CPR-nummer" },
