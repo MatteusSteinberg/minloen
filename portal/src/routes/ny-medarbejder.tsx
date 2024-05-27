@@ -47,6 +47,8 @@ const Section = ({ title, undertitle, form, onChange, fields, children }: Cowork
           <input
             name={v.name}
             placeholder={v.placeholder}
+            {...inputHandler(v.keyPath)}
+            onChange={(ev) => onChange(v.keyPath, ev.target.checked)}
             type="checkbox"
           />
         </div>}
