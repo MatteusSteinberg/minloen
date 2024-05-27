@@ -1,7 +1,9 @@
+import ContentContainer from "../components/globals/ContentContainer"
+
 type Props = {}
 
 const PaymentDocuments = (props: Props) => {
-    return <div>lønsedler</div>
+    return <ContentContainer>Lønsedler</ContentContainer>
 }
 
 export default PaymentDocuments

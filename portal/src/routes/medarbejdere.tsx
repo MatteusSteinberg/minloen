@@ -1,5 +1,6 @@
 import TranImage from "../assets/images/jonas1.png"
 import DataTable from "../components/elements/DataTable"
+import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
 
 const coworkersData = {
@@ -74,18 +75,14 @@ const coworkersData = {
 
 const Coworkers = () => {
     return (
-        <div className="relative flex max-w-full rounded-none grow bg-secondarySupport md:rounded-3xl dark:bg-white">
-            <div className="relative flex flex-col max-w-full grow">
-                <div className="px-6 pt-6 pb-10 md:p-12 2xl:px-10">
-                    <div className="">
-                        <Header title="Dine medarbejdere" />
-                    </div>
-                    <div className="">
-                        <DataTable title="Medarbejdere" actions tableData={coworkersData} button="/ny-medarbejder" />
-                    </div>
-                </div>
+        <ContentContainer>
+            <div className="">
+                <Header title="Dine medarbejdere" />
             </div>
-        </div>
+            <div className="">
+                <DataTable title="Medarbejdere" actions tableData={coworkersData} button="/ny-medarbejder" />
+            </div>
+        </ContentContainer>
     )
 }
 

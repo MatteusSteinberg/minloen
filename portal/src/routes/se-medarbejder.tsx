@@ -1,5 +1,6 @@
 import { CheckIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline"
 import DataTable from "../components/elements/DataTable"
+import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
 import Card from "../components/layouts/se-medarbejder/Card"
 import Options from "../components/layouts/se-medarbejder/Options"
@@ -70,31 +71,27 @@ const coworkersData = {
 
 const SeeCoworker = () => {
     return (
-        <div className="relative flex max-w-full rounded-none grow bg-secondarySupport md:rounded-3xl dark:bg-white">
-            <div className="relative flex flex-col max-w-full grow">
-                <div className="px-6 pt-6 pb-10 md:p-12 2xl:px-10">
-                    <div>
-                        <Header title="Tobias Thien Tran" history />
-                    </div>
-                    <Options />
-                    <div className="flex items-start justify-between">
-                        <div className="flex flex-col items-start w-full">
-                            <p className="text-white font-large-semibold">Aftaler</p>
-                            <p className="text-white opacity-30">Tilpassede medarbejder aftaler</p>
-                        </div>
-                        <div className="flex flex-col w-full gap-3">
-                            {agreementsData.map((agreement: IAgreements, index: number) => (
-                                <Card key={index} {...agreement} />
-                            ))}
-                        </div>
-                    </div>
-                    <div className="flex flex-col items-start justify-between gap-4 mt-16">
-                        <DataTable title="Lønsedler" tableData={coworkersData} />
-                        <DataTable title="Kørsel" tableData={coworkersData} />
-                    </div>
+        <ContentContainer>
+            <div>
+                <Header title="Tobias Thien Tran" history />
+            </div>
+            <Options />
+            <div className="flex items-start justify-between">
+                <div className="flex flex-col items-start w-full">
+                    <p className="text-white font-large-semibold">Aftaler</p>
+                    <p className="text-white opacity-30">Tilpassede medarbejder aftaler</p>
+                </div>
+                <div className="flex flex-col w-full gap-3">
+                    {agreementsData.map((agreement: IAgreements, index: number) => (
+                        <Card key={index} {...agreement} />
+                    ))}
                 </div>
             </div>
-        </div>
+            <div className="flex flex-col items-start justify-between gap-4 mt-16">
+                <DataTable title="Lønsedler" tableData={coworkersData} />
+                <DataTable title="Kørsel" tableData={coworkersData} />
+            </div>
+        </ContentContainer>
     )
 }
 

@@ -23,17 +23,17 @@ const DataTable = ({ tableData, button, actions, title }: IDataTable) => {
                     </Link>
                 )}
             </div>
-            <div className="relative overflow-x-auto">
+            <div className="relative overflow-x-auto no-scrollbar scroll-smooth">
                 <table className="w-full text-left bg-[#1B1F20]">
                     <thead>
                         <tr>
                             {tableData.headers.map((header, index) => (
-                                <th scope="col" className="px-8 py-4 text-white uppercase font-xsmall-normal">
+                                <th scope="col" className="px-8 py-4 text-white uppercase text-nowrap font-xsmall-normal">
                                     {header}
                                 </th>
                             ))}
                             {actions && (
-                                <th scope="col" className="px-8 py-4 text-white uppercase font-xsmall-normal">
+                                <th scope="col" className="px-8 py-4 text-white uppercase text-nowrap font-xsmall-normal">
                                     <span className="sr-only">Edit</span>
                                 </th>
                             )}
@@ -43,12 +43,12 @@ const DataTable = ({ tableData, button, actions, title }: IDataTable) => {
                         {tableData.rows.map((row, index) => (
                             <tr className="text-white bg-primarySupport font-small-normal border-b border-solid border-[#343839]">
                                 {tableData.headers.map((header, colIndex) => (
-                                    <td key={colIndex} className="px-8 py-4">
+                                    <td key={colIndex} className="px-8 py-4 text-nowrap">
                                         {header === "Billede" && row[header] ? <img src={`${row[header]}`} alt={row.name || "Image"} className="w-10 h-10 rounded-full" /> : row[header]}
                                     </td>
                                 ))}
                                 {actions && (
-                                    <td className="flex items-center justify-end px-8 py-4 text-right">
+                                    <td className="flex items-center justify-end px-8 py-4 text-right text-nowrap">
                                         <Link to="/se-medarbejder" className="mr-2 flex items-center text-primaryLight bg-gradientmain border border-solid border-[rgba(231,231,233,0.2)] hover:border-[rgba(231,231,233,0.5)] transition-colors duration-300 rounded-xl h-12 w-12 justify-center">
                                             <EyeIcon className="w-5 h-5" />
                                         </Link>
