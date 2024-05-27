@@ -1,149 +1,70 @@
 import fs from "fs"
-import { PDFDocument, PDFImage, PDFPage, StandardFonts, rgb } from "pdf-lib"
+import { PDFDocument, PDFImage, PDFPage, PageSizes, StandardFonts, rgb } from "pdf-lib"
+import { defaultPage } from './defaultPage'
 
 const leftSideStartPix = 35
-const leftSideDataPix = 120
+
+interface IDetailLine {
+    a: string,
+    b: string,
+    c: string,
+    d: string
+}
+
+interface ISaldiLine {
+    a: string,
+    b: string 
+}
+
+interface IHolidayLine {
+    name: string,
+    optionOneValue: string,
+    optionTwoValue: string,
+    optionThreeValue: string
+}
+
+interface IHoliday {
+    name: string,
+    optionOne: string,
+    optionTwo: string,
+    optionThree: string,
+    holidayLines: Array<IHolidayLine>
+}
 
 export async function payrollPdfTemplate(data?: object) {
     const doc = await PDFDocument.create()
 
     await doc.embedFont(StandardFonts.TimesRoman)
 
-    const page = doc.addPage()
+    const page = doc.addPage(PageSizes.A4)
 
     const logoBytes = fs.readFileSync("./lib/assets/Logo.png")
     const logoImage = await doc.embedPng(logoBytes)
 
-    generateHeader(page, logoImage)
+    defaultPage(page, logoImage, leftSideStartPix)
+
     generateBanner(page)
-    generateDetailSection(page)
-    generateDetailLine(page)
+    generateDetailSection(page, doc, logoImage)
     generateBalance(page)
     generateFooter(page)
 
     return doc.save()
 }
 
-function generateHeader(page: PDFPage, logo: PDFImage) {
-    // Employee Information
-    page.drawText("NAME", {
-        x: leftSideStartPix,
-        y: page.getHeight() - 30,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("ADDRESS", {
-        x: leftSideStartPix,
-        y: page.getHeight() - 40,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("ZIP CODE", {
-        x: leftSideStartPix,
-        y: page.getHeight() - 50,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    // Section 2 - Employee Information
-    page.drawText("EMPLOYEE NUMBER", {
-        x: leftSideStartPix,
-        y: page.getHeight() - 70,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("CPR NUMBER", {
-        x: leftSideStartPix,
-        y: page.getHeight() - 80,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("HIRED DATE", {
-        x: leftSideStartPix,
-        y: page.getHeight() - 90,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("BANK ACCOUNT", {
-        x: leftSideStartPix,
-        y: page.getHeight() - 100,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    // Section 3 - Employee Filled Information
-    page.drawText("0000", {
-        x: leftSideDataPix,
-        y: page.getHeight() - 70,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("010101-0101", {
-        x: leftSideDataPix,
-        y: page.getHeight() - 80,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("01/02/22", {
-        x: leftSideDataPix,
-        y: page.getHeight() - 90,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("5556 56565656565656", {
-        x: leftSideDataPix,
-        y: page.getHeight() - 100,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    // Logo
-    const { width, height } = logo.scale(0.5)
-
-    page.drawImage(logo, {
-        x: page.getWidth() - 120,
-        y: page.getHeight() - 45,
-        width: width,
-        height: height,
-    })
-
-    // Company Information
-    page.drawText("COMPANY NAME", {
-        x: page.getWidth() - 100,
-        y: page.getHeight() - 70,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("ADDRESS", {
-        x: page.getWidth() - 100,
-        y: page.getHeight() - 80,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("ZIP CODE", {
-        x: page.getWidth() - 100,
-        y: page.getHeight() - 90,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    page.drawText("CVR NUMBER", {
-        x: page.getWidth() - 100,
-        y: page.getHeight() - 100,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
+function checkIfDetailsIsFull(currentCord: number) {
+    if(currentCord <= 180) {
+        return true
+    }
+    return false
 }
+
+function checkIfSaldiIsFull(currentCord: number) {
+    if(currentCord <= 40) {
+        return true
+    }
+    return false
+}
+
 
 function generateBanner(page: PDFPage) {
     // Banner
@@ -152,7 +73,7 @@ function generateBanner(page: PDFPage) {
         y: page.getHeight() - 200,
         width: page.getWidth(),
         height: 65,
-        color: rgb(0.36, 0.4, 0.51),
+        color: rgb(0.14, 0.15, 0.2),
     })
 
     // LEFT SIDE
@@ -206,7 +127,7 @@ function generateBanner(page: PDFPage) {
     })
 }
 
-function generateDetailSection(page: PDFPage) {
+function generateDetailSection(page: PDFPage, doc: PDFDocument, logoImage: PDFImage, detailsLines: Array<IDetailLine>  = [{a: "Arbejdstimer", b: "137,0", c: "2.5 %", d: "10.000,00"}]) {
     page.drawText("BESKRIVELSE", {
         x: leftSideStartPix + 30,
         y: page.getHeight() - 230,
@@ -234,40 +155,54 @@ function generateDetailSection(page: PDFPage) {
         size: 8,
         color: rgb(0, 0, 0),
     })
+
+    let currentPage = page
+    let newIndex = 0
+    
+    detailsLines.forEach((line) => {
+        if(checkIfDetailsIsFull(currentPage.getHeight() - 250 - (newIndex * 10))) {
+            newIndex = 0
+            currentPage = doc.addPage(PageSizes.A4)
+            defaultPage(currentPage, logoImage, leftSideStartPix)
+            newIndex++
+        }
+        generateDetailLine(currentPage, line, newIndex)
+    });
+
 }
 
-function generateDetailLine(page: PDFPage) {
+function generateDetailLine(page: PDFPage, line: IDetailLine, index: number) {
     page.drawText("0001", {
         x: leftSideStartPix,
-        y: page.getHeight() - 250,
+        y: page.getHeight() - 250 - (index * 10),
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("Arbejdstimer", {
+    page.drawText(line.a, {
         x: leftSideStartPix + 30,
-        y: page.getHeight() - 250,
+        y: page.getHeight() - 250 - (index * 10),
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("137,0", {
+    page.drawText(line.b, {
         x: page.getWidth() / 2 - 50,
-        y: page.getHeight() - 250,
+        y: page.getHeight() - 250 - (index * 10),
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("2.5 %", {
+    page.drawText(line.c, {
         x: page.getWidth() / 2 + 100,
-        y: page.getHeight() - 250,
+        y: page.getHeight() - 250 - (index * 10),
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("10.000,00", {
+    page.drawText(line.d, {
         x: page.getWidth() - 100,
-        y: page.getHeight() - 250,
+        y: page.getHeight() - 250 - (index * 10),
         size: 8,
         color: rgb(0, 0, 0),
     })
@@ -281,96 +216,129 @@ function generateBalance(page: PDFPage) {
         opacity: 0.5,
         color: rgb(0, 0, 0),
     })
-    generateFooterLineTitel(page, "Feriepenge", "Yes", "Noo", "TOTAL")
-    generateFooterLine(page, "Feriepengegrundlag", 10000, 10000, 10000)
-    generateFooterSaldi(page)
+    generateBalanceHoliday(page, [{name: "Ferie", optionOne: "Ferie", optionTwo: "Ferie", optionThree: "Ferie", holidayLines: [{name: "Ferie", optionOneValue: "10", optionTwoValue: "10", optionThreeValue: "10"}]}])
+    generateBalanceSaldi(page)
 }
 
-function generateFooterLineTitel(page: PDFPage, text: string, optionOne?: string, optionTwo?: string, optionThree?: string) {
-    page.drawText(text, {
+function generateBalanceHoliday(page: PDFPage, holidays: Array<IHoliday>) {
+
+    let titelYCord = page.getHeight() - 670
+    holidays.forEach((holiday, index) => {  
+    generateFooterLineTitel(page, holiday, titelYCord)
+    holiday.holidayLines.forEach((line, index) => {
+        generateFooterLine(page, line, index)
+        titelYCord = page.getHeight() - 670 - (index * 10)
+    })})
+}
+
+function generateFooterLineTitel(page: PDFPage, holiday: IHoliday, yCord: number) {
+    page.drawText(holiday.name, {
         x: leftSideStartPix,
-        y: page.getHeight() - 670,
+        y: yCord,
+        size: 12,
+        color: rgb(0, 0, 0),
+    })
+
+    if (holiday.optionOne) {
+        page.drawText(holiday.optionOne, {
+            x: leftSideStartPix + 90 * 1,
+            y: yCord,
+            size: 8,
+            color: rgb(0, 0, 0),
+        })
+    }
+
+    if (holiday.optionTwo) {
+        page.drawText(holiday.optionTwo, {
+            x: leftSideStartPix + 90 * 1.7,
+            y: yCord,
+            size: 8,
+            color: rgb(0, 0, 0),
+        })
+    }
+
+    if (holiday.optionThree) {
+        page.drawText(holiday.optionThree, {
+            x: leftSideStartPix + 90 * 2.45,
+            y: yCord,
+            size: 8,
+            color: rgb(0, 0, 0),
+        })
+    }
+}
+
+function generateFooterLine(page: PDFPage, line: IHolidayLine, index: number) {
+    page.drawText(line.name, {
+        x: leftSideStartPix,
+        y: page.getHeight() - 680 - (index * 10),
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    if (optionOne) {
-        page.drawText(optionOne, {
+    if (line.optionOneValue) {
+        page.drawText(line.optionOneValue, {
             x: leftSideStartPix + 90 * 1,
-            y: page.getHeight() - 670,
+            y: page.getHeight() - 680 - (index * 10),
             size: 8,
             color: rgb(0, 0, 0),
         })
     }
 
-    if (optionTwo) {
-        page.drawText(optionTwo, {
+    if (line.optionTwoValue) {
+        page.drawText(line.optionTwoValue, {
             x: leftSideStartPix + 90 * 1.7,
-            y: page.getHeight() - 670,
+            y: page.getHeight() - 680 - (index * 10),
             size: 8,
             color: rgb(0, 0, 0),
         })
     }
 
-    if (optionThree) {
-        page.drawText(optionThree, {
+    if (line.optionThreeValue) {
+        page.drawText(line.optionThreeValue, {
             x: leftSideStartPix + 90 * 2.45,
-            y: page.getHeight() - 670,
+            y: page.getHeight() - 680 - (index * 10),
             size: 8,
             color: rgb(0, 0, 0),
         })
     }
 }
 
-function generateFooterLine(page: PDFPage, text: string, detailOne?: number, detailTwo?: number, detailThree?: number) {
-    page.drawText(text, {
-        x: leftSideStartPix,
-        y: page.getHeight() - 680,
-        size: 8,
-        color: rgb(0, 0, 0),
-    })
-
-    if (detailOne) {
-        page.drawText(detailOne.toString(), {
-            x: leftSideStartPix + 90 * 1,
-            y: page.getHeight() - 680,
-            size: 8,
-            color: rgb(0, 0, 0),
-        })
-    }
-
-    if (detailTwo) {
-        page.drawText(detailTwo.toString(), {
-            x: leftSideStartPix + 90 * 1.7,
-            y: page.getHeight() - 680,
-            size: 8,
-            color: rgb(0, 0, 0),
-        })
-    }
-
-    if (detailThree) {
-        page.drawText(detailThree.toString(), {
-            x: leftSideStartPix + 90 * 2.45,
-            y: page.getHeight() - 680,
-            size: 8,
-            color: rgb(0, 0, 0),
-        })
-    }
-}
-
-function generateFooterSaldi(page: PDFPage) {
+function generateBalanceSaldi(page: PDFPage, saldiLines: Array<ISaldiLine> = [{a: "Ferie", b: "10"}]) {
     page.drawText("SALDI", {
         x: page.getWidth() - 200,
         y: page.getHeight() - 670,
-        size: 8,
+        size: 12,
         color: rgb(0, 0, 0),
     })
 
     page.drawText("I Ferieåret", {
         x: page.getWidth() - 100,
         y: page.getHeight() - 670,
+        size: 12,
+        color: rgb(0, 0, 0),
+    })
+
+    saldiLines.forEach((line, index) => {
+        if(checkIfSaldiIsFull(page.getHeight() - 680 - (index * 10))){
+            return 
+        }
+        generateBalanceSaldiLine(page, line, index)
+    })
+}
+
+function generateBalanceSaldiLine(page: PDFPage, line: ISaldiLine, index: number) {
+    page.drawText(line.a, {
+        x: page.getWidth() - 200,
+        y: page.getHeight() - 680 - (index * 10),
         size: 8,
         color: rgb(0, 0, 0),
+    })
+    
+    page.drawText(line.b, {
+            x: page.getWidth() - 100,
+            y: page.getHeight() - 680 - (index * 10),
+            size: 8,
+            color: rgb(0, 0, 0),
     })
 }
 
