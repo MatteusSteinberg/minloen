@@ -13,7 +13,7 @@ interface CoworkerSection {
   form?: IUserAdd
   title: string,
   undertitle?: string
-  error?: string
+  error?: any
   onChange: (path: string, value: any) => void
   fields: Array<{ placeholder: string, keyPath: string, name: string, type?: React.HTMLInputTypeAttribute | "boolean" | "dropdown", options?: Array<DropdownOption> }>,
   children?: React.ReactNode
@@ -132,6 +132,7 @@ const NewCoworker = (props: Props) => {
                   { keyPath: "disabled", type: "boolean", name: "disabled", placeholder: "Deaktiver brugeren?" }
                 ]}
                 form={form}
+                error={error}
                 title="Bruger oplysninger"
                 undertitle="Brugeroplysninger til at logge ind"
                 onChange={handleSectionOnChange}
@@ -156,121 +157,130 @@ const NewCoworker = (props: Props) => {
                   { keyPath: "phoneNumber", name: "phoneNumber", placeholder: "Telefon" }
                 ]}
                 form={form}
+                error={error}
                 title="Personlige oplysninger"
                 undertitle="Personinformationer omkring medarbejderen"
                 onChange={handleSectionOnChange}
               />
-              <Section
-                fields={[
-                  { keyPath: "workerNumber", name: "workerNumber", placeholder: "Medarbejdernummer" },
-                  { keyPath: "employmentDate", name: "employmentDate", placeholder: "Ansættelses dato" },
-                  { keyPath: "resignationDate", name: "resignationDate", placeholder: "Fratrædelses dato" },
-                  { keyPath: "position", name: "position", placeholder: "Stilling" },
-                  { keyPath: "paymentArrangement", type: "dropdown", options: [{ value: "ahead", label: "Betales måneden forud" }, { value: "behind", label: "Betales måneden bagud" }], name: "paymentArrangement", placeholder: "Betalingsordning" }
-                ]}
-                form={form}
-                title="Ansættelses oplysninger"
-                undertitle="Medarbejders ansættelses oplysninger"
-                onChange={handleSectionOnChange}
-              />
-              <Section
-                fields={[
-                  { keyPath: "bankRegistrationNumber", name: "bankRegistrationNumber", placeholder: "Reg. nr." },
-                  { keyPath: "bankAccountNumber", name: "bankAccountNumber", placeholder: "Kontonummer" },
-                ]}
-                form={form}
-                title="Konto oplysninger"
-                undertitle="Medarbejders konto oplysninger"
-                onChange={handleSectionOnChange}
-              />
-              <Section
-                fields={[
-                  { keyPath: "standardHours", name: "standardHours", placeholder: "Normtimer" },
-                  { keyPath: "salary", name: "salary", placeholder: "Gage" },
-                ]}
-                form={form}
-                title="Gage"
-                undertitle="Medarbejders Gage"
-                onChange={handleSectionOnChange}
-              />
-              <Section
-                fields={[
-                  { keyPath: "hourlyWage", name: "hourlyWage", placeholder: "Timeløn" },
-                ]}
-                form={form}
-                title="Timeløn, individuel sats"
-                undertitle="Medarbejder timeløn"
-                onChange={handleSectionOnChange}
-              />
-              <Section
-                fields={[
-                  {
-                    keyPath: "ATP", name: "ATP", type: "dropdown", options: [
-                      { label: "A-indkomst (Kode 00)", value: "00" },
-                      { label: "Anden personlig indkomst (Kode 04)", value: "04" },
-                      { label: "B-indkomst (Kode 05)", value: "05" },
-                      { label: "Skattefri indkomst (kode 09)", value: "09" }
-                    ], placeholder: "ATP-Ordning"
-                  },
-                  { keyPath: "amContribution", name: "amContribution", type: "boolean", placeholder: "Er lønnen AM-Bidragsbidrag?" }
-                ]}
-                form={form}
-                title="Løn oplysninger"
-                undertitle="Medarbejders løn oplysninger"
-                onChange={handleSectionOnChange}
-              />
-              <Section
-                fields={[
-                  { keyPath: "vacation.scheme", type: "dropdown", options: [{ value: "vacationSavings", label: "Ferie opsparing" }, { value: "vacationWithPay", label: "Ferie med løn" }], name: "vacationScheme", placeholder: "Ferieordning" },
-                  { keyPath: "vacation.recipient", type: "dropdown", options: [{ value: "standard", label: "Feriekonto (Standard)" }, { value: "other", label: "Andet" }], name: "vacationRecipient", placeholder: "Feriepengemodtager" },
-                  { keyPath: "vacation.eachYear", name: "vacationEachYear", placeholder: "Ferie pr. år" }
-                ]}
-                form={form}
-                title="Ferie"
-                undertitle="Medarbejders ferie oplysninger"
-                onChange={handleSectionOnChange}
-              />
-              <Section
-                fields={[
-                  { keyPath: "pension.type", type: "dropdown", name: "Pension", placeholder: "Pension" },
-                  { keyPath: "pension.ownContributionPercentage", name: "pensionOwnContributionPercentage", placeholder: "Eget bidrag %" },
-                  { keyPath: "pension.ownAmount", name: "pensionOwnAmount", placeholder: "Eget beløb" },
-                  { keyPath: "pension.companyContributionPercentage", name: "companyContribution", placeholder: "Firma bidrag %" },
-                  { keyPath: "pension.companyAmount", name: "Firma beløb", placeholder: "Firma beløb" }
-                ]}
-                form={form}
-                title="Almindelig pension"
-                undertitle="Medarbejders almindelige pension"
-                onChange={handleSectionOnChange}
-              />
-              <Section
-                fields={[
-                  { keyPath: "eIncome.enabled", type: "boolean", name: "eIncomeEnabled", placeholder: "Tilkoblet eIndkomst" },
-                  { keyPath: "eIncome.productionUnit", name: "eIncomeProductionUnit", placeholder: "Produktionsenhed" },
-                  { keyPath: "eIncome.incomeType", name: "eIncomeIncometype", placeholder: "Indkomsttype" }
-                ]}
-                form={form}
-                title="eIndkomst"
-                undertitle="Tilkoblet eIndkomst"
-                onChange={handleSectionOnChange}
-              />
-              <Section
-                fields={[
-                  { keyPath: "workplacePension.institute", type: "dropdown", options: [{ value: "velliv", label: "Velliv" }, { value: "pfa", label: "PFA" }], name: "pensionInstitute", placeholder: "Pensionsinstitut" },
-                  { keyPath: "workplacePension.agreementCode", name: "pensionAgreementCode", placeholder: "Overenskomstkode" },
-                  { keyPath: "workplacePension.ownContributionPercentage", name: "workplacePensionOwnContributionPercentage", placeholder: "Eget bidrag %" },
-                  { keyPath: "workplacePension.ownAmount", name: "workplacePensionOwnAmount", placeholder: "Eget beløb" },
-                  { keyPath: "workplacePension.companyContributionPercentage", name: "workplacePensionCompanyContribution", placeholder: "Firma bidrag %" },
-                  { keyPath: "workplacePension.companyAmount", name: "workplacePensionCompanyAmount", placeholder: "Firma beløb" }
-                ]}
-                form={form}
-                title="Arbejdsmarkeds pension"
-                undertitle="Medarbejders anden pension"
-                onChange={handleSectionOnChange}
-              />
 
               {form.organizationRole === "user" && <>
-
+                <Section
+                  fields={[
+                    { keyPath: "workerNumber", name: "workerNumber", placeholder: "Medarbejdernummer" },
+                    { keyPath: "employmentDate", name: "employmentDate", placeholder: "Ansættelses dato" },
+                    { keyPath: "resignationDate", name: "resignationDate", placeholder: "Fratrædelses dato" },
+                    { keyPath: "position", name: "position", placeholder: "Stilling" },
+                    { keyPath: "paymentArrangement", type: "dropdown", options: [{ value: "ahead", label: "Betales måneden forud" }, { value: "behind", label: "Betales måneden bagud" }], name: "paymentArrangement", placeholder: "Betalingsordning" }
+                  ]}
+                  form={form}
+                  error={error}
+                  title="Ansættelses oplysninger"
+                  undertitle="Medarbejders ansættelses oplysninger"
+                  onChange={handleSectionOnChange}
+                />
+                <Section
+                  fields={[
+                    { keyPath: "bankRegistrationNumber", name: "bankRegistrationNumber", placeholder: "Reg. nr." },
+                    { keyPath: "bankAccountNumber", name: "bankAccountNumber", placeholder: "Kontonummer" },
+                  ]}
+                  form={form}
+                  error={error}
+                  title="Konto oplysninger"
+                  undertitle="Medarbejders konto oplysninger"
+                  onChange={handleSectionOnChange}
+                />
+                <Section
+                  fields={[
+                    { keyPath: "standardHours", name: "standardHours", placeholder: "Normtimer" },
+                    { keyPath: "salary", name: "salary", placeholder: "Gage" },
+                  ]}
+                  form={form}
+                  error={error}
+                  title="Gage"
+                  undertitle="Medarbejders Gage"
+                  onChange={handleSectionOnChange}
+                />
+                <Section
+                  fields={[
+                    { keyPath: "hourlyWage", name: "hourlyWage", placeholder: "Timeløn" },
+                  ]}
+                  form={form}
+                  error={error}
+                  title="Timeløn, individuel sats"
+                  undertitle="Medarbejder timeløn"
+                  onChange={handleSectionOnChange}
+                />
+                <Section
+                  fields={[
+                    {
+                      keyPath: "ATP", name: "ATP", type: "dropdown", options: [
+                        { label: "A-indkomst (Kode 00)", value: "00" },
+                        { label: "Anden personlig indkomst (Kode 04)", value: "04" },
+                        { label: "B-indkomst (Kode 05)", value: "05" },
+                        { label: "Skattefri indkomst (kode 09)", value: "09" }
+                      ], placeholder: "ATP-Ordning"
+                    },
+                    { keyPath: "amContribution", name: "amContribution", type: "boolean", placeholder: "Er lønnen AM-Bidragsbidrag?" }
+                  ]}
+                  form={form}
+                  error={error}
+                  title="Løn oplysninger"
+                  undertitle="Medarbejders løn oplysninger"
+                  onChange={handleSectionOnChange}
+                />
+                <Section
+                  fields={[
+                    { keyPath: "vacation.scheme", type: "dropdown", options: [{ value: "vacationSavings", label: "Ferie opsparing" }, { value: "vacationWithPay", label: "Ferie med løn" }], name: "vacationScheme", placeholder: "Ferieordning" },
+                    { keyPath: "vacation.recipient", type: "dropdown", options: [{ value: "standard", label: "Feriekonto (Standard)" }, { value: "other", label: "Andet" }], name: "vacationRecipient", placeholder: "Feriepengemodtager" },
+                    { keyPath: "vacation.eachYear", name: "vacationEachYear", placeholder: "Ferie pr. år" }
+                  ]}
+                  form={form}
+                  error={error}
+                  title="Ferie"
+                  undertitle="Medarbejders ferie oplysninger"
+                  onChange={handleSectionOnChange}
+                />
+                <Section
+                  fields={[
+                    { keyPath: "pension.type", type: "dropdown", name: "Pension", placeholder: "Pension" },
+                    { keyPath: "pension.ownContributionPercentage", name: "pensionOwnContributionPercentage", placeholder: "Eget bidrag %" },
+                    { keyPath: "pension.ownAmount", name: "pensionOwnAmount", placeholder: "Eget beløb" },
+                    { keyPath: "pension.companyContributionPercentage", name: "companyContribution", placeholder: "Firma bidrag %" },
+                    { keyPath: "pension.companyAmount", name: "Firma beløb", placeholder: "Firma beløb" }
+                  ]}
+                  form={form}
+                  error={error}
+                  title="Almindelig pension"
+                  undertitle="Medarbejders almindelige pension"
+                  onChange={handleSectionOnChange}
+                />
+                <Section
+                  fields={[
+                    { keyPath: "eIncome.enabled", type: "boolean", name: "eIncomeEnabled", placeholder: "Tilkoblet eIndkomst" },
+                    { keyPath: "eIncome.productionUnit", name: "eIncomeProductionUnit", placeholder: "Produktionsenhed" },
+                    { keyPath: "eIncome.incomeType", name: "eIncomeIncometype", placeholder: "Indkomsttype" }
+                  ]}
+                  form={form}
+                  error={error}
+                  title="eIndkomst"
+                  undertitle="Tilkoblet eIndkomst"
+                  onChange={handleSectionOnChange}
+                />
+                <Section
+                  fields={[
+                    { keyPath: "workplacePension.institute", type: "dropdown", options: [{ value: "velliv", label: "Velliv" }, { value: "pfa", label: "PFA" }], name: "pensionInstitute", placeholder: "Pensionsinstitut" },
+                    { keyPath: "workplacePension.agreementCode", name: "pensionAgreementCode", placeholder: "Overenskomstkode" },
+                    { keyPath: "workplacePension.ownContributionPercentage", name: "workplacePensionOwnContributionPercentage", placeholder: "Eget bidrag %" },
+                    { keyPath: "workplacePension.ownAmount", name: "workplacePensionOwnAmount", placeholder: "Eget beløb" },
+                    { keyPath: "workplacePension.companyContributionPercentage", name: "workplacePensionCompanyContribution", placeholder: "Firma bidrag %" },
+                    { keyPath: "workplacePension.companyAmount", name: "workplacePensionCompanyAmount", placeholder: "Firma beløb" }
+                  ]}
+                  form={form}
+                  error={error}
+                  title="Arbejdsmarkeds pension"
+                  undertitle="Medarbejders anden pension"
+                  onChange={handleSectionOnChange}
+                />
               </>}
             </div>
           </div>

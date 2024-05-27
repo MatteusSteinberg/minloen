@@ -4,7 +4,7 @@ import { validateObject } from "../lib/validator";
 import userModel from "../models/user.model";
 import getAuthToken from "./helpers/auth-token-generation";
 import baseHandler, { StatusCodes } from "./helpers/base-handler";
-import Organization from "./utils/organization";
+import Organization from "./utils/organization.utils";
 
 
 export const login = baseHandler(async ({ body }) => {
@@ -46,7 +46,7 @@ export const add = baseHandler(async ({ user, body }) => {
     firstName: ["required"],
     lastName: ["required"],
     email: ["required", "email"],
-    organizationRole: ["required"]
+    organizationRole: ["required"],
   }, newUser)
 
   if (!valid) {
@@ -54,7 +54,7 @@ export const add = baseHandler(async ({ user, body }) => {
   }
 
   const org = new Organization(user.activeOrganization as any)
-  await org.addUser(newUser)
+  const newOrgUser = await org.addUser(newUser)
 
-  return { data: "Success", status: StatusCodes.Created }
+  return { data: newOrgUser, status: StatusCodes.Created }
 }, "admin")

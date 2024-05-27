@@ -1,7 +1,7 @@
 import { Document, Model, Types } from "mongoose"
 import { IOrganization } from "./organization.interface"
 
-interface IUserDetails {
+export interface IUserDetails {
   socialSecurityNumber?: string
   firstName?: string
   lastName?: string
@@ -43,11 +43,11 @@ interface IUserDetails {
     /** Eget bidrag % */
     ownContributionPercentage?: number
     /** Eget beløb */
-    ownAmount?: number
+    ownAmount?: string
     /** Firma bidrag % */
     companyContributionPercentage?: number
     /** Firma beløb */
-    companyAmount?: number
+    companyAmount?: string
   }
 
   eIncome?: {
@@ -61,9 +61,9 @@ interface IUserDetails {
     institute?: string
     agreementCode?: string
     ownContributionPercentage?: number
-    ownAmount?: number
+    ownAmount?: string
     companyContributionPercentage?: number
-    companyAmount?: number
+    companyAmount?: string
   }
 }
 
@@ -76,6 +76,7 @@ export interface IUser extends IUserDetails {
 
   email: string
   password?: string
+  disabled?: boolean
 
   updatedAt?: Date
   createdAt?: Date

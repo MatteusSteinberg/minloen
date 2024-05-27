@@ -3,7 +3,7 @@ import { validateObject } from "../lib/validator";
 import organizationModel from "../models/organization.model";
 import userModel from "../models/user.model";
 import baseHandler, { StatusCodes } from "./helpers/base-handler";
-import Organization from "./utils/organization";
+import Organization from "./utils/organization.utils";
 import { User } from "./utils/user.utils";
 
 
