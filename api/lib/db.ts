@@ -4,7 +4,7 @@ mongoose.set("debug", process.env.NODE_ENV !== "production")
 
 mongoose.set("autoIndex", true)
 
-mongoose.set("maxTimeMS", 10000) // TESt
+mongoose.set("maxTimeMS", 10000) // TE
 
 let connection: typeof import("mongoose") | undefined
 
