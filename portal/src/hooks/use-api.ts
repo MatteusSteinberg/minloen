@@ -64,7 +64,7 @@ export interface IRequestData<T = any> {
 interface IUseApi {
   /** Start with /  */
   url: string,
-  params?: string,
+  params?: any,
   id?: string,
   opts?: {
     autoGet?: boolean

@@ -39,7 +39,7 @@ const Section = ({ title, undertitle, error, form, onChange, fields, children }:
         {fields.map((v) => (
           <React.Fragment key={v.name}>
 
-            {v.type === "dropdown" && <Dropdown name={v.name} options={v.options || []} placeholder={v.placeholder} {...inputHandler(v)} onChange={(v) => onChange?.(v.keyPath, v)} />}
+            {v.type === "dropdown" && <Dropdown name={v.name} options={v.options || []} placeholder={v.placeholder} {...inputHandler(v)} onChange={(h) => onChange?.(v.keyPath, h)} />}
 
             {v.type === "boolean" && (
               <div className="flex flex-row gap-2">
@@ -49,7 +49,7 @@ const Section = ({ title, undertitle, error, form, onChange, fields, children }:
             )}
 
             {!["dropdown", "boolean"].includes(v.type as any) && <Input
-              type="text"
+              type={v.type || "text"}
               autocomplete={v.autocomplete}
               name={v.name}
               placeholder={v.placeholder}
@@ -170,7 +170,7 @@ const NewCoworker = () => {
               <Section
                 fields={[
                   { keyPath: "workerNumber", name: "workerNumber", placeholder: "Medarbejdernummer " },
-                  { keyPath: "employmentDate", name: "employmentDate", placeholder: "Ansættelses dato " },
+                  { keyPath: "employmentDate", name: "employmentDate", type: "date", placeholder: "Ansættelses dato " },
                   { keyPath: "resignationDate", name: "resignationDate", placeholder: "Fratrædelses dato" },
                   { keyPath: "position", name: "position", placeholder: "Stilling " },
                   {
