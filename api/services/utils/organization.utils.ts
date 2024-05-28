@@ -48,6 +48,7 @@ export default class Organization {
     if (user.organizationRole === "user") {
       newUser = await userModel.create({
         ...user,
+        name: [user.firstName, user.lastName].join(' ').trim(),
         organizationRole: "user",
         organizations: [this.organization._id],
         activeOrganization: this.organization._id
@@ -58,6 +59,7 @@ export default class Organization {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        name: [user.firstName.trim(), user.lastName.trim()].join(' ').trim(),
         socialSecurityNumber: user.socialSecurityNumber,
         phoneNumber: user.phoneNumber,
         organizationRole: "admin",

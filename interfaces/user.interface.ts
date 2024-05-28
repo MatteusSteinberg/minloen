@@ -39,7 +39,7 @@ export interface IUserDetails {
   }
 
   pension?: {
-    type?: string
+    pensionType?: string
     /** Eget bidrag % */
     ownContributionPercentage?: number
     /** Eget beløb */

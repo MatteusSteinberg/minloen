@@ -1,17 +1,19 @@
 import bcrypt from "bcrypt"
-import { Schema, Types, model } from "mongoose"
+import { Schema, SchemaDefinition, Types, model } from "mongoose"
 import { IUser, IUserDetails } from "../../interfaces/user.interface"
 
-const userDetailsSchema = new Schema<IUserDetails>({
+const userDetailsSchema: SchemaDefinition<IUserDetails> = {
   address: { type: String, trim: true },
   amContribution: { type: Boolean },
   ATP: { type: String, trim: true },
   bankAccountNumber: { type: String, trim: true },
-  bankRegistrationNumber: { typ: String, trim: true },
+  bankRegistrationNumber: { type: String, trim: true },
   eIncome: {
-    enabled: { type: Boolean },
-    productionUnit: { type: String },
-    incomeType: { type: String }
+    type: {
+      enabled: { type: Boolean },
+      productionUnit: { type: String },
+      incomeType: { type: String }
+    }
   },
   employmentDate: { type: Date },
   firstName: { type: String },
@@ -19,11 +21,13 @@ const userDetailsSchema = new Schema<IUserDetails>({
   hourlyWage: { type: String },
   paymentArrangement: { type: String, trim: true },
   pension: {
-    type: { type: String },
-    ownContributionPercentage: { type: Number },
-    ownAmount: { type: String },
-    companyContributionPercentage: { type: Number },
-    companyAmount: { type: String }
+    type: {
+      pensionType: { type: String },
+      ownContributionPercentage: { type: Number },
+      ownAmount: { type: String },
+      companyContributionPercentage: { type: Number },
+      companyAmount: { type: String }
+    }
   },
   phoneNumber: { type: String },
   position: { type: String },
@@ -32,20 +36,24 @@ const userDetailsSchema = new Schema<IUserDetails>({
   socialSecurityNumber: { type: String, trim: true },
   standardHours: { type: String, required: false },
   vacation: {
-    scheme: { type: String },
-    recipient: { type: String },
-    eachYear: { type: String }
+    type: {
+      scheme: { type: String },
+      recipient: { type: String },
+      eachYear: { type: String }
+    }
   },
   workerNumber: { type: String },
   workplacePension: {
-    institute: { type: String },
-    agreementCode: { type: String },
-    ownContributionPercentage: { type: Number },
-    ownAmount: { type: String },
-    companyContributionPercentage: { type: Number },
-    companyAmount: { type: String }
+    type: {
+      institute: { type: String },
+      agreementCode: { type: String },
+      ownContributionPercentage: { type: Number },
+      ownAmount: { type: String },
+      companyContributionPercentage: { type: Number },
+      companyAmount: { type: String }
+    }
   }
-})
+}
 
 const userSchema = new Schema<IUser>(
   {
