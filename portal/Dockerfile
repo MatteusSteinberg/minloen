@@ -1,24 +1,26 @@
-# Fetching the latest node image on alpine linux
-FROM node:lts-alpine
+FROM node:slim
 
-# Declaring env
-#ENV NODE_ENV production
+WORKDIR /app
 
-# Setting up the work directory
-WORKDIR /portal
+RUN mkdir portal
 
-# Installing dependencies
-COPY package.json yarn.lock ./
 
-RUN yarn install
+WORKDIR /app/portal
+COPY ./yarn.lock .
+COPY ./portal .
 
-# Copying all the files in our project
-COPY . .
 
-# Building our application
+WORKDIR /app
+COPY ./interfaces ./interfaces
+
+
+WORKDIR /app/portal
+RUN yarn
+
+ENV NODE_ENV production
 RUN yarn build
+
 
 EXPOSE 3000
 
-# Starting our application
-CMD ["yarn","start"]
+CMD ["yarn", "start"]
