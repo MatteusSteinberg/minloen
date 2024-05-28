@@ -4,10 +4,11 @@ FROM node:slim
 # Declaring env
 ENV NODE_ENV production
 
+COPY yarn.lock ./
+
 # Setting up the work directory
 WORKDIR /api
 
-COPY ../yarn.lock ./
 COPY package.json ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
