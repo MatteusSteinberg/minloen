@@ -10,10 +10,10 @@ const Options = (props: Props) => {
                 <p className="text-primaryLight font-small-normal">Medarbejder</p>
             </div>
             <div className="flex items-center justify-center gap-4">
-                <Link to="/opret-lønseddel" className="text-white font-small-normal">
+                <Link to="/opret-loenseddel" className="text-white font-small-normal">
                     Opret fast lønseddel
                 </Link>
-                <Link to="/opret-kommende-lønseddel" className="text-primaryLight font-small-normal">
+                <Link to="/opret-kommende-loenseddel" className="text-primaryLight font-small-normal">
                     Opret tilpasset for kommende måned
                 </Link>
             </div>

@@ -3,7 +3,6 @@ import { lazy, useState } from "react"
 // Components
 import { Route, Routes, matchPath, useLocation } from "react-router-dom"
 import Sidebar from "./components/globals/Sidebar"
-import Error404 from "./routes/404"
 
 // Pages
 const Dashboard = lazy(() => import("./routes/dashboard"))
@@ -13,8 +12,9 @@ const Absence = lazy(() => import("./routes/fravær"))
 const Coworkers = lazy(() => import("./routes/medarbejdere"))
 const NewCoworker = lazy(() => import("./routes/ny-medarbejder"))
 const SeeCoworker = lazy(() => import("./routes/se-medarbejder"))
-const Paycheck = lazy(() => import("./routes/paycheck"))
-const UpcomingPaycheck = lazy(() => import("./routes/upcomingPaycheck"))
+const AddPaycheck = lazy(() => import("./routes/addPaycheck"))
+const AddUpcomingPaycheck = lazy(() => import("./routes/addUpcomingPaycheck"))
+const Error404 = lazy(() => import("./routes/404"))
 const Login = lazy(() => import("./routes/login"))
 const Signup = lazy(() => import("./routes/signup"))
 
@@ -28,14 +28,14 @@ interface IAppRoute {
 
 const routes: Array<IAppRoute> = [
     { path: "/", element: <Dashboard />, layout: true },
-    { path: "/lønsedler", element: <PaymentDocuments />, layout: true },
-    { path: "/kørsel", element: <DrivingCompensation />, layout: true },
-    { path: "/fravær", element: <Absence />, layout: true },
+    { path: "/loensedler", element: <PaymentDocuments />, layout: true },
+    { path: "/koersel", element: <DrivingCompensation />, layout: true },
+    { path: "/fravaer", element: <Absence />, layout: true },
+    { path: "/opret-loenseddel", element: <AddPaycheck />, layout: true },
+    { path: "/opret-kommende-loenseddel", element: <AddUpcomingPaycheck />, layout: true },
     { path: "/medarbejdere", element: <Coworkers />, layout: true },
     { path: "/ny-medarbejder", element: <NewCoworker />, layout: true },
     { path: "/se-medarbejder", element: <SeeCoworker />, layout: true },
-    { path: "/opret-lønseddel", element: <Paycheck />, layout: true },
-    { path: "/opret-kommende-lønseddel", element: <UpcomingPaycheck />, layout: true },
     { path: "/signup", element: <Signup />, layout: false },
     { path: "/login", element: <Login />, layout: false },
 ]
