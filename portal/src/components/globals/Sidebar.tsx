@@ -1,7 +1,8 @@
 import { ChevronDownIcon, ClipboardDocumentIcon, FaceFrownIcon, MoonIcon, Squares2X2Icon, SunIcon, TruckIcon } from "@heroicons/react/24/outline"
 import React, { useState } from "react"
-import { Link, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import ProfileImage from "../../assets/images/jonas1.png"
+import LeaveModal from "../modals/leavemodal"
 
 interface ILinkProps {
     link: string
@@ -53,6 +54,7 @@ interface ISidebar {
 const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
     const [hideAdmin, setHideAdmin] = useState(false)
     const [isDarkMode, setIsDarkMode] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     const toggleSidebar = () => {
         setShowSidebar(!showSidebar)
@@ -135,9 +137,10 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                                 </div>
                                 <p className="px-3 py-1 rounded-full font-default text-[12px] font-bold bg-primaryLight leading-[15px] uppercase">Free</p>
                             </div>
-                            <Link className="border-solid border-2 border-[rgb(52,56,57)] bg-transparent text-white font-standard-medium py-3 mt-4 w-full rounded-[14px] flex justify-center hover:bg-[rgb(52,56,57)] transition-colors duration-150" to="/">
+                            <button className="border-solid border-2 border-[rgb(52,56,57)] bg-transparent text-white font-standard-medium py-3 mt-4 w-full rounded-[14px] flex justify-center hover:bg-[rgb(52,56,57)] transition-colors duration-150" onClick={() => setShowModal(true)}>
                                 Upgrade til Pro
-                            </Link>
+                            </button>
+                            <LeaveModal isOpen={showModal} toggleModal={setShowModal} />
                         </div>
                     ) : (
                         <div className="relative w-10 h-10">
