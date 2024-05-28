@@ -47,6 +47,17 @@ export const add = baseHandler(async ({ user, body }) => {
     lastName: ["required"],
     socialSecurityNumber: ["required"],
     organizationRole: ["required"],
+    ...(newUser.organizationRole === "user" ? {
+      workerNumber: ["required"],
+      employmentDate: ["required"],
+      position: ["required"],
+      paymentArrangement: ["required"],
+      bankRegistrationNumber: ["required"],
+      bankAccountNumber: ["required"],
+      ATP: ["required"],
+      "vacation.scheme": ["required"],
+      "vacation.recipient": ["required"],
+    } : {})
   }, newUser)
 
   if (inValid) {

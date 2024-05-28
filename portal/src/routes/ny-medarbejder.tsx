@@ -153,9 +153,9 @@ const NewCoworker = () => {
           </Section>
           <Section
             fields={[
-              { keyPath: "firstName", name: "Fornavn", placeholder: "Fornavn" },
-              { keyPath: "lastName", name: "Efternavn", placeholder: "Efternavn" },
-              { keyPath: "socialSecurityNumber", name: "cpr", placeholder: "CPR-nummer" },
+              { keyPath: "firstName", name: "Fornavn", placeholder: "Fornavn " },
+              { keyPath: "lastName", name: "Efternavn", placeholder: "Efternavn " },
+              { keyPath: "socialSecurityNumber", name: "cpr", placeholder: "CPR-nummer " },
               { keyPath: "phoneNumber", name: "phoneNumber", placeholder: "Telefon" },
             ]}
             form={form}
@@ -169,10 +169,10 @@ const NewCoworker = () => {
             <>
               <Section
                 fields={[
-                  { keyPath: "workerNumber", name: "workerNumber", placeholder: "Medarbejdernummer" },
-                  { keyPath: "employmentDate", name: "employmentDate", placeholder: "Ansættelses dato" },
+                  { keyPath: "workerNumber", name: "workerNumber", placeholder: "Medarbejdernummer " },
+                  { keyPath: "employmentDate", name: "employmentDate", placeholder: "Ansættelses dato " },
                   { keyPath: "resignationDate", name: "resignationDate", placeholder: "Fratrædelses dato" },
-                  { keyPath: "position", name: "position", placeholder: "Stilling" },
+                  { keyPath: "position", name: "position", placeholder: "Stilling " },
                   {
                     keyPath: "paymentArrangement",
                     type: "dropdown",
@@ -181,7 +181,7 @@ const NewCoworker = () => {
                       { value: "behind", label: "Betales måneden bagud" },
                     ],
                     name: "paymentArrangement",
-                    placeholder: "Betalingsordning",
+                    placeholder: "Betalingsordning ",
                   },
                 ]}
                 form={form}
@@ -192,8 +192,8 @@ const NewCoworker = () => {
               />
               <Section
                 fields={[
-                  { keyPath: "bankRegistrationNumber", name: "bankRegistrationNumber", placeholder: "Reg. nr." },
-                  { keyPath: "bankAccountNumber", name: "bankAccountNumber", placeholder: "Kontonummer" },
+                  { keyPath: "bankRegistrationNumber", name: "bankRegistrationNumber", placeholder: "Reg. nr. " },
+                  { keyPath: "bankAccountNumber", name: "bankAccountNumber", placeholder: "Kontonummer " },
                 ]}
                 form={form}
                 error={error}
@@ -225,9 +225,9 @@ const NewCoworker = () => {
                       { label: "B-indkomst (Kode 05)", value: "05" },
                       { label: "Skattefri indkomst (kode 09)", value: "09" },
                     ],
-                    placeholder: "ATP-Ordning",
+                    placeholder: "ATP-Ordning ",
                   },
-                  { keyPath: "amContribution", name: "amContribution", type: "boolean", placeholder: "Er lønnen AM-Bidragsbidrag?" },
+                  { keyPath: "amContribution", name: "amContribution", type: "boolean", placeholder: "Er lønnen AM-Bidragspligt?" },
                 ]}
                 form={form}
                 error={error}
@@ -245,7 +245,7 @@ const NewCoworker = () => {
                       { value: "vacationWithPay", label: "Ferie med løn" },
                     ],
                     name: "vacationScheme",
-                    placeholder: "Ferieordning",
+                    placeholder: "Ferieordning ",
                   },
                   {
                     keyPath: "vacation.recipient",
@@ -255,7 +255,7 @@ const NewCoworker = () => {
                       { value: "other", label: "Andet" },
                     ],
                     name: "vacationRecipient",
-                    placeholder: "Feriepengemodtager",
+                    placeholder: "Feriepengemodtager ",
                   },
                   { keyPath: "vacation.eachYear", name: "vacationEachYear", placeholder: "Ferie pr. år" },
                 ]}
@@ -298,7 +298,19 @@ const NewCoworker = () => {
                     type: "dropdown",
                     options: [
                       { value: "velliv", label: "Velliv" },
-                      { value: "pfa", label: "PFA" },
+                      { value: "danica", label: "Danica Pension" },
+                      { value: "industriens", label: "Industriens Pension" },
+                      { value: "ap", label: "AP Pension" },
+                      { value: "topdanmark", label: "Topdanmark Pension" },
+                      { value: "alm_brand", label: "Alm. Brand Pension" },
+                      { value: "pfa", label: "PFA Pension" },
+                      { value: "pensam", label: "PenSam Pension" },
+                      { value: "sampension", label: "Sampension" },
+                      { value: "seb", label: "SEB Pension" },
+                      { value: "lærernes", label: "Lærernes Pension" },
+                      { value: "pension_danmark", label: "PensionDanmark" },
+                      { value: "pka", label: "PKA pension" },
+                      { value: "mp", label: "MP Pension" },
                     ],
                     name: "pensionInstitute",
                     placeholder: "Pensionsinstitut",
