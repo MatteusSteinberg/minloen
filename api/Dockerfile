@@ -1,27 +1,24 @@
 # Fetching the minified node image on apline linux
 FROM node:slim
 
-# Declaring env
 ENV NODE_ENV production
 
-COPY yarn.lock ./
-
-# Setting up the work directory
 WORKDIR /api
 
-COPY package.json ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# Copying package.json, yarn.lock and interfaces folder to the container
+COPY ./yarn.lock /api/yarn.lock
+COPY ./interfaces /interfaces
+COPY ./api/package.json /api/package.json
 
-# Copying all the files in our project
-COPY . .
+# Installing dependencies
+RUN cd /api && yarn
 
-run yarn build
+COPY ./api /api
+# Building the application
+RUN cd /api && yarn build
 
 # Exposing server port
 EXPOSE 8080
 
-# Starting our application
+# Starting application
 CMD [ "yarn", "start:prod" ]
