@@ -47,6 +47,17 @@ export const add = baseHandler(async ({ user, body }) => {
     lastName: ["required"],
     socialSecurityNumber: ["required"],
     organizationRole: ["required"],
+    ...(newUser.organizationRole === "user" ? {
+      workerNumber: ["required"],
+      employmentDate: ["required"],
+      position: ["required"],
+      paymentArrangement: ["required"],
+      bankRegistrationNumber: ["required"],
+      bankAccountNumber: ["required"],
+      ATP: ["required"],
+      "vacation.scheme": ["required"],
+      "vacation.recipient": ["required"],
+    } : {})
   }, newUser)
 
   if (inValid) {
@@ -57,4 +68,24 @@ export const add = baseHandler(async ({ user, body }) => {
   const newOrgUser = await org.addUser(newUser)
 
   return { data: newOrgUser, status: StatusCodes.Created }
+}, "admin")
+
+
+export const list = baseHandler(async ({ params, user }) => {
+  const { page } = params as { page?: string }
+
+  const users = await userModel.find({
+    organizations: { $eq: user.activeOrganization }
+  }).skip((parseInt(page) ?? 0) * 10).limit(10)
+
+  return { data: users, status: StatusCodes.Ok }
+}, "admin")
+
+export const listMetadata = baseHandler(async ({ params, user }) => {
+
+  const count = await userModel.countDocuments({
+    organizations: { $eq: user.activeOrganization }
+  })
+
+  return { data: { count: count, size: 10 }, status: StatusCodes.Ok }
 }, "admin")

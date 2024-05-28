@@ -107,10 +107,12 @@ const userSchema = new Schema<IUser>(
     },
     activeOrganization: {
       type: Schema.Types.ObjectId,
+      index: true,
       ref: "Organization",
     },
     organizations: {
       type: [Schema.Types.ObjectId],
+      index: true,
       ref: "Organization",
     },
     organizationRole: {
