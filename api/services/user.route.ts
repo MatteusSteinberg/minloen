@@ -41,16 +41,16 @@ export const me = baseHandler(async ({ user }) => {
 export const add = baseHandler(async ({ user, body }) => {
   const newUser = body as IUserAdd
 
-  const valid = validateObject({
-    socialSecurityNumber: ["required"],
+  const inValid = validateObject({
+    email: ["required", "email"],
     firstName: ["required"],
     lastName: ["required"],
-    email: ["required", "email"],
+    socialSecurityNumber: ["required"],
     organizationRole: ["required"],
   }, newUser)
 
-  if (!valid) {
-    return { data: valid, status: StatusCodes.BadRequest }
+  if (inValid) {
+    return { data: inValid, status: StatusCodes.BadRequest }
   }
 
   const org = new Organization(user.activeOrganization as any)
