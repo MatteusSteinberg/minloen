@@ -7,10 +7,11 @@ ENV NODE_ENV production
 # Setting up the work directory
 WORKDIR /api
 
-COPY package.json yarn.lock ./
-
-# Installing dependencies
-RUN yarn install
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
 # Copying all the files in our project
 COPY . .
