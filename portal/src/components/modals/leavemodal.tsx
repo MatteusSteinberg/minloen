@@ -1,5 +1,7 @@
 import { useState } from "react";
+import Button from "../elements/Button";
 import Dropdown from "../elements/Dropdown";
+import Input from "../elements/Input";
 import Base from "./Base";
 
 interface ILeavemodal {
@@ -20,23 +22,7 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
 
     const handleChange = (value: string) => {
         setSelectedOption(value);
-    };
-
-    const renderView = () => {
-        switch (selectedOption) {
-            case "Option 1":
-                return <div>View for Option 1</div>;
-            case "Option 2":
-                return <div>View for Option 2</div>;
-            case "Option 3":
-                return <div>View for Option 3</div>;
-            case "Option 4":
-                return <div>View for Option 4</div>;
-            case "Option 5":
-                return <div>View for Option 5</div>;
-            default:
-                return null;
-        }
+        console.log(value)
     };
 
     return (
@@ -47,11 +33,25 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                         label="Vælg fraværstype"
                         name="type"
                         options={options}
-                        onChange={(event) => handleChange(event.target.value)}
+                        onChange={(value) => handleChange(value)}
                     />
                 </div>
                 <div className="px-12 my-6">
-                    {renderView()}
+                    {selectedOption == "Option 1" && (
+                        <>
+                            <div>
+                                <Input label="Skirv årsag" name="årsag" placeholder="sygdom" />
+                            </div>
+                            <div className="px-12 my-12 ">
+                                <Button background="primaryLight" color="text">Godkend</Button>
+                                <Button background="secondarySupport" color="white">Annullere</Button>
+                            </div>
+                        </>
+                    )}
+                    {selectedOption == "Option 2" && (<div>View for Option 2</div>)}
+                    {selectedOption == "Option 3" && (<div>View for Option 3</div>)}
+                    {selectedOption == "Option 4" && (<div>View for Option 4</div>)}
+                    {selectedOption == "Option 5" && (<div>View for Option 5</div>)}
                 </div>
             </div>
         </Base>
