@@ -1,7 +1,11 @@
 import loginSvg from "../assets/images/Login.svg"
 import Form from "../components/layouts/login/Form"
 
-const login = () => {
+interface ILogin {
+    noRedirect?: boolean
+}
+
+const login = ({ noRedirect }: ILogin) => {
     return (
         <div className="flex flex-col items-center justify-center w-full sm:px-6 lg:justify-between min-h-dvh lg:flex-row lg:px-0">
             <div className="relative w-full overflow-hidden h-full min-h-dvh py-[108px] px-[76px] hidden lg:block">

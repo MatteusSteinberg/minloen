@@ -13,7 +13,7 @@ interface ILinkProps {
 
 const Links: ILinkProps[] = [
     {
-        link: "/",
+        link: "/overblik",
         icon: <Squares2X2Icon className="inline-block w-6 h-6" />,
         text: "Overview",
     },
@@ -36,7 +36,7 @@ const Links: ILinkProps[] = [
 
 const AdminLinks: ILinkProps[] = [
     {
-        link: "/dashboard",
+        link: "/kontrolpanel",
         icon: <Squares2X2Icon className="inline-block w-6 h-6" />,
         text: "Dashboard",
     },
