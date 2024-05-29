@@ -1,23 +1,24 @@
 import { PDFPage, rgb, PDFImage } from 'pdf-lib'
+import { ICompanyInformation, IEmployeeInformation } from './payroll'
 
 
-export function defaultPage(page: PDFPage, logo: PDFImage, xStartPix: number) {
+export function defaultPage(page: PDFPage, logo: PDFImage, xStartPix: number, employee: IEmployeeInformation, company: ICompanyInformation) {
     // Employee Information
-    page.drawText("NAME", {
+    page.drawText(employee.name, {
         x: xStartPix,
         y: page.getHeight() - 30,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("ADDRESS", {
+    page.drawText(employee.address, {
         x: xStartPix,
         y: page.getHeight() - 40,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("ZIP CODE", {
+    page.drawText(employee.zipCode, {
         x: xStartPix,
         y: page.getHeight() - 50,
         size: 8,
@@ -54,28 +55,28 @@ export function defaultPage(page: PDFPage, logo: PDFImage, xStartPix: number) {
     })
 
     // Section 3 - Employee Filled Information
-    page.drawText("0000", {
+    page.drawText(employee.employeeNumber, {
         x: 120,
         y: page.getHeight() - 70,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("010101-0101", {
+    page.drawText(employee.cpr, {
         x: 120,
         y: page.getHeight() - 80,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("01/02/22", {
+    page.drawText(employee.hiredDate, {
         x: 120,
         y: page.getHeight() - 90,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("5556 56565656565656", {
+    page.drawText(employee.bankAccount, {
         x: 120,
         y: page.getHeight() - 100,
         size: 8,
@@ -93,28 +94,28 @@ export function defaultPage(page: PDFPage, logo: PDFImage, xStartPix: number) {
     })
 
     // Company Information
-    page.drawText("COMPANY NAME", {
+    page.drawText(company.name, {
         x: page.getWidth() - 100,
         y: page.getHeight() - 70,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("ADDRESS", {
+    page.drawText(company.address, {
         x: page.getWidth() - 100,
         y: page.getHeight() - 80,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("ZIP CODE", {
+    page.drawText(company.zipCode, {
         x: page.getWidth() - 100,
         y: page.getHeight() - 90,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
-    page.drawText("CVR NUMBER", {
+    page.drawText(company.cvr, {
         x: page.getWidth() - 100,
         y: page.getHeight() - 100,
         size: 8,
