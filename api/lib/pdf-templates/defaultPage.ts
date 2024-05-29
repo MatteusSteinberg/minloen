@@ -2,24 +2,24 @@ import { PDFPage, rgb, PDFImage } from 'pdf-lib'
 import { IPayrollCompanyInfo, IPayrollEmployeeInfo } from '../../../interfaces/payroll.interface'
 
 
-export function defaultPage(page: PDFPage, logo: PDFImage, xStartPix: number, employee: IPayrollEmployeeInfo, company: IPayrollCompanyInfo) {
+export function defaultPage(page: PDFPage, logo: PDFImage, employee: IPayrollEmployeeInfo, company: IPayrollCompanyInfo) {
     // Employee Information
     page.drawText(employee.name, {
-        x: xStartPix,
+        x: 35,
         y: page.getHeight() - 30,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
     page.drawText(employee.address, {
-        x: xStartPix,
+        x: 35,
         y: page.getHeight() - 40,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
     page.drawText(employee.zipCode, {
-        x: xStartPix,
+        x: 35,
         y: page.getHeight() - 50,
         size: 8,
         color: rgb(0, 0, 0),
@@ -27,28 +27,28 @@ export function defaultPage(page: PDFPage, logo: PDFImage, xStartPix: number, em
 
     // Section 2 - Employee Information
     page.drawText("EMPLOYEE NUMBER", {
-        x: xStartPix,
+        x: 35,
         y: page.getHeight() - 70,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
     page.drawText("CPR NUMBER", {
-        x: xStartPix,
+        x: 35,
         y: page.getHeight() - 80,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
     page.drawText("HIRED DATE", {
-        x: xStartPix,
+        x: 35,
         y: page.getHeight() - 90,
         size: 8,
         color: rgb(0, 0, 0),
     })
 
     page.drawText("BANK ACCOUNT", {
-        x: xStartPix,
+        x: 35,
         y: page.getHeight() - 100,
         size: 8,
         color: rgb(0, 0, 0),

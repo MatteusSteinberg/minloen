@@ -15,7 +15,7 @@ export async function payrollPdfTemplate(data: IPayrollPDF) {
     const logoBytes = fs.readFileSync("./lib/assets/Logo.png")
     const logoImage = await doc.embedPng(logoBytes)
 
-    defaultPage(page, logoImage, leftSideStartPix, data.employee, data.company)
+    defaultPage(page, logoImage, data.employee, data.company)
 
     generateBanner(page, data.payroll)
     generateDetailSection(page, doc, logoImage, data)
