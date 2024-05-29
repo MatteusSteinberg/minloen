@@ -47,10 +47,10 @@ const Coworkers = () => {
                     actions={(user: IUser) => (
                         <>
                             <td className="flex items-center justify-end px-8 py-4 text-right text-nowrap">
-                                <Link to={`/se-medarbejder/${user.id}`} className="mr-2 flex items-center text-primaryLight bg-gradientmain border border-solid border-[rgba(231,231,233,0.2)] hover:border-[rgba(231,231,233,0.5)] transition-colors duration-300 rounded-xl h-12 w-12 justify-center">
+                                <Link to={`/se-medarbejder/${user.id}`} className="mr-2 flex items-center text-darkPrimaryLight bg-gradientmain border border-solid border-[rgba(231,231,233,0.2)] hover:border-[rgba(231,231,233,0.5)] transition-colors duration-300 rounded-xl h-12 w-12 justify-center">
                                     <EyeIcon className="w-5 h-5" />
                                 </Link>
-                                <Link to="/" className="mr-2 flex items-center text-primaryLight bg-gradientmain border border-solid border-[rgba(231,231,233,0.2)] hover:border-[rgba(231,231,233,0.5)] transition-colors duration-300 rounded-xl h-12 w-12 justify-center">
+                                <Link to="/" className="mr-2 flex items-center text-darkPrimaryLight bg-gradientmain border border-solid border-[rgba(231,231,233,0.2)] hover:border-[rgba(231,231,233,0.5)] transition-colors duration-300 rounded-xl h-12 w-12 justify-center">
                                     <PencilIcon className="w-5 h-5" />
                                 </Link>
                             </td>

@@ -56,7 +56,7 @@ const dashboard = () => {
                 <Header title="Hejsa Tobias!" />
             </div>
             <div>
-                <p className="mb-2 text-white font-large-normal">Statistikker</p>
+                <p className="mb-2 text-text dark:text-white font-large-normal">Statistikker</p>
                 <div className="grid grid-cols-3 grid-rows-1 gap-4 mb-12">
                     {boxData.map((data, index) => (
                         <Box graph title={data.title} graphData={graphData} value={data.value} />

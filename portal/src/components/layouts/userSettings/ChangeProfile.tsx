@@ -27,7 +27,7 @@ const ChangeProfile = (props: Props) => {
                     <Input label="Lokation" placeholder="Adresse" name="adress" icon={<MapPinIcon />} />
                 </div>
                 <div className="flex w-full gap-4">
-                    <button className="w-full py-5 bg-primaryLight text-text rounded-2xl">Gem ændringer</button>
+                    <button className="w-full py-5 bg-darkPrimaryLight text-text rounded-2xl">Gem ændringer</button>
                     <button className="w-full py-5 text-white bg-gradientmain rounded-2xl">Anuller</button>
                 </div>
             </div>
