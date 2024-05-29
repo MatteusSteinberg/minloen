@@ -2,6 +2,7 @@ import DataTable from "../components/elements/DataTable"
 import Box from "../components/globals/Box"
 import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
+import CurrentPaycheck from "../components/layouts/overview/CurrentPaycheck"
 
 const boxData = [
     {
@@ -65,6 +66,10 @@ const dashboard = () => {
             </div>
             <div className="mt-12">
                 <DataTable title="Lønsedler" tableData={paycheckData} />
+            </div>
+            <div className="mt-12">
+                <p className="mb-2 text-text dark:text-white font-large-normal">Din seneste lønseddel</p>
+                <CurrentPaycheck />
             </div>
         </ContentContainer>
     )
