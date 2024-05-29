@@ -1,11 +1,12 @@
-import { IPDFPayroll, payrollPdfTemplate } from "../../lib/pdf-templates/payroll"
+import { payrollPdfTemplate } from "../../lib/pdf-templates/payroll"
 
 import fs from "fs"
 import path from 'path'
+import { IPayrollPDF } from '../../../interfaces/payroll.interface'
 
 export interface IPdf {
     key: string
-    data: IPDFPayroll | any
+    data: IPayrollPDF | any
     mock?: boolean
 }
 

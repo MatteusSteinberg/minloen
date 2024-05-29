@@ -1,8 +1,8 @@
 import { PDFPage, rgb, PDFImage } from 'pdf-lib'
-import { ICompanyInformation, IEmployeeInformation } from './payroll'
+import { IPayrollCompanyInfo, IPayrollEmployeeInfo } from '../../../interfaces/payroll.interface'
 
 
-export function defaultPage(page: PDFPage, logo: PDFImage, xStartPix: number, employee: IEmployeeInformation, company: ICompanyInformation) {
+export function defaultPage(page: PDFPage, logo: PDFImage, xStartPix: number, employee: IPayrollEmployeeInfo, company: IPayrollCompanyInfo) {
     // Employee Information
     page.drawText(employee.name, {
         x: xStartPix,

@@ -1,74 +1,11 @@
 import fs from "fs"
 import { PDFDocument, PDFImage, PDFPage, PageSizes, StandardFonts, rgb } from "pdf-lib"
 import { defaultPage } from "./defaultPage"
+import { IPayrollBalance, IPayrollDetailLine, IPayrollHoliday, IPayrollHolidayLine, IPayrollInfo, IPayrollPDF, IPayrollSaldiLine } from '../../../interfaces/payroll.interface'
 
 const leftSideStartPix = 35
 
-export interface IEmployeeInformation {
-    name: string
-    address: string
-    zipCode: string
-    employeeNumber: string
-    cpr: string
-    hiredDate: string
-    bankAccount: string
-}
-
-export interface ICompanyInformation {
-    name: string
-    address: string
-    zipCode: string
-    cvr: string
-}
-
-export interface IPayrollInformation {
-    month: string
-    datePeriod: string
-    paymentDate: string
-    salary: string
-}
-
-export interface IDetailLine {
-    description: string
-    basis?: string
-    rate?: string
-    total?: string
-}
-
-export interface ISaldiLine {
-    description: string
-    value: string
-}
-
-export interface IHolidayLine {
-    description: string
-    optionOne?: string
-    optionTwo?: string
-    optionThree?: string
-}
-
-export interface IHoliday {
-    description: string
-    optionOne?: string
-    optionTwo?: string
-    optionThree?: string
-    holidayLines: Array<IHolidayLine>
-}
-
-export interface IBalance {
-    holidays: Array<IHoliday>
-    saldi: Array<ISaldiLine>
-}
-
-export interface IPDFPayroll {
-    employee: IEmployeeInformation
-    company: ICompanyInformation
-    payroll: IPayrollInformation
-    details: Array<IDetailLine>
-    balance: IBalance
-}
-
-export async function payrollPdfTemplate(data: IPDFPayroll) {
+export async function payrollPdfTemplate(data: IPayrollPDF) {
     const doc = await PDFDocument.create()
 
     await doc.embedFont(StandardFonts.TimesRoman)
@@ -102,7 +39,7 @@ function checkIfSaldiIsFull(currentCord: number) {
     return false
 }
 
-function generateBanner(page: PDFPage, payroll: IPayrollInformation) {
+function generateBanner(page: PDFPage, payroll: IPayrollInfo) {
     // Banner
     page.drawRectangle({
         x: 0,
@@ -163,7 +100,7 @@ function generateBanner(page: PDFPage, payroll: IPayrollInformation) {
     })
 }
 
-function generateDetailSection(page: PDFPage, doc: PDFDocument, logoImage: PDFImage, data: IPDFPayroll) {
+function generateDetailSection(page: PDFPage, doc: PDFDocument, logoImage: PDFImage, data: IPayrollPDF) {
     page.drawText("BESKRIVELSE", {
         x: leftSideStartPix + 30,
         y: page.getHeight() - 230,
@@ -207,7 +144,7 @@ function generateDetailSection(page: PDFPage, doc: PDFDocument, logoImage: PDFIm
     })
 }
 
-function generateDetailLine(page: PDFPage, line: IDetailLine, index: number) {
+function generateDetailLine(page: PDFPage, line: IPayrollDetailLine, index: number) {
     page.drawText(index.toString(), {
         x: leftSideStartPix,
         y: page.getHeight() - 250 - index * 10,
@@ -244,7 +181,7 @@ function generateDetailLine(page: PDFPage, line: IDetailLine, index: number) {
     })
 }
 
-function generateBalance(page: PDFPage, balance: IBalance) {
+function generateBalance(page: PDFPage, balance: IPayrollBalance) {
     page.drawLine({
         start: { x: 0, y: 200 },
         end: { x: page.getWidth(), y: 200 },
@@ -256,7 +193,7 @@ function generateBalance(page: PDFPage, balance: IBalance) {
     generateBalanceSaldi(page, balance.saldi)
 }
 
-function generateBalanceHoliday(page: PDFPage, holidays: Array<IHoliday>) {
+function generateBalanceHoliday(page: PDFPage, holidays: Array<IPayrollHoliday>) {
     let titelYCord = page.getHeight() - 670
     let totalLines = 0;
     holidays.forEach((holiday, index) => {
@@ -273,7 +210,7 @@ function generateBalanceHoliday(page: PDFPage, holidays: Array<IHoliday>) {
     })
 }
 
-function generateFooterLineTitel(page: PDFPage, holiday: IHoliday, yCord: number) {
+function generateFooterLineTitel(page: PDFPage, holiday: IPayrollHoliday, yCord: number) {
     page.drawText(holiday.description, {
         x: leftSideStartPix,
         y: yCord,
@@ -309,7 +246,7 @@ function generateFooterLineTitel(page: PDFPage, holiday: IHoliday, yCord: number
     }
 }
 
-function generateFooterLine(page: PDFPage, line: IHolidayLine, index: number) {
+function generateFooterLine(page: PDFPage, line: IPayrollHolidayLine, index: number) {
     page.drawText(line.description, {
         x: leftSideStartPix,
         y: page.getHeight() - 680 - index * 10,
@@ -345,7 +282,7 @@ function generateFooterLine(page: PDFPage, line: IHolidayLine, index: number) {
     }
 }
 
-function generateBalanceSaldi(page: PDFPage, saldiLines: Array<ISaldiLine>) {
+function generateBalanceSaldi(page: PDFPage, saldiLines: Array<IPayrollSaldiLine>) {
     page.drawText("SALDI", {
         x: page.getWidth() - 200,
         y: page.getHeight() - 670,
@@ -368,7 +305,7 @@ function generateBalanceSaldi(page: PDFPage, saldiLines: Array<ISaldiLine>) {
     })
 }
 
-function generateBalanceSaldiLine(page: PDFPage, line: ISaldiLine, index: number) {
+function generateBalanceSaldiLine(page: PDFPage, line: IPayrollSaldiLine, index: number) {
     page.drawText(line.description, {
         x: page.getWidth() - 200,
         y: page.getHeight() - 680 - index * 10,
