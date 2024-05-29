@@ -1,7 +1,5 @@
 import { useState } from "react";
-import Button from "../elements/Button";
 import Dropdown from "../elements/Dropdown";
-import Input from "../elements/Input";
 import Base from "./Base";
 
 interface ILeavemodal {
@@ -11,9 +9,9 @@ interface ILeavemodal {
 
 const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
     const options = [
-        { value: "Option 1", label: "Option 1" },
-        { value: "Option 2", label: "Option 2" },
-        { value: "Option 3", label: "Option 3" },
+        { value: "Option 1", label: "Sygdom" },
+        { value: "Option 2", label: "fridag" },
+        { value: "Option 3", label: "feriedag" },
         { value: "Option 4", label: "Option 4" },
         { value: "Option 5", label: "Option 5" }
     ];
@@ -22,11 +20,10 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
 
     const handleChange = (value: string) => {
         setSelectedOption(value);
-        console.log(value)
     };
 
     return (
-        <Base isOpen={isOpen} title="Leave Modal" toggleModal={toggleModal}>
+        <Base isOpen={isOpen} title="Fravær" toggleModal={toggleModal}>
             <div>
                 <div className="px-12 my-6">
                     <Dropdown
@@ -39,17 +36,33 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                 <div className="px-12 my-6">
                     {selectedOption == "Option 1" && (
                         <>
+                            <h1 className="block mb-3 text-white">
+                                Skriv årsag
+                            </h1>
                             <div>
-                                <Input label="Skirv årsag" name="årsag" placeholder="sygdom" />
+                                <textarea className="rounded-[14px] w-full h-[68px] border-[1px] border-solid text-white border-border outline-0 bg-[rgba(33,33,34,0.2)] resize-none min-h-[227px] py-4 pl-4" name="årsag" placeholder="sygdom" />
                             </div>
-                            <div className="px-12 my-12 ">
-                                <Button background="primaryLight" color="text">Godkend</Button>
-                                <Button background="secondarySupport" color="white">Annullere</Button>
+                            <div className="my-12">
+                                <button className="w-[120px] h-[44px] bg-primaryLight text-text rounded-xl border border-solid border-border mr-3">Godkend</button>
+                                <button className="w-[120px] h-[44px] bg-secondarySupport text-white rounded-xl border border-solid border-border">Annullere</button>
                             </div>
                         </>
                     )}
-                    {selectedOption == "Option 2" && (<div>View for Option 2</div>)}
-                    {selectedOption == "Option 3" && (<div>View for Option 3</div>)}
+                    {selectedOption == "Option 2" && (
+                        <>
+                            <h1 className="block mb-3 text-white">
+                                Skriv årsag
+                            </h1>
+                            <div>
+                                <textarea className="rounded-[14px] w-full h-[68px] border-[1px] border-solid text-white border-border outline-0 bg-[rgba(33,33,34,0.2)] resize-none min-h-[227px] py-4 pl-4" name="årsag" placeholder="ferie" />
+                            </div>
+                            <div className="my-12">
+                                <button className="w-[120px] h-[44px] bg-primaryLight text-text rounded-xl border border-solid border-border mr-3">Godkend</button>
+                                <button className="w-[120px] h-[44px] bg-secondarySupport text-white rounded-xl border border-solid border-border">Annullere</button>
+                            </div>
+                        </>
+                    )}
+                    {selectedOption == "Option 3" && (<div>View for feriedag</div>)}
                     {selectedOption == "Option 4" && (<div>View for Option 4</div>)}
                     {selectedOption == "Option 5" && (<div>View for Option 5</div>)}
                 </div>
