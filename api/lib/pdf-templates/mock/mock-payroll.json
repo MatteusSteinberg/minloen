@@ -18,7 +18,7 @@
     "month": "May 2015",
     "datePeriod": "2015/05/01 - 2015/05/31",
     "paymentDate": "2015/06/01",
-    "salary": "10000"
+    "salary": "10000 kr"
   },
   "details": [
     {
@@ -62,9 +62,9 @@
     "holidays": [
       {
         "description": "Holidays",
-        "optionOne": "5",
-        "optionTwo": "10",
-        "optionThree": "15",
+        "optionOne": "Grundlag",
+        "optionTwo": "Sats",
+        "optionThree": "Yeah",
         "holidayLines": [
           {
             "description": "Holidays earned",
@@ -87,27 +87,25 @@
         ]
       },
       {
-        "description": "Holidays",
-        "optionOne": "5",
-        "optionTwo": "10",
-        "optionThree": "15",
+        "description": "Ferie",
+        "optionOne": "",
+        "optionTwo": "Brugt",
+        "optionThree": "Total",
         "holidayLines": [
           {
-            "description": "Holidays earned",
+            "description": "Holidays Hash",
             "optionOne": "5",
             "optionTwo": "10",
             "optionThree": "15"
           },
           {
-            "description": "Holidays taken",
+            "description": "Holidays OOI",
             "optionOne": "5",
-            "optionTwo": "10",
             "optionThree": "15"
           },
           {
-            "description": "Holidays left",
+            "description": "Holidays Yeah",
             "optionOne": "5",
-            "optionTwo": "10",
             "optionThree": "15"
           }
         ]

@@ -40,14 +40,14 @@ export interface ISaldiLine {
     value: string
 }
 
-interface IHolidayLine {
+export interface IHolidayLine {
     description: string
     optionOne?: string
     optionTwo?: string
     optionThree?: string
 }
 
-interface IHoliday {
+export interface IHoliday {
     description: string
     optionOne?: string
     optionTwo?: string
@@ -55,12 +55,12 @@ interface IHoliday {
     holidayLines: Array<IHolidayLine>
 }
 
-interface IBalance {
+export interface IBalance {
     holidays: Array<IHoliday>
     saldi: Array<ISaldiLine>
 }
 
-export interface IPayroll {
+export interface IPDFPayroll {
     employee: IEmployeeInformation
     company: ICompanyInformation
     payroll: IPayrollInformation
@@ -68,7 +68,7 @@ export interface IPayroll {
     balance: IBalance
 }
 
-export async function payrollPdfTemplate(data: IPayroll) {
+export async function payrollPdfTemplate(data: IPDFPayroll) {
     const doc = await PDFDocument.create()
 
     await doc.embedFont(StandardFonts.TimesRoman)
@@ -163,7 +163,7 @@ function generateBanner(page: PDFPage, payroll: IPayrollInformation) {
     })
 }
 
-function generateDetailSection(page: PDFPage, doc: PDFDocument, logoImage: PDFImage, data: IPayroll) {
+function generateDetailSection(page: PDFPage, doc: PDFDocument, logoImage: PDFImage, data: IPDFPayroll) {
     page.drawText("BESKRIVELSE", {
         x: leftSideStartPix + 30,
         y: page.getHeight() - 230,
@@ -203,6 +203,7 @@ function generateDetailSection(page: PDFPage, doc: PDFDocument, logoImage: PDFIm
             newIndex++
         }
         generateDetailLine(currentPage, line, newIndex)
+        newIndex++
     })
 }
 
@@ -257,11 +258,17 @@ function generateBalance(page: PDFPage, balance: IBalance) {
 
 function generateBalanceHoliday(page: PDFPage, holidays: Array<IHoliday>) {
     let titelYCord = page.getHeight() - 670
-    holidays.forEach((holiday) => {
+    let totalLines = 0;
+    holidays.forEach((holiday, index) => {
+        if (index !== 0) {
+            titelYCord -= 30
+            totalLines += 2
+        }
         generateFooterLineTitel(page, holiday, titelYCord)
-        holiday.holidayLines.forEach((line, index) => {
-            generateFooterLine(page, line, index)
-            titelYCord = page.getHeight() - 670 - index * 10
+        holiday.holidayLines.forEach((line) => {
+            generateFooterLine(page, line, totalLines)
+            titelYCord = page.getHeight() - 670 - totalLines * 10
+            totalLines++;
         })
     })
 }

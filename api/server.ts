@@ -12,6 +12,4 @@ registerRoutes(app)
 
 connect()
 
-pdfMaker({ key: "payroll" })
-
 app.listen(port, () => console.log(`Listening on port ${port}`))
