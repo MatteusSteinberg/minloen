@@ -15,7 +15,7 @@ const paySummary = {
   aTax: -9235.0,
 }
 
-const AddPaycheck = (props: Props) => {
+const AddPaycheck = () => {
   return (
     <ContentContainer>
       <div className="">

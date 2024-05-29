@@ -34,7 +34,7 @@ export interface IUserDetails {
 
   /** Ferieordning */
   vacation?: {
-    scheme?: string
+    scheme?: "vacationSavings" | "vacationWithPay"
     recipient?: string
     eachYear?: string
   }

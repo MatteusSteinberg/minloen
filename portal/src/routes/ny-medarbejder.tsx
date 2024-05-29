@@ -19,6 +19,23 @@ interface CoworkerSection {
   children?: React.ReactNode
 }
 
+export const workplacePensionInstitues = [
+  { value: "velliv", label: "Velliv" },
+  { value: "danica", label: "Danica Pension" },
+  { value: "industriens", label: "Industriens Pension" },
+  { value: "ap", label: "AP Pension" },
+  { value: "topdanmark", label: "Topdanmark Pension" },
+  { value: "alm_brand", label: "Alm. Brand Pension" },
+  { value: "pfa", label: "PFA Pension" },
+  { value: "pensam", label: "PenSam Pension" },
+  { value: "sampension", label: "Sampension" },
+  { value: "seb", label: "SEB Pension" },
+  { value: "lærernes", label: "Lærernes Pension" },
+  { value: "pension_danmark", label: "PensionDanmark" },
+  { value: "pka", label: "PKA pension" },
+  { value: "mp", label: "MP Pension" },
+]
+
 const Section = ({ title, undertitle, error, form, onChange, fields, children }: CoworkerSection) => {
   const inputHandler = (field: field) => ({
     onChange: (ev: React.ChangeEvent<HTMLInputElement>) => {
