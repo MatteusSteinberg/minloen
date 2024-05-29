@@ -24,7 +24,7 @@ const Header = ({ title, history }: IHeader) => {
                         <ChevronLeftIcon className="w-6 h-6" />
                     </button>
                 )}
-                <h1 className="-mt-2 text-white dark:text-black font-h2">{title}</h1>
+                <h1 className="-mt-2 text-white font-h2">{title}</h1>
             </div>
             <div className="relative z-50 flex items-center justify-center gap-5 p-5 md:p-4 rounded-xl bg-primarySupport">
                 <button className="relative z-[25] gap-1 shrink-0 flex flex-col items-center justify-center w-8 h-8 ml-auto tap-highlight-color md:hidden">
