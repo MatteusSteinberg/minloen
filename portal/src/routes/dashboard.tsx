@@ -1,24 +1,73 @@
-import Dropdown from "../components/elements/Dropdown"
+import DataTable from "../components/elements/DataTable"
+import Box from "../components/globals/Box"
+import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
 
-type Props = {}
+const boxData = [
+    {
+        title: "Løn i alt",
+        value: "127.812,34 DKK",
+    },
+    {
+        title: "Sygedage / Fravær",
+        value: "12",
+    },
+    {
+        title: "Kørselsfradrag",
+        value: "26",
+    },
+]
 
-const options = [{ value: "Option 1", label: "Option 1" }, { value: "Option 2", label: "Option 2" }, { value: "Option 3", label: "Option 3" }, { value: "Option 4", label: "Option 4" }, { value: "Option 5", label: "Option 5" }]
+const paycheckData = {
+    headers: ["ID #", "Dato", "Løn"],
+    rows: [
+        {
+            "ID #": 1,
+            Dato: "01-01-2021",
+            Løn: "18.057",
+        },
+        {
+            "ID #": 2,
+            Dato: "01-01-2021",
+            Løn: "18.057",
+        },
+        {
+            "ID #": 3,
+            Dato: "01-01-2021",
+            Løn: "18.057",
+        },
+        {
+            "ID #": 4,
+            Dato: "01-01-2021",
+            Løn: "18.057",
+        },
+    ],
+}
 
-const dashboard = (props: Props) => {
+const graphData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    data: [65, 59, 72, 75, 52, 55],
+}
 
-  return (
-    <div className="relative flex max-w-full rounded-none grow bg-secondarySupport md:rounded-3xl dark:bg-white">
-      <div className="relative flex flex-col max-w-full grow">
-        <div className="px-6 pt-6 pb-10 md:p-12 2xl:px-10">
-          <div className="">
-            <Header title="Hejsa Tobias!" />
-          </div>
-          <Dropdown name="Test" options={options} />
-        </div>
-      </div>
-    </div>
-  )
+const dashboard = () => {
+    return (
+        <ContentContainer>
+            <div className="">
+                <Header title="Hejsa Tobias!" />
+            </div>
+            <div>
+                <p className="mb-2 text-white font-large-normal">Statistikker</p>
+                <div className="grid grid-cols-3 grid-rows-1 gap-4 mb-12">
+                    {boxData.map((data, index) => (
+                        <Box graph title={data.title} graphData={graphData} value={data.value} />
+                    ))}
+                </div>
+            </div>
+            <div className="mt-12">
+                <DataTable title="Lønsedler" tableData={paycheckData} />
+            </div>
+        </ContentContainer>
+    )
 }
 
 export default dashboard

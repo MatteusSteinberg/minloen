@@ -1,39 +1,7 @@
 import { Document, Model, Types } from "mongoose"
 import { IOrganization } from "./organization.interface"
 
-export interface IUser {
-  id?: any
-  firstName: string
-  lastName: string
-  /** Combination of firstName and lastName */
-  name: string
-
-  email: string
-  password?: string
-
-  updatedAt?: Date
-  createdAt?: Date
-  forgottenPassword?: {
-    token: string
-    createdAt: Date
-    expriryAt: Date
-    usedAt?: Date
-  }
-  organizations?: Array<Types.ObjectId>
-  activeOrganization?: Types.ObjectId | IOrganization | string
-  organizationRole?: "admin" | "user"
-}
-
-export type IUserDoc = IUser & Document
-
-export interface IUserModel extends Model<IUserDoc> {
-  isEmailTaken(email: string, excludeUserId?: Types.ObjectId): Promise<boolean>
-}
-
-export interface IUserAdd {
-  email?: string
-  organizationRole: "admin" | "user"
-
+export interface IUserDetails {
   socialSecurityNumber?: string
   firstName?: string
   lastName?: string
@@ -44,11 +12,14 @@ export interface IUserAdd {
   employmentDate?: Date
   resignationDate?: Date
   position?: string
+  /** Betalingsordning */
+  paymentArrangement?: string
 
   bankRegistrationNumber?: string
   bankAccountNumber?: string
 
   standardHours?: string
+  salaryType?: "salary" | "hourly"
   /** Gage */
   salary?: string
 
@@ -69,15 +40,15 @@ export interface IUserAdd {
   }
 
   pension?: {
-    type?: string
+    pensionType?: string
     /** Eget bidrag % */
     ownContributionPercentage?: number
     /** Eget beløb */
-    ownAmount?: number
+    ownAmount?: string
     /** Firma bidrag % */
     companyContributionPercentage?: number
     /** Firma beløb */
-    companyAmount?: number
+    companyAmount?: string
   }
 
   eIncome?: {
@@ -91,8 +62,45 @@ export interface IUserAdd {
     institute?: string
     agreementCode?: string
     ownContributionPercentage?: number
-    ownAmount?: number
+    ownAmount?: string
     companyContributionPercentage?: number
-    companyAmount?: number
+    companyAmount?: string
   }
+}
+
+export interface IUser extends IUserDetails {
+  id?: any
+  _id?: any
+  firstName: string
+  lastName: string
+  /** Combination of firstName and lastName */
+  name: string
+
+  email: string
+  password?: string
+  disabled?: boolean
+
+  updatedAt?: Date
+  createdAt?: Date
+  forgottenPassword?: {
+    token: string
+    createdAt: Date
+    expriryAt: Date
+    usedAt?: Date
+  }
+  organizations?: Array<Types.ObjectId>
+  activeOrganization?: Types.ObjectId | IOrganization | string
+  organizationRole?: "admin" | "user",
+}
+
+export type IUserDoc = IUser & Document
+
+export interface IUserModel extends Model<IUserDoc> {
+  isEmailTaken(email: string, excludeUserId?: Types.ObjectId): Promise<boolean>
+}
+
+export interface IUserAdd extends IUserDetails {
+  email?: string
+  disabled?: boolean
+  organizationRole: "admin" | "user"
 }

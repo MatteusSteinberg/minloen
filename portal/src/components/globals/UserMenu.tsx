@@ -1,5 +1,7 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
+import { useAuth } from "../../hooks/use-auth"
 import { useOutsideClick } from "../../hooks/useOutsideClick"
+import UserSettings from "../modals/UserSettings"
 
 interface IUserMenu {
     image: string
@@ -8,6 +10,9 @@ interface IUserMenu {
 const UserMenu = ({ image }: IUserMenu) => {
     const buttonRef = useRef<HTMLButtonElement>(null)
     const [toggleMenu, node, setToggleMenu] = useOutsideClick(false, buttonRef)
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+
+    const { user } = useAuth()
 
     return (
         <>
@@ -19,12 +24,12 @@ const UserMenu = ({ image }: IUserMenu) => {
                     <div className="flex items-center gap-4">
                         <img src={image} alt="ProfileImage" className="rounded-full w-14 h-14" />
                         <div className="flex flex-col items-start justify-start gap-1">
-                            <p className="text-white font-default font-medium text-[18px] leading-6 dark:text-text -mt-1">Tobias Thien Tran</p>
-                            <p className="text-white opacity-30 font-default font-light text-[14px] dark:text-text">IT-Supporter Elev</p>
+                            <p className="text-white font-default font-medium text-[18px] leading-6 dark:text-text -mt-1">{user?.name}</p>
+                            <p className="text-white opacity-30 font-default font-light text-[14px] dark:text-text">{user?.position}</p>
                         </div>
                     </div>
                     <div className="flex flex-col px-4 mt-3 bg-secondarySupport rounded-2xl">
-                        <button className="flex items-center w-full h-12 text-white transition-colors dark:text-dark group font-standard-medium hover:text-primaryLight">
+                        <button onClick={() => setIsModalOpen(true)} className="flex items-center w-full h-12 text-white transition-colors dark:text-dark group font-standard-medium hover:text-primaryLight">
                             <svg className="inline-block w-6 h-6 mr-4 fill-[#6c7275] transition-colors group-hover:fill-primaryLight" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M12 1c.478 0 .946.136 1.346.393s.717.622.911 1.053l.657 1.446a2.68 2.68 0 0 0 1.117 1.228 2.75 2.75 0 0 0 1.641.343l1.597-.167a2.5 2.5 0 0 1 1.381.252c.426.214.78.545 1.018.952s.353.875.328 1.345a2.41 2.41 0 0 1-.469 1.304l-.945 1.28c-.337.457-.519 1.007-.518 1.572s.177 1.119.514 1.578l.945 1.28a2.41 2.41 0 0 1 .469 1.304c.025.47-.089.937-.328 1.345s-.593.739-1.018.952a2.5 2.5 0 0 1-1.381.252l-1.596-.167a2.75 2.75 0 0 0-1.641.343 2.68 2.68 0 0 0-1.116 1.222l-.652 1.446c-.194.43-.511.796-.911 1.053a2.5 2.5 0 0 1-2.693 0c-.401-.257-.717-.622-.911-1.053l-.653-1.446a2.68 2.68 0 0 0-1.121-1.228 2.75 2.75 0 0 0-1.641-.343l-1.597.168c-.475.049-.955-.038-1.381-.252s-.78-.544-1.019-.952-.353-.875-.328-1.345a2.41 2.41 0 0 1 .469-1.304l.945-1.28c.337-.457.519-1.007.519-1.572s-.181-1.115-.519-1.572l-.945-1.28a2.41 2.41 0 0 1-.469-1.304c-.025-.47.089-.937.328-1.345s.593-.739 1.018-.952a2.5 2.5 0 0 1 1.381-.252l1.602.167a2.75 2.75 0 0 0 1.641-.343A2.68 2.68 0 0 0 9.09 3.892l.653-1.446c.194-.43.511-.796.911-1.053S11.522 1 12 1zm0 8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
                             </svg>
@@ -39,6 +44,7 @@ const UserMenu = ({ image }: IUserMenu) => {
                     </div>
                 </div>
             </div>
+            <UserSettings isOpen={isModalOpen} toggleModal={setIsModalOpen} />
         </>
     )
 }

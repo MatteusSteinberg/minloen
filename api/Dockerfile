@@ -1,24 +1,27 @@
 # Fetching the minified node image on apline linux
 FROM node:slim
 
-# Declaring env
+WORKDIR /app
+
+RUN mkdir api
+
+
+WORKDIR /app/api
+COPY ./yarn.lock .
+COPY ./api/package.json .
+
+RUN yarn
+COPY ./api .
+
+WORKDIR /app
+COPY ./interfaces ./interfaces
+
+
+WORKDIR /app/api
 ENV NODE_ENV production
+RUN yarn build
 
-# Setting up the work directory
-WORKDIR /api
 
-COPY package.json yarn.lock ./
-
-# Installing dependencies
-RUN yarn install
-
-# Copying all the files in our project
-COPY . .
-
-run yarn build
-
-# Exposing server port
 EXPOSE 8080
 
-# Starting our application
 CMD [ "yarn", "start:prod" ]
