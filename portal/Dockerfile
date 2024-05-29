@@ -18,6 +18,7 @@ WORKDIR /app/portal
 RUN yarn
 
 ENV NODE_ENV production
+ENV CI true
 RUN yarn build
 
 
