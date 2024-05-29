@@ -34,7 +34,7 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                     />
                 </div>
                 <div className="px-12 my-6">
-                    {selectedOption == "Option 1" && (
+                    {selectedOption === "Option 1" && (
                         <>
                             <h1 className="block mb-3 text-white">
                                 Skriv årsag
@@ -48,7 +48,7 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                             </div>
                         </>
                     )}
-                    {selectedOption == "Option 2" && (
+                    {selectedOption === "Option 2" && (
                         <>
                             <h1 className="block mb-3 text-white">
                                 Skriv årsag
@@ -62,9 +62,9 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                             </div>
                         </>
                     )}
-                    {selectedOption == "Option 3" && (<div>View for feriedag</div>)}
-                    {selectedOption == "Option 4" && (<div>View for Option 4</div>)}
-                    {selectedOption == "Option 5" && (<div>View for Option 5</div>)}
+                    {selectedOption === "Option 3" && (<div>View for feriedag</div>)}
+                    {selectedOption === "Option 4" && (<div>View for Option 4</div>)}
+                    {selectedOption === "Option 5" && (<div>View for Option 5</div>)}
                 </div>
             </div>
         </Base>
