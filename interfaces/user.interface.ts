@@ -19,6 +19,7 @@ export interface IUserDetails {
   bankAccountNumber?: string
 
   standardHours?: string
+  salaryType?: "salary" | "hourly"
   /** Gage */
   salary?: string
 
@@ -69,6 +70,7 @@ export interface IUserDetails {
 
 export interface IUser extends IUserDetails {
   id?: any
+  _id?: any
   firstName: string
   lastName: string
   /** Combination of firstName and lastName */

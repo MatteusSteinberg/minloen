@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
-import { IUserAdd } from "../../interfaces/user.interface";
+import { HydratedDocument, Types } from "mongoose";
+import { IUser, IUserAdd } from "../../interfaces/user.interface";
 import { validateObject } from "../lib/validator";
 import userModel from "../models/user.model";
 import getAuthToken from "./helpers/auth-token-generation";
@@ -76,7 +77,7 @@ export const list = baseHandler(async ({ query, user }) => {
 
   console.log(query)
 
-  const users = await userModel.find({
+  const users: HydratedDocument<IUser>[] = await userModel.find({
     organizations: { $eq: user.activeOrganization }
   }).skip((parseInt(page || "1") - 1) * 10).limit(10)
 
@@ -90,4 +91,15 @@ export const listMetadata = baseHandler(async ({ query, user }) => {
   })
 
   return { data: { count: count, size: 10 }, status: StatusCodes.Ok }
+}, "admin")
+
+export const get = baseHandler(async ({ params, user }) => {
+  const { id } = params as { id: string }
+
+  const getUser: HydratedDocument<IUser> = await userModel.findOne({
+    _id: new Types.ObjectId(id),
+    organizations: { $eq: user.activeOrganization }
+  })
+
+  return { data: getUser, status: StatusCodes.Ok }
 }, "admin")

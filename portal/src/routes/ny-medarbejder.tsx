@@ -74,7 +74,6 @@ const NewCoworker = () => {
   })
 
   const handleSectionOnChange = (path: string, value: any) => {
-    console.log(path, value)
     setForm((f) => {
       f = _.set(f, path, value)
       return { ...f }
@@ -94,7 +93,7 @@ const NewCoworker = () => {
   return (
     <ContentContainer>
       <div className="">
-        <Header history title="Ny Medarbejder" />
+        <Header history="/medarbejdere" title="Ny Medarbejder" />
       </div>
       <div className="relative flex items-start justify-between gap-4">
         <div className="relative flex flex-col w-2/5 gap-4">
@@ -203,18 +202,19 @@ const NewCoworker = () => {
               />
               <Section
                 fields={[
-                  { keyPath: "standardHours", name: "standardHours", placeholder: "Normtimer" },
-                  { keyPath: "salary", name: "salary", placeholder: "Gage" },
-                ]}
-                form={form}
-                error={error}
-                title="Gage"
-                undertitle="Medarbejders Gage"
-                onChange={handleSectionOnChange}
-              />
-              <Section fields={[{ keyPath: "hourlyWage", name: "hourlyWage", placeholder: "Timeløn" }]} form={form} error={error} title="Timeløn, individuel sats" undertitle="Medarbejder timeløn" onChange={handleSectionOnChange} />
-              <Section
-                fields={[
+                  {
+                    keyPath: "salaryType", name: "salaryType", type: "dropdown", placeholder: "Løntype", options: [
+                      { value: "salary", label: "Gage" },
+                      { value: "hourly", label: "Timeløn" }
+                    ]
+                  },
+
+                  ...(form.salaryType === "salary" ?
+                    [{ keyPath: "standardHours", name: "standardHours", placeholder: "Normtimer" }, { keyPath: "salary", name: "salary", placeholder: "Gage" }] : []),
+
+                  ...(form.salaryType === "hourly" ?
+                    [{ keyPath: "hourlyWage", name: "hourlyWage", placeholder: "Timeløn" }] : []),
+
                   {
                     keyPath: "ATP",
                     name: "ATP",

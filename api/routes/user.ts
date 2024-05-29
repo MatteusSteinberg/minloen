@@ -1,5 +1,5 @@
 import express from "express";
-import { add, list, listMetadata, login, me, register } from "../services/user.route";
+import { add, get, list, listMetadata, login, me, register } from "../services/user.route";
 
 const userRouter = express.Router()
 
@@ -12,6 +12,7 @@ userRouter.post('/', add)
 // GET
 userRouter.get('/', me)
 userRouter.get('/list', list)
+userRouter.get('/:id', get)
 userRouter.get('/list/meta', listMetadata)
 
 // PATCH
