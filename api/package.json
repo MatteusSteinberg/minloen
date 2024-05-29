@@ -8,11 +8,15 @@
     "copy": "cp package.json && cp yarn.lock",
     "dev": "yarn server",
     "server": "nodemon server.ts",
-    "start:prod": "node build/server.js"
+    "start:prod": "node build/api/server.js"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/lodash": "^4.17.4",
+    "@types/node": "^20.12.12",
     "@types/passport": "^1.0.16",
     "@types/passport-jwt": "^4.0.1",
     "bcrypt": "^5.1.1",
@@ -20,20 +24,19 @@
     "cors": "^2.8.5",
     "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
+    "email-validator": "^2.0.4",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "mongoose": "^8.4.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
     "pdf-lib": "^1.17.1"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/express": "^4.17.21",
     "@types/mongoose": "^5.11.97",
-    "@types/node": "^20.12.12",
-    "nodemon": "^3.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "nodemon": "^3.1.0"
   }
 }

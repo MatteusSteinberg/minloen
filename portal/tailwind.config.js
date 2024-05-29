@@ -17,7 +17,7 @@ module.exports = {
       secondarySupport: "#232627",
       tertiarySupport: "#8FB996",
       text: "#252525",
-      border: "#E7E7E9",
+      border: "rgba(231, 231, 233, 0.2)",
       error: "#C35865",
       success: "#58C383",
       white: "#FFFFFF",
@@ -32,7 +32,39 @@ module.exports = {
     shadows: {
       default: "0px 2px 75px 0px rgba(37, 37, 37, 0.10);",
     },
-    extend: {},
+    keyframes: {
+      inAnimation: {
+        "0%": {
+          opacity: "0",
+          transform: "translateY(50px)",
+          visibility: "hidden"
+        },
+        "100%": {
+          opacity: "1",
+          transform: "translateY(0)",
+          visibility: "visible"
+        }
+      },
+      outAnimation: {
+        "0%": {
+          opacity: "1",
+          transform: "translateY(0px)",
+          visibility: "visible"
+        },
+        "100%": {
+          opacity: "0",
+          transform: "translateY(50)",
+          visibility: "hidden"
+        }
+      },
+
+    },
+    extend: {
+      animation: {
+        inAnimation: "inAnimation 500ms cubic-bezier(0.77, 0.2, 0.05, 1)",
+        outAnimation: "outAnimation 500ms cubic-bezier(0.77, 0.2, 0.05, 1) forwards",
+      },
+    },
   },
   plugins: [],
 }

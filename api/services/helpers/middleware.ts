@@ -4,7 +4,7 @@ import { Application, Request } from "express";
 import { HydratedDocument } from "mongoose";
 import passport from "passport";
 import { ExtractJwt, Strategy as JwtStrategy, StrategyOptions, VerifiedCallback } from "passport-jwt";
-import { IUser } from "../../interfaces/user.interface";
+import { IUser } from "../../../interfaces/user.interface";
 import userModel from "../../models/user.model";
 import { IAuthToken } from "./auth-token-generation";
 

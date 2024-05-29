@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import { HydratedDocument } from "mongoose"
-import { IFile } from "../../interfaces/file.interface"
-import { IUser } from "../../interfaces/user.interface"
+import { IFile } from "../../../interfaces/file.interface"
+import { IUser } from "../../../interfaces/user.interface"
 
 export type File = Partial<IFile>
 
@@ -11,6 +11,8 @@ export enum StatusCodes {
   BadRequest = 400,
   Unauthorized = 401,
   NotFound = 404,
+  /** Already exists */
+  Conflict = 409,
   ServerError = 500
 }
 
@@ -52,11 +54,22 @@ export type HandlerRequest = {
   user: HydratedDocument<IUser> | undefined
 }
 
-const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, requiresAuth?: boolean) => {
+const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, requiresRole?: "admin" | "user" | "any") => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    if (requiresAuth && !(req as any).user) {
-      res.status(401).json({ message: "Method not allowed without being logged in." })
-      return
+    if (requiresRole && !(req as any).user) {
+      const user = (req.user as HydratedDocument<IUser>)
+      if (!user) {
+        res.status(401).json("Unauthorized")
+        return
+      }
+      if (user.organizationRole !== "admin" && requiresRole === "admin") {
+        res.status(401).json("Unauthorized")
+        return
+      }
+      if (user.organizationRole !== "user" && requiresRole === "user") {
+        res.status(401).json("Unauthorized")
+        return
+      }
     }
 
     try {

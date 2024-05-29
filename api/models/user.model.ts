@@ -1,14 +1,81 @@
 import bcrypt from "bcrypt"
-import { Schema, Types, model } from "mongoose"
-import { IUserDoc, IUserModel } from "../interfaces/user.interface"
+import { Schema, SchemaDefinition, Types, model } from "mongoose"
+import { IUser, IUserDetails } from "../../interfaces/user.interface"
 
-const userSchema = new Schema<IUserDoc, IUserModel>(
+const userDetailsSchema: SchemaDefinition<IUserDetails> = {
+  address: { type: String, trim: true },
+  amContribution: { type: Boolean },
+  ATP: { type: String, trim: true },
+  bankAccountNumber: { type: String, trim: true },
+  bankRegistrationNumber: { type: String, trim: true },
+  eIncome: {
+    type: {
+      enabled: { type: Boolean },
+      productionUnit: { type: String },
+      incomeType: { type: String }
+    }
+  },
+  employmentDate: { type: Date },
+  firstName: { type: String },
+  lastName: { type: String },
+  hourlyWage: { type: String },
+  paymentArrangement: { type: String, trim: true },
+  pension: {
+    type: {
+      pensionType: { type: String },
+      ownContributionPercentage: { type: Number },
+      ownAmount: { type: String },
+      companyContributionPercentage: { type: Number },
+      companyAmount: { type: String }
+    }
+  },
+  phoneNumber: { type: String },
+  position: { type: String },
+  resignationDate: { type: Date },
+  salary: { type: String },
+  socialSecurityNumber: { type: String, trim: true },
+  standardHours: { type: String, required: false },
+  vacation: {
+    type: {
+      scheme: { type: String },
+      recipient: { type: String },
+      eachYear: { type: String }
+    }
+  },
+  workerNumber: { type: String },
+  workplacePension: {
+    type: {
+      institute: { type: String },
+      agreementCode: { type: String },
+      ownContributionPercentage: { type: Number },
+      ownAmount: { type: String },
+      companyContributionPercentage: { type: Number },
+      companyAmount: { type: String }
+    }
+  }
+}
+
+const userSchema = new Schema<IUser>(
   {
-    name: {
+    firstName: {
       type: String,
       trim: true,
-      index: true,
       required: true,
+    },
+    lastName: {
+      type: String,
+      trim: true,
+      required: false
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    name: {
+      type: String,
+      required: false,
+      trim: true,
     },
     email: {
       type: String,
@@ -38,19 +105,22 @@ const userSchema = new Schema<IUserDoc, IUserModel>(
         type: Date,
       },
     },
-    activeOrganizations: {
+    activeOrganization: {
       type: Schema.Types.ObjectId,
+      index: true,
       ref: "Organization",
     },
     organizations: {
       type: [Schema.Types.ObjectId],
+      index: true,
       ref: "Organization",
     },
     organizationRole: {
       type: String,
       enum: ["admin", "user"],
       default: "user",
-    }
+    },
+    ...userDetailsSchema
   },
   {
     timestamps: true,
@@ -76,6 +146,6 @@ userSchema.pre("save", async function (next) {
   next()
 })
 
-const userModel = model<IUserModel>("User", userSchema)
+const userModel = model<IUser>("User", userSchema)
 
 export default userModel
