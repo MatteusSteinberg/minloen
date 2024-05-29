@@ -6,6 +6,7 @@ import userModel from "../models/user.model";
 import getAuthToken from "./helpers/auth-token-generation";
 import baseHandler, { StatusCodes } from "./helpers/base-handler";
 import Organization from "./utils/organization.utils";
+import { User } from "./utils/user.utils";
 
 
 export const login = baseHandler(async ({ body }) => {
@@ -102,4 +103,21 @@ export const get = baseHandler(async ({ params, user }) => {
   })
 
   return { data: getUser, status: StatusCodes.Ok }
+}, "admin")
+
+export const updateMe = baseHandler(async ({ user, body }) => {
+  const updateBody = body as Partial<IUser>
+
+  const updatedUser = await User.update(updateBody, user._id, user)
+
+  return { data: updatedUser, status: StatusCodes.Ok }
+}, "user")
+
+export const update = baseHandler(async ({ params, body, user }) => {
+  const { id } = params as { id: string }
+  const updateBody = body as Partial<IUser>
+
+  const updatedUser = await User.update(updateBody, id, user)
+
+  return { data: updatedUser, status: StatusCodes.Ok }
 }, "admin")
