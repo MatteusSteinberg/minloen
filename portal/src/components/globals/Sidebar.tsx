@@ -1,8 +1,8 @@
 import { ChevronDownIcon, ClipboardDocumentIcon, FaceFrownIcon, MoonIcon, Squares2X2Icon, SunIcon, TruckIcon } from "@heroicons/react/24/outline"
 import React, { useState } from "react"
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import ProfileImage from "../../assets/images/jonas1.png"
-import LeaveModal from "../modals/leavemodal"
+import { useAuth } from "../../hooks/use-auth"
 
 interface ILinkProps {
     link: string
@@ -17,17 +17,17 @@ const Links: ILinkProps[] = [
         text: "Overview",
     },
     {
-        link: "/lønsedler",
+        link: "/loensedler",
         icon: <ClipboardDocumentIcon className="inline-block w-6 h-6" />,
         text: "Lønsedler",
     },
     {
-        link: "/kørsel",
+        link: "/koersel",
         icon: <TruckIcon className="inline-block w-6 h-6" />,
         text: "Kørsel",
     },
     {
-        link: "/fravær",
+        link: "/fravaer",
         icon: <FaceFrownIcon className="inline-block w-6 h-6" />,
         text: "Sygedage / Fravær",
     },
@@ -54,7 +54,8 @@ interface ISidebar {
 const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
     const [hideAdmin, setHideAdmin] = useState(false)
     const [isDarkMode, setIsDarkMode] = useState(false)
-    const [showModal, setShowModal] = useState(false)
+
+    const { user } = useAuth()
 
     const toggleSidebar = () => {
         setShowSidebar(!showSidebar)
@@ -110,7 +111,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                         {showSidebar && <span className="ml-5 -mt-[3px]">Admin navigation</span>}
                     </button>
                     <div className={`${hideAdmin ? "invisible" : "visible"} ${showSidebar ? "px-0" : "px-2"}`}>
-                        {AdminLinks.map((link: ILinkProps, index: number) => (
+                        {AdminLinks.map((link: ILinkProps) => (
                             <NavLink to={link.link} className={`w-full flex items-center h-12 font-normal text-[15px] font-default text-[rgba(232,236,239,.75)] rounded-lg transition-colors hover:text-white ${showSidebar ? "px-5" : "px-3"}`}>
                                 {link.icon}
                                 {showSidebar && <span className="ml-5 -mt-[3px]">{link.text}</span>}
@@ -131,16 +132,15 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                                         </div>
                                     </div>
                                     <div className="ml-4 mr-4">
-                                        <p className="text-white truncate font-standard-normal">Tobias Thien Tran</p>
-                                        <p className="text-white font-small-normal opacity-30">ttt@flc.dk</p>
+                                        <p className="text-white truncate font-standard-normal">{user?.name}</p>
+                                        <p className="text-white font-small-normal opacity-30">{user?.email}</p>
                                     </div>
                                 </div>
                                 <p className="px-3 py-1 rounded-full font-default text-[12px] font-bold bg-primaryLight leading-[15px] uppercase">Free</p>
                             </div>
-                            <button className="border-solid border-2 border-[rgb(52,56,57)] bg-transparent text-white font-standard-medium py-3 mt-4 w-full rounded-[14px] flex justify-center hover:bg-[rgb(52,56,57)] transition-colors duration-150" onClick={() => setShowModal(true)}>
+                            <Link className="border-solid border-2 border-[rgb(52,56,57)] bg-transparent text-white font-standard-medium py-3 mt-4 w-full rounded-[14px] flex justify-center hover:bg-[rgb(52,56,57)] transition-colors duration-150" to="/">
                                 Upgrade til Pro
-                            </button>
-                            <LeaveModal isOpen={showModal} toggleModal={setShowModal} />
+                            </Link>
                         </div>
                     ) : (
                         <div className="relative w-10 h-10">
