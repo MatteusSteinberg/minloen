@@ -1,7 +1,7 @@
 import fs from "fs"
 import { PDFDocument, PDFImage, PDFPage, PageSizes, StandardFonts, rgb } from "pdf-lib"
+import { IPayrollBalance, IPayrollDetailLine, IPayrollHoliday, IPayrollHolidayLine, IPayrollInfo, IPayrollPDF, IPayrollSaldiLine } from "../../../interfaces/payroll.interface"
 import { defaultPage } from "./defaultPage"
-import { IPayrollBalance, IPayrollDetailLine, IPayrollHoliday, IPayrollHolidayLine, IPayrollInfo, IPayrollPDF, IPayrollSaldiLine } from '../../../interfaces/payroll.interface'
 
 const leftSideStartPix = 35
 
@@ -136,7 +136,7 @@ function generateDetailSection(page: PDFPage, doc: PDFDocument, logoImage: PDFIm
         if (checkIfDetailsIsFull(currentPage.getHeight() - 250 - newIndex * 10)) {
             newIndex = 0
             currentPage = doc.addPage(PageSizes.A4)
-            defaultPage(currentPage, logoImage, leftSideStartPix, data.employee, data.company)
+            defaultPage(currentPage, logoImage, data.employee, data.company)
             newIndex++
         }
         generateDetailLine(currentPage, line, newIndex)
@@ -195,7 +195,7 @@ function generateBalance(page: PDFPage, balance: IPayrollBalance) {
 
 function generateBalanceHoliday(page: PDFPage, holidays: Array<IPayrollHoliday>) {
     let titelYCord = page.getHeight() - 670
-    let totalLines = 0;
+    let totalLines = 0
     holidays.forEach((holiday, index) => {
         if (index !== 0) {
             titelYCord -= 30
@@ -205,7 +205,7 @@ function generateBalanceHoliday(page: PDFPage, holidays: Array<IPayrollHoliday>)
         holiday.holidayLines.forEach((line) => {
             generateFooterLine(page, line, totalLines)
             titelYCord = page.getHeight() - 670 - totalLines * 10
-            totalLines++;
+            totalLines++
         })
     })
 }
