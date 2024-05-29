@@ -10,9 +10,12 @@ interface IDataTable {
   button?: string
   actions?: boolean
   title?: string
+  currentPage?: number
+  onPageClick?: (page: number) => void
+  metadata?: { count: number, size: number }
 }
 
-const DataTable = ({ tableData, button, actions, title }: IDataTable) => {
+const DataTable = ({ tableData, currentPage, onPageClick, metadata, button, actions, title }: IDataTable) => {
   return (
     <div className="relative z-10 w-full h-full border border-solid shadow-custom rounded-2xl border-border">
       <div className="relative flex items-center justify-between h-full py-6 px-9 bg-primarySupport rounded-t-2xl">
@@ -63,7 +66,7 @@ const DataTable = ({ tableData, button, actions, title }: IDataTable) => {
         </table>
       </div>
       <div className="flex items-center justify-end py-4 bg-primarySupport rounded-b-2xl px-9">
-        <Pagination />
+        <Pagination onClick={onPageClick} currentPage={currentPage} size={metadata?.size} count={metadata?.count} />
       </div>
     </div>
   )

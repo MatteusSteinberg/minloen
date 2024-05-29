@@ -71,17 +71,19 @@ export const add = baseHandler(async ({ user, body }) => {
 }, "admin")
 
 
-export const list = baseHandler(async ({ params, user }) => {
-  const { page } = params as { page?: string }
+export const list = baseHandler(async ({ query, user }) => {
+  const { page } = query as { page?: string }
+
+  console.log(query)
 
   const users = await userModel.find({
     organizations: { $eq: user.activeOrganization }
-  }).skip((parseInt(page) ?? 0) * 10).limit(10)
+  }).skip((parseInt(page || "1") - 1) * 10).limit(10)
 
   return { data: users, status: StatusCodes.Ok }
 }, "admin")
 
-export const listMetadata = baseHandler(async ({ params, user }) => {
+export const listMetadata = baseHandler(async ({ query, user }) => {
 
   const count = await userModel.countDocuments({
     organizations: { $eq: user.activeOrganization }
