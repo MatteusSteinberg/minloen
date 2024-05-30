@@ -18,7 +18,7 @@ const Summary = ({ payrollSetup, user }: IPayrollSummary) => {
           </li>
           <li className="flex items-center justify-between pb-2 border-b border-solid text-text dark:text-white border-lightBorder dark:border-darkBorder font-standard-normal">
             <p>ATP af Løn</p>
-            <p>{""}</p>
+            <p>{"-99.00"}</p>
           </li>
           <li className="flex items-center justify-between pb-2 border-b border-solid text-text dark:text-white border-lightBorder dark:border-darkBorder font-standard-normal">
             <p>AM-Indkomst</p>
