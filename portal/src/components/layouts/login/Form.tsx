@@ -21,7 +21,7 @@ const Form = (props: Props) => {
     }
 
     const onSubmit = async () => {
-        const error = await authenticate(form?.email || "", form.password || "")
+        const { error } = await authenticate(form?.email || "", form.password || "")
 
         if (error) {
             setError(true)
