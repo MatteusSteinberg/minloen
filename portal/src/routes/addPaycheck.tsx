@@ -15,7 +15,7 @@ const AddPaycheck = () => {
   const isFixedPayrollParam = useSearchParam("fast")
 
   const [form, setForm] = useState<IPayrollSetup>({})
-  const [, { add, has }] = useSet<string>()
+  const [edited, { add }] = useSet<string>()
 
   const isFixedPayroll = isFixedPayrollParam === "true"
 
@@ -43,7 +43,7 @@ const AddPaycheck = () => {
       </div>
       <div className="relative flex items-start justify-between gap-4">
         <div className="relative flex flex-col w-1/4 gap-4">
-          <Summary user={data} />
+          <Summary user={data} payrollSetup={currentForm} />
         </div>
         <div className="relative flex flex-col w-2/4 gap-4">
           <PaycheckForm user={data} payrollSetup={currentForm} />

@@ -39,9 +39,13 @@ const PaycheckForm = ({ payrollSetup, user, onFormChange }: IPayrollForm) => {
           <p className="opacity-50 text-text dark:text-white font-small-normal">Medarbejderens faste lønoplysninger</p>
         </div>
         <div className="flex flex-col items-stretch justify-start gap-1">
-          <Input {...inputHandler("wageInfo.standardHours")} name="normTime" placeholder="Normtimer" type="number" />
-          <Input {...inputHandler("wageInfo.salary")} name="gage" placeholder="Gage" type="number" />
-          <Input {...inputHandler("wageInfo.hourlyWage")} name="hourlyPaid" placeholder="Individuel sats (Timeløn)" type="number" />
+          {user?.salaryType === "salary" && <>
+            <Input {...inputHandler("wageInfo.standardHours")} name="normTime" placeholder="Normtimer" type="number" />
+            <Input {...inputHandler("wageInfo.salary")} name="gage" placeholder="Gage" type="number" />
+          </>}
+          {user?.salaryType === "hourly" && <>
+            <Input {...inputHandler("wageInfo.hourlyWage")} name="hourlyPaid" placeholder="Individuel sats (Timeløn)" type="number" />
+          </>}
           <Input {...inputHandler("wageInfo.personalAdditions")} name="personalAdditions" placeholder="Personligt tillæg" type="number" />
         </div>
       </div>
