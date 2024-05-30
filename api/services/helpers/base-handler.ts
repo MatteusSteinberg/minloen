@@ -51,7 +51,8 @@ export type HandlerRequest = {
   body: any
   params: any
   query: any
-  user: HydratedDocument<IUser> | undefined
+  user: HydratedDocument<IUser> | undefined,
+  file?: Express.MulterS3.File
 }
 
 const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, requiresRole?: "admin" | "user" | "any") => {
