@@ -39,6 +39,7 @@ const routes: Array<IAppRoute> = [
   { path: "/opret-loenseddel/:id", element: <AddPaycheck />, layout: true, protected: true },
   { path: "/medarbejdere", element: <Coworkers />, layout: true, protected: true },
   { path: "/ny-medarbejder", element: <NewCoworker />, layout: true, protected: true },
+  { path: "/rediger-medarbejder/:id", element: <NewCoworker />, layout: true, protected: true },
   { path: "/se-medarbejder/:id", element: <SeeCoworker />, layout: true, protected: true },
   { path: "/signup", element: <Signup />, layout: false },
   { path: "/login", element: <Login />, layout: false },

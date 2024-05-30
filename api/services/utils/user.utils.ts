@@ -30,7 +30,10 @@ export namespace User {
       activeOrganization: loggedInUser.activeOrganization,
     }, {
       $set: {
-        ...omitted
+        ...omitted,
+        ...(!!user.firstName ? {
+          name: [user.firstName.trim(), user.lastName.trim()].join(' ').trim()
+        } : {}),
       }
     }, { new: true })
   }

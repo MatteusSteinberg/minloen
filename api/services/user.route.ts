@@ -33,10 +33,6 @@ export const login = baseHandler(async ({ body }) => {
   }
 })
 
-export const register = baseHandler(async ({ }) => {
-  return { data: "", status: StatusCodes.Created }
-})
-
 export const me = baseHandler(async ({ user }) => {
 
   await user.populate("activeOrganization")
@@ -87,7 +83,7 @@ export const list = baseHandler(async ({ query, user }) => {
   return { data: users, status: StatusCodes.Ok }
 }, "admin")
 
-export const listMetadata = baseHandler(async ({ query, user }) => {
+export const listMetadata = baseHandler(async ({ user }) => {
 
   const count = await userModel.countDocuments({
     organizations: { $eq: user.activeOrganization }

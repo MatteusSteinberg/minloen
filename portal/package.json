@@ -16,6 +16,7 @@
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
+    "dayjs": "^1.11.11",
     "compressorjs": "^1.2.1",
     "lodash": "^4.17.21",
     "postcss": "^8.4.38",

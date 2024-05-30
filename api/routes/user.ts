@@ -1,12 +1,11 @@
 import express from "express";
-import { add, get, getProfileImage, list, listMetadata, login, me, register, update, updateMe, uploadProfileImage } from "../services/user.route";
+import { add, get, getProfileImage, list, listMetadata, login, me, update, updateMe, uploadProfileImage } from "../services/user.route";
 
 const userRouter = express.Router()
 
 
 // POST
 userRouter.post('/login', login)
-userRouter.post('/register', register)
 userRouter.post('/', add)
 userRouter.post('/profile/image', uploadProfileImage)
 
