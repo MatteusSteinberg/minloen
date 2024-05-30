@@ -1,12 +1,11 @@
 import express from "express";
-import { add, get, list, listMetadata, login, me, register, update, updateMe } from "../services/user.route";
+import { add, get, list, listMetadata, login, me, update, updateMe } from "../services/user.route";
 
 const userRouter = express.Router()
 
 
 // POST
 userRouter.post('/login', login)
-userRouter.post('/register', register)
 userRouter.post('/', add)
 
 // GET

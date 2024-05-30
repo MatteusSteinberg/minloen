@@ -29,10 +29,6 @@ export const login = baseHandler(async ({ body }) => {
   }
 })
 
-export const register = baseHandler(async ({ }) => {
-  return { data: "", status: StatusCodes.Created }
-})
-
 export const me = baseHandler(async ({ user }) => {
 
   await user.populate("activeOrganization")
@@ -76,8 +72,6 @@ export const add = baseHandler(async ({ user, body }) => {
 export const list = baseHandler(async ({ query, user }) => {
   const { page } = query as { page?: string }
 
-  console.log(query)
-
   const users: HydratedDocument<IUser>[] = await userModel.find({
     organizations: { $eq: user.activeOrganization }
   }).skip((parseInt(page || "1") - 1) * 10).limit(10)
@@ -85,7 +79,7 @@ export const list = baseHandler(async ({ query, user }) => {
   return { data: users, status: StatusCodes.Ok }
 }, "admin")
 
-export const listMetadata = baseHandler(async ({ query, user }) => {
+export const listMetadata = baseHandler(async ({ user }) => {
 
   const count = await userModel.countDocuments({
     organizations: { $eq: user.activeOrganization }
