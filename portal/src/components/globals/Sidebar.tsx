@@ -2,8 +2,8 @@ import { ChevronDownIcon, ClipboardDocumentIcon, FaceFrownIcon, MoonIcon, Square
 import React, { useState } from "react"
 import { Link, NavLink } from "react-router-dom"
 import { useLocalStorage } from "react-use"
-import ProfileImage from "../../assets/images/jonas1.png"
 import { useAuth } from "../../hooks/use-auth"
+import { profileImage } from '../../lib/utils/profileImage'
 
 interface ILinkProps {
     link: string
@@ -127,8 +127,8 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                             <div className="flex items-start justify-between px-2.5 py-2.5 pb-4.5">
                                 <div className="flex items-center">
                                     <div className="relative w-10 h-10">
-                                        <div className="absolute -right-0.75 -bottom-0.75 w-4.5 h-4.5 bg-primary-2 rounded-full border-4 overflow-hidden">
-                                            <img src={ProfileImage} alt="profile" />
+                                        <div className="absolute -right-0.75 -bottom-0.75 w-10 h-10 bg-primary-2 rounded-full border-4 overflow-hidden">
+                                            <img src={profileImage({userId: user?._id})} alt="profile" />
                                         </div>
                                     </div>
                                     <div className="ml-4 mr-4">
@@ -144,8 +144,8 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                         </div>
                     ) : (
                         <div className="relative w-10 h-10">
-                            <div className="absolute -right-0.75 -bottom-0.75 w-4.5 h-4.5 rounded-full overflow-hidden">
-                                <img src={ProfileImage} alt="profile" />
+                            <div className="absolute -right-0.75 -bottom-0.75 w-10 h-10 rounded-full overflow-hidden">
+                                <img src={profileImage({userId: user?._id})} alt="profile" />
                             </div>
                         </div>
                     )}

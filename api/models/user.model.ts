@@ -105,6 +105,10 @@ const userSchema = new Schema<IUser>(
         type: Date,
       },
     },
+    profileImage: {
+      type: Schema.Types.ObjectId,
+      ref: "File",
+    },
     activeOrganization: {
       type: Schema.Types.ObjectId,
       index: true,

@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { HydratedDocument, Types } from "mongoose";
+import { HydratedDocument, Types, isValidObjectId } from "mongoose";
 import { IUser, IUserAdd } from "../../interfaces/user.interface";
 import { validateObject } from "../lib/validator";
 import userModel from "../models/user.model";
@@ -7,6 +7,10 @@ import getAuthToken from "./helpers/auth-token-generation";
 import baseHandler, { StatusCodes } from "./helpers/base-handler";
 import Organization from "./utils/organization.utils";
 import { User } from "./utils/user.utils";
+import fileHandler from './helpers/file-handler';
+import _ from 'lodash';
+import fileModel from '../models/file.model';
+import { deleteFile } from './helpers/file-helper';
 
 
 export const login = baseHandler(async ({ body }) => {
@@ -76,8 +80,6 @@ export const add = baseHandler(async ({ user, body }) => {
 export const list = baseHandler(async ({ query, user }) => {
   const { page } = query as { page?: string }
 
-  console.log(query)
-
   const users: HydratedDocument<IUser>[] = await userModel.find({
     organizations: { $eq: user.activeOrganization }
   }).skip((parseInt(page || "1") - 1) * 10).limit(10)
@@ -121,3 +123,42 @@ export const update = baseHandler(async ({ params, body, user }) => {
 
   return { data: updatedUser, status: StatusCodes.Ok }
 }, "admin")
+
+export const uploadProfileImage = fileHandler("image", async ({ file, user }) => {
+  const imageId = user.profileImage
+
+  if (imageId) {
+    const existingFile = await fileModel.findByIdAndDelete(imageId)
+    await deleteFile(existingFile.key)
+  }
+
+  const newFile = await fileModel.create({ contentType: file.mimetype, fileType: file.fieldname, key: file.key })
+  user.profileImage = newFile._id
+  await user.save({ validateModifiedOnly: true })
+
+  return { data: {}, status: StatusCodes.Created}
+}, "any")
+
+export const getProfileImage = baseHandler(async ({ params }) => {
+
+  const user = await userModel.findOne({
+    $or: [
+      { email: params.id },
+      { _id: isValidObjectId(params.id) ? params.id : null }
+    ]
+  })
+
+  const imageId = user.profileImage
+
+  if (!imageId) {
+    return { data: {}, status: StatusCodes.NotFound}
+  }
+
+  const image = await fileModel.findById(imageId)
+
+  if (!image) {
+    return { data: {}, status: StatusCodes.NotFound}
+  }
+
+  return { file: image, status: StatusCodes.Ok }
+})
