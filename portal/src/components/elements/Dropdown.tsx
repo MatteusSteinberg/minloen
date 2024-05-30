@@ -15,20 +15,18 @@ type Props = {
 }
 
 const Dropdown = ({ options, name, placeholder, error, label, onChange, spacing, value }: Props) => {
-  const [selectedOption, setSelectedOption] = useState<any>(value)
   const [dropdownDirection, setDropdownDirection] = useState("mt-1")
   const buttonRef = useRef<HTMLButtonElement>(null)
   const [isVisible, dropdownRef, toggleVisibility] = useOutsideClick(false, buttonRef)
 
   const onOptionClicked = (value: any) => () => {
-    setSelectedOption(value)
     onChange?.(value)
     toggleVisibility(false)
   }
 
   const currentOption = useMemo(() => {
-    return options.find((x) => x.value === value || selectedOption)
-  }, [options, selectedOption, value])
+    return options.find((x) => x.value === value)
+  }, [options, value])
 
   useEffect(() => {
     const checkIfTooCloseToBottom = () => {
