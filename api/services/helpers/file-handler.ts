@@ -23,13 +23,13 @@ const upload = multer({
     }),
 })
 
-const fileHandler = (fileField: string, cb: (request: HandlerRequest) => Promise<HandlerResponse>, requiresAuth?: boolean) => {
+const fileHandler = (fileField: string, cb: (request: HandlerRequest) => Promise<HandlerResponse>, requiredRole?: "admin" | "user" | "any") => {
     return [
         upload.single(fileField),
         baseHandler(async (request: HandlerRequest) => {
             const baseResponse = await cb(request)
             return baseResponse
-        }),
+        }, requiredRole),
     ]
 }
 
