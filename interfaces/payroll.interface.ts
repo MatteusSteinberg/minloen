@@ -1,11 +1,44 @@
 import { Types } from "mongoose"
 
+export interface IPayrollSetup {
+  id?: any
+  user?: Types.ObjectId
+  organization?: Types.ObjectId
+  wageInfo?: {
+    standardHours?: number
+    /** Gage */
+    salary?: number
+
+    /** Timeløn */
+    hourlyWage?: number
+    personalAdditions?: number
+  }
+
+  benefits?: {
+    freeCar?: number
+    /** Helårsbolig */
+    freeYearRoundResidence?: number
+    freeSummerResidence?: number
+    freeYacht?: number
+    freeMediaAndRadioLicense?: number
+    benefitsWithFloor?: number
+    benefitsWithoutFloor?: number
+    freePhoneAndInternet?: number
+    /** Frikort til offentlig befordring */
+    freepassForPublicCarriage?: number
+    healthInsurance?: number
+  }
+
+  supplements?: Array<string>
+}
+
 export interface IPayroll {
   id?: any
   user: Types.ObjectId
   organization: Types.ObjectId
   preTaxAmount: number
   afterTaxAmount: number
+
   dateFrom: Date
   dateTo: Date
   updatedAt?: Date
