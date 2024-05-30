@@ -42,7 +42,7 @@ const Button = ({ background, color, icon, onClick, children }: IButton) => {
                 </div>
             )}
             {background === "primaryLight" && (
-                <div className={`text-${color} min-w-[220px] min-h-[56px] rounded-2xl border-solid border-[1px] bg-primaryLight border-primaryLight py-[17px] px-16 flex justify-center align items-center gap-3`}>
+                <div className={`text-white dark:text-text min-w-[220px] min-h-[56px] rounded-2xl border-solid border-[1px] bg-lightPrimary border-lightPrimary dark:bg-darkPrimaryLight dark:border-darkPrimaryLight py-[17px] px-16 flex justify-center align items-center gap-3`}>
                     {loading ? (
                         <svg aria-hidden="true" role="status" className="inline w-4 h-4 mr-3 text-text animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"></path>
@@ -53,13 +53,13 @@ const Button = ({ background, color, icon, onClick, children }: IButton) => {
                     ) : (
                         <>
                             {icon && <div className={`text-${color} w-[20px] h-[20px]`}>{icon}</div>}
-                            <span className="uppercase font-small-semibold">{children}</span>
+                            <span className="font-standard-normal">{children}</span>
                         </>
                     )}
                 </div>
             )}
             {background === "primarySupport" && (
-                <div className={`text-${color} min-w-[220px] min-h-[56px] rounded-2xl border-solid border-[1px] bg-primarySupport border-primarySupport py-[17px] px-16 flex justify-center align items-center gap-3`}>
+                <div className={`text-${color} min-w-[220px] min-h-[56px] rounded-2xl border-solid border-[1px] bg-darkPrimarySupport border-darkPrimarySupport py-[17px] px-16 flex justify-center align items-center gap-3`}>
                     {loading ? (
                         <svg aria-hidden="true" role="status" className="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"></path>
@@ -76,7 +76,7 @@ const Button = ({ background, color, icon, onClick, children }: IButton) => {
                 </div>
             )}
             {background === "secondarySupport" && (
-                <div className={`text-${color} min-w-[220px] min-h-[56px] rounded-2xl border-solid border-[1px] bg-secondarySupport border-secondarySupport py-[17px] px-16 flex justify-center align items-center gap-3`}>
+                <div className={`text-${color} min-w-[220px] min-h-[56px] rounded-2xl border-solid border-[1px] bg-darkSecondarySupport border-darkSecondarySupport py-[17px] px-16 flex justify-center align items-center gap-3`}>
                     {loading ? (
                         <svg aria-hidden="true" role="status" className="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"></path>

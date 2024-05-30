@@ -23,23 +23,26 @@
     body {
         line-height: 1;
         width: 100%;
-        @apply text-text;
         font-size: 16px;
-        @apply font-default;
-        @apply bg-primarySupport;
+        @apply font-default dark:bg-darkPrimarySupport bg-lightPrimary text-text;
     }
 }
 
 a.active {
     @apply border-solid
+    transition-all
+    duration-150
     border-[1px]
-    border-[rgba(51,54,62,0.50)]
-    bg-gradientmain
-    text-white;
+    border-lightBorder
+    bg-white
+    text-text
+    dark:border-[rgba(51,54,62,0.50)]
+    dark:bg-gradientmain
+    dark:text-white;
 }
 
 a.active svg {
-    @apply stroke-primaryLight;
+    @apply transition-all duration-150 dark:stroke-darkPrimaryLight stroke-lightPrimary;
 }
 
 @layer utilities {

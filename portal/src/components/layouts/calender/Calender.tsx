@@ -30,44 +30,44 @@ const Calendar: React.FC = () => {
     return (
         <div>
             <div className="flex items-center justify-between gap-6 py-5">
-                <span className="text-white font-default font-normal text-[24px] leading-6">
+                <span className="text-text dark:text-white font-default font-normal text-[24px] leading-6">
                     {monthNames[month]} {year}
                 </span>
                 <div className="flex items-center gap-4">
-                    <button onClick={handlePrevMonth} className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full bg-primaryLight">
+                    <button onClick={handlePrevMonth} className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full bg-lightPrimary dark:bg-darkPrimaryLight">
                         <svg width="7" height="10" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 9L2.20711 5.70711C1.81658 5.31658 1.81658 4.68342 2.20711 4.29289L5.5 1" className="stroke-primarySupport" stroke-width="2" stroke-linecap="round" />
+                            <path d="M5.5 9L2.20711 5.70711C1.81658 5.31658 1.81658 4.68342 2.20711 4.29289L5.5 1" className="stroke-white dark:stroke-darkPrimarySupport" stroke-width="2" stroke-linecap="round" />
                         </svg>
                     </button>
-                    <button onClick={handleNextMonth} className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full bg-primaryLight">
+                    <button onClick={handleNextMonth} className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full bg-lightPrimary dark:bg-darkPrimaryLight">
                         <svg width="7" height="10" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1.5 9L4.79289 5.70711C5.18342 5.31658 5.18342 4.68342 4.79289 4.29289L1.5 1" className="stroke-primarySupport" stroke-width="2" stroke-linecap="round" />
+                            <path d="M1.5 9L4.79289 5.70711C5.18342 5.31658 5.18342 4.68342 4.79289 4.29289L1.5 1" className="stroke-white dark:stroke-darkPrimarySupport" stroke-width="2" stroke-linecap="round" />
                         </svg>
                     </button>
                 </div>
             </div>
-            <div className="border border-solid rounded-2xl border-border shadow-custom">
-                <div className="grid grid-cols-7 bg-[#1B1F20] rounded-t-2xl border-b border-solid border-border">
+            <div className="border border-solid rounded-2xl border-lightBorder dark:border-darkBorder shadow-custom">
+                <div className="grid grid-cols-7 bg-white dark:bg-[#1B1F20] rounded-t-2xl border-b border-solid border-lightBorder dark:border-darkBorder">
                     {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-                        <div key={day} className="py-4 text-center text-white font-medium-normal">
+                        <div key={day} className="py-4 text-center text-text dark:text-white font-medium-normal">
                             {day}
                         </div>
                     ))}
                 </div>
                 <div className="grid grid-cols-7 gap-px overflow-hidden rounded-b-2xl">
                     {blankDays.map((day, index) => (
-                        <button key={`prev-${index}`} className="relative p-2 h-28 text-center text-border py-9 bg-[rgba(20,23,24,0.3)] font-medium-semibold">
+                        <button key={`prev-${index}`} className="relative p-2 h-28 text-center text-text dark:text-darkBorder py-9 bg-[rgba(20,23,24,0.1)] dark:bg-[rgba(20,23,24,0.3)] font-medium-semibold">
                             <span className="absolute left-3 top-3">{day}</span>
                         </button>
                     ))}
                     {daysArray.map((day) => (
-                        <button key={day} className="relative p-2 text-center text-white h-28 bg-primarySupport py-9 font-medium-semibold">
+                        <button key={day} className="relative p-2 text-center bg-white text-text dark:text-white h-28 dark:bg-darkPrimarySupport py-9 font-medium-semibold">
                             <span className="absolute left-3 top-3">{day}</span>
                             {/* <CalenderTags type="vacation" message="Ferie" /> */}
                         </button>
                     ))}
                     {trailingDays.map((day, index) => (
-                        <button key={`next-${index}`} className="relative p-2 h-28 text-center py-9 text-border bg-[rgba(20,23,24,0.3)] font-medium-semibold">
+                        <button key={`next-${index}`} className="relative p-2 h-28 text-center py-9 text-text bg-[rgba(20,23,24,0.1)] dark:bg-[rgba(20,23,24,0.3)] font-medium-semibold">
                             <span className="absolute left-3 top-3">{day}</span>
                         </button>
                     ))}

@@ -11,19 +11,22 @@ module.exports = {
       xxl: "1400px",
     },
     colors: {
-      primary: "#55FEC3",
-      primaryLight: "#CDE4BA",
-      primarySupport: "#141718",
-      lightPrimarySupport: "#F5F7F3",
-      secondarySupport: "#232627",
-      tertiarySupport: "#8FB996",
+      darkPrimaryLight: "#CDE4BA",
+      darkPrimarySupport: "#141718",
+      darkSecondarySupport: "#232627",
+      darkBorder: "rgba(231, 231, 233, 0.2)",
+
       text: "#252525",
-      border: "rgba(231, 231, 233, 0.2)",
-      borderLight: "#E0E0E0",
       error: "#C35865",
       success: "#58C383",
       white: "#FFFFFF",
       black: "#000000",
+
+      lightPrimary: "#005445",
+      lightPrimaryLight: "#FF9DCE",
+      lightSecondary: "#F5F7F3",
+      lightSecondaryLight: "#74EAA3",
+      lightBorder: "#E0E0E0",
     },
     fontFamily: {
       default: ["Mundial", "sans-serif"],
@@ -62,6 +65,12 @@ module.exports = {
 
     },
     extend: {
+      colors: {
+        "light-start": '#005445',
+        'light-end': '#005445',
+        'dark-start': '#CDE4BA',
+        'dark-end': '#CDE4BA',
+      },
       animation: {
         inAnimation: "inAnimation 500ms cubic-bezier(0.77, 0.2, 0.05, 1)",
         outAnimation: "outAnimation 500ms cubic-bezier(0.77, 0.2, 0.05, 1) forwards",
