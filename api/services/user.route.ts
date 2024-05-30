@@ -147,13 +147,13 @@ export const getProfileImage = baseHandler(async ({ params }) => {
   const imageId = user.profileImage
 
   if (!imageId) {
-    return { data: {}, status: StatusCodes.NotFound}
+    return { file: { key: 'default.png', contentType: 'image/png' }, status: StatusCodes.Ok}
   }
 
   const image = await fileModel.findById(imageId)
 
   if (!image) {
-    return { data: {}, status: StatusCodes.NotFound}
+    return { file: { key: 'default.png', contentType: 'image/png' }, status: StatusCodes.Ok}
   }
 
   return { file: image, status: StatusCodes.Ok }

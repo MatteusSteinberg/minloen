@@ -84,7 +84,7 @@ const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, 
 
       if (file) {
         const stream = await readFile(file.key)
-        res.setHeader("Content-Type", file.fileType)
+        res.setHeader("Content-Type", file.contentType)
         stream.pipe(res)
         res.status(200)
         return file // For testing
