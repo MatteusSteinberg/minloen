@@ -1,5 +1,7 @@
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
+import '@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css';
 import { useState } from "react";
+import 'react-calendar/dist/Calendar.css';
 import Dropdown from "../elements/Dropdown";
 import Base from "./Base";
 
@@ -71,7 +73,7 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                                 Fra Til
                             </h1>
                             <div>
-                                <DateRangePicker onChange={(value) => setValue(value as [Date, Date] | undefined)} value={value} />
+                                <DateRangePicker className="text-white border border-solid bg-secondarySupport border-border" onChange={(value) => setValue(value as [Date, Date] | undefined)} value={value} />
                             </div>
                             <div className="my-12">
                                 <button className="w-[120px] h-[44px] bg-primaryLight text-text rounded-xl border border-solid border-border mr-3">Godkend</button>
