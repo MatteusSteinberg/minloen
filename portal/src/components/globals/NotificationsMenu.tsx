@@ -17,11 +17,11 @@ const NotificationsMenu = (props: Props) => {
                 <div className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error"></div>
             </button>
             <div ref={node} className={`absolute transition-all duration-150 md:right-0 transform ${toggleMenu ? "scale-100 opacity-100 visible" : "scale-95 opacity-0 invisible"}`}>
-                <div className="absolute top-full -right-[158px] md:right-16 w-[445px] mt-10 p-4 bg-darkPrimarySupport border border-solid border-[rgba(51,54,62,0.50)] rounded-2xl shadow-[0px_48px_64px_-16px_rgba(0,0,0,0.25)]">
-                    <div className="flex items-center justify-between p-4 mb-3 bg-darkSecondarySupport rounded-xl">
-                        <p className="font-default text-[24px] font-semibold leading-8 text-white">Notifikationer</p>
+                <div className="absolute top-full -right-[158px] md:right-16 w-[445px] mt-10 p-4 bg-white dark:bg-darkPrimarySupport border border-solid border-lightBorder dark:border-[rgba(51,54,62,0.50)] rounded-2xl shadow-[0px_48px_64px_-16px_rgba(0,0,0,0.25)]">
+                    <div className="flex items-center justify-between p-4 mb-3 border border-solid bg-lightSecondary border-lightBorder dark:border-none dark:bg-darkSecondarySupport rounded-xl">
+                        <p className="font-default text-[24px] font-semibold leading-8 text-text dark:text-white">Notifikationer</p>
                         <button>
-                            <svg className="inline-block w-6 h-6 transition-all fill-white opacity-30 hover:fill-darkPrimaryLight hover:opacity-100" width="24" height="24" viewBox="0 0 24 24" role="none">
+                            <svg className="inline-block w-6 h-6 transition-all fill-lightPrimary dark:fill-white dark:opacity-30 hover:fill-darkPrimaryLight hover:opacity-100" width="24" height="24" viewBox="0 0 24 24" role="none">
                                 <path
                                     d="M12.5 2a2.49 2.49 0 0 1 1.766.73l.052.053a2.49 2.49 0 0 1 .68 1.607l.001.021L15 4.5v.014c0 .041.025.077.062.093a.1.1 0 0 0 .11-.022l.01-.01.063-.061.015-.014a2.49 2.49 0 0 1 1.617-.656l.074-.001a2.49 2.49 0 0 1 1.765.732l.707.707a2.49 2.49 0 0 1 .732 1.765l-.001.074a2.49 2.49 0 0 1-.656 1.618l-.014.015-.061.063-.01.01c-.029.029-.037.072-.021.11s.052.062.093.062h.014l.088.002h.021a2.49 2.49 0 0 1 1.608.68l.053.052A2.49 2.49 0 0 1 22 11.5v1a2.49 2.49 0 0 1-.73 1.766l-.053.052a2.49 2.49 0 0 1-1.608.68l-.021.001L19.5 15h-.014a.1.1 0 0 0-.093.062c-.016.037-.007.081.021.11l.01.01.061.063.014.015a2.49 2.49 0 0 1 .656 1.617l.001.074a2.49 2.49 0 0 1-.732 1.765l-.707.707a2.49 2.49 0 0 1-1.765.732c-.025 0-.05 0-.074-.001a2.49 2.49 0 0 1-1.617-.656l-.015-.014-.063-.061-.01-.01c-.029-.029-.072-.037-.11-.021a.1.1 0 0 0-.062.093v.014l-.002.088-.001.021a2.49 2.49 0 0 1-.68 1.608l-.052.053A2.49 2.49 0 0 1 12.5 22h-1a2.49 2.49 0 0 1-1.766-.73l-.052-.053a2.49 2.49 0 0 1-.68-1.608v-.021L9 19.544h0v-.058c0-.041-.025-.077-.062-.093s-.081-.007-.11.021l-.01.01-.063.061-.015.014a2.49 2.49 0 0 1-1.618.656l-.074.001a2.49 2.49 0 0 1-1.765-.732l-.707-.707a2.49 2.49 0 0 1-.732-1.765l.001-.074a2.49 2.49 0 0 1 .656-1.617l.014-.015.061-.063.01-.01a.1.1 0 0 0 .022-.11c-.016-.038-.052-.062-.093-.062H4.5a2.57 2.57 0 0 1-.088-.002l-.021-.001a2.49 2.49 0 0 1-1.607-.68l-.053-.052A2.49 2.49 0 0 1 2 12.5v-1a2.49 2.49 0 0 1 .73-1.766l.053-.052a2.49 2.49 0 0 1 1.607-.68h.021L4.456 9h0 .058c.041 0 .077-.025.093-.062s.007-.081-.022-.11l-.01-.01-.061-.063-.014-.015a2.49 2.49 0 0 1-.656-1.618l-.001-.074a2.49 2.49 0 0 1 .732-1.765l.707-.707a2.49 2.49 0 0 1 1.765-.732l.074.001a2.49 2.49 0 0 1 1.618.656l.015.014.063.061.01.01c.029.029.072.037.11.022S9 4.555 9 4.514V4.5l.002-.088v-.021a2.49 2.49 0 0 1 .68-1.607l.052-.053A2.49 2.49 0 0 1 11.5 2h1zm0 2h-1a.5.5 0 0 0-.5.5v.014A2.1 2.1 0 0 1 7.414 6l-.01-.01a.5.5 0 0 0-.707 0l-.707.707a.5.5 0 0 0 0 .707l.01.01A2.1 2.1 0 0 1 4.514 11H4.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h.014A2.1 2.1 0 0 1 6 16.586l-.01.01a.5.5 0 0 0 0 .707l.707.707a.5.5 0 0 0 .707 0l.01-.01A2.1 2.1 0 0 1 11 19.486v.014a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-.014A2.1 2.1 0 0 1 16.586 18l.01.01a.5.5 0 0 0 .707 0l.707-.707a.5.5 0 0 0 0-.707l-.01-.01A2.1 2.1 0 0 1 19.486 13h.014a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-.014A2.1 2.1 0 0 1 18 7.414l.01-.01a.5.5 0 0 0 0-.707l-.707-.707a.5.5 0 0 0-.707 0l-.01.01A2.1 2.1 0 0 1 13 4.514V4.5a.5.5 0 0 0-.5-.5zM12 8a4 4 0 1 1 0 8 4 4 0 1 1 0-8zm0 2a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
                                     role="none"></path>
@@ -29,13 +29,13 @@ const NotificationsMenu = (props: Props) => {
                         </button>
                     </div>
                     <div className="max-h-[340px] md:max-h-[510px] -mx-6 px-6 space-y-6 md:space-y-3 overflow-y-auto scroll-smooth no-scrollbar ">
-                        <div className="flex items-center p-0 transition-colors md:p-2 rounded-xl hover:bg-darkSecondarySupport">
+                        <div className="flex items-center p-0 transition-all border border-white border-solid dark:border-darkPrimarySupport md:p-2 rounded-xl hover:bg-lightSecondary hover:border-lightBorder dark:hover:border-darkBorder dark:hover:bg-darkSecondarySupport">
                             <div className="relative flex items-center justify-center w-12 h-12 shrink-0 md:w-16 md:h-16">
-                                <DocumentIcon className="w-8 h-8 text-darkPrimaryLight" />
+                                <DocumentIcon className="w-8 h-8 text-lightPrimary dark:text-darkPrimaryLight" />
                             </div>
                             <div className="w-[calc(100%-60px)] px-3 md:px-5">
-                                <div className="mb-0 text-white truncate font-medium-normal md:mb-1">Ny lønseddel tilgængelig</div>
-                                <div className="text-white opacity-25 font-light text-[14px] font-default">Din lønseddel fra Maj er nu ankommet!</div>
+                                <div className="mb-0 truncate text-text dark:text-white font-medium-normal md:mb-1">Ny lønseddel tilgængelig</div>
+                                <div className="text-text dark:text-white opacity-25 font-light text-[14px] font-default">Din lønseddel fra Maj er nu ankommet!</div>
                             </div>
                         </div>
                     </div>

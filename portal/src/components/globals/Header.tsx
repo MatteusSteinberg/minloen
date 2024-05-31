@@ -1,7 +1,6 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/outline"
 import { useNavigate } from "react-router-dom"
 import ProfileImage from "../../assets/images/jonas1.png"
-import NotificationsMenu from "./NotificationsMenu"
 import UserMenu from "./UserMenu"
 
 interface IHeader {
@@ -32,7 +31,7 @@ const Header = ({ title, history }: IHeader) => {
                     <span className="w-7 h-[3px] bg-darkBorder rounded-full transition-all"></span>
                 </button>
                 <div className="items-center justify-center hidden gap-5 md:flex">
-                    <NotificationsMenu />
+                    {/* <NotificationsMenu /> */}
                     <UserMenu image={ProfileImage} />
                 </div>
             </div>
