@@ -1,3 +1,4 @@
+import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import { useState } from "react";
 import Dropdown from "../elements/Dropdown";
 import Base from "./Base";
@@ -10,8 +11,8 @@ interface ILeavemodal {
 const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
     const options = [
         { value: "Option 1", label: "Sygdom" },
-        { value: "Option 2", label: "fridag" },
-        { value: "Option 3", label: "feriedag" },
+        { value: "Option 2", label: "Fridag" },
+        { value: "Option 3", label: "Feriedag" },
         { value: "Option 4", label: "Option 4" },
         { value: "Option 5", label: "Option 5" }
     ];
@@ -21,6 +22,8 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
     const handleChange = (value: string) => {
         setSelectedOption(value);
     };
+
+    const [value, setValue] = useState<[Date, Date] | undefined>([new Date(), new Date()]);
 
     return (
         <Base isOpen={isOpen} title="Fravær" toggleModal={toggleModal}>
@@ -34,7 +37,7 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                     />
                 </div>
                 <div className="px-12 my-6">
-                    {selectedOption == "Option 1" && (
+                    {selectedOption === "Option 1" && (
                         <>
                             <h1 className="block mb-3 text-white">
                                 Skriv årsag
@@ -48,7 +51,7 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                             </div>
                         </>
                     )}
-                    {selectedOption == "Option 2" && (
+                    {selectedOption === "Option 2" && (
                         <>
                             <h1 className="block mb-3 text-white">
                                 Skriv årsag
@@ -62,9 +65,22 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                             </div>
                         </>
                     )}
-                    {selectedOption == "Option 3" && (<div>View for feriedag</div>)}
-                    {selectedOption == "Option 4" && (<div>View for Option 4</div>)}
-                    {selectedOption == "Option 5" && (<div>View for Option 5</div>)}
+                    {selectedOption === "Option 3" && (
+                        <>
+                            <h1 className="block mb-3 text-white">
+                                Fra Til
+                            </h1>
+                            <div>
+                                <DateRangePicker onChange={(value) => setValue(value as [Date, Date] | undefined)} value={value} />
+                            </div>
+                            <div className="my-12">
+                                <button className="w-[120px] h-[44px] bg-primaryLight text-text rounded-xl border border-solid border-border mr-3">Godkend</button>
+                                <button className="w-[120px] h-[44px] bg-secondarySupport text-white rounded-xl border border-solid border-border">Annullere</button>
+                            </div>
+                        </>
+                    )}
+                    {selectedOption === "Option 4" && (<div>View for Option 4</div>)}
+                    {selectedOption === "Option 5" && (<div>View for Option 5</div>)}
                 </div>
             </div>
         </Base>
