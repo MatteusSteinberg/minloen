@@ -142,7 +142,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                                 </div>
                                 <p className="px-3 py-1 rounded-full font-default text-[12px] font-bold bg-lightPrimaryLight dark:bg-darkPrimaryLight leading-[15px] uppercase">Free</p>
                             </div>
-                            <Link className="border-solid border-2 border-lightPrimary dark:border-[rgb(52,56,57)] bg-lightPrimary dark:bg-transparent text-white font-standard-medium py-3 mt-4 w-full rounded-[14px] flex justify-center hover:bg-lightSecondaryLight hover:border-lightSecondaryLight dark:hover:border-[rgb(52,56,57)] dark:hover:bg-[rgb(52,56,57)] transition-colors duration-150" to="/">
+                            <Link className="border-solid border-2 border-lightPrimary dark:border-[rgb(52,56,57)] bg-lightPrimary dark:bg-transparent text-white font-standard-medium py-3 mt-4 w-full rounded-[14px] flex justify-center hover:bg-lightSecondaryLight hover:border-lightSecondaryLight dark:hover:border-[rgb(52,56,57)] dark:hover:bg-[rgb(52,56,57)] transition-colors duration-150" to="/pricing">
                                 Upgrade til Pro
                             </Link>
                         </div>
