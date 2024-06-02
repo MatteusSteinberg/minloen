@@ -1,21 +1,17 @@
 import { AnimatePresence } from "framer-motion"
-import AdminImage from "../assets/images/Frame 857 2.png"
-import CheckImage from "../assets/images/Group 685.png"
 import Footer from "../components/layouts/landing/Footer"
-import Hero from "../components/layouts/landing/Hero"
-import Logos from "../components/layouts/landing/Logos"
 import MeetTheApp from "../components/layouts/landing/MeetTheApp"
 import Navigation from "../components/layouts/landing/Navigation"
-import TextImage from "../components/layouts/landing/TextImage"
+import PricingHero from "../components/layouts/landing/PricingHero"
 
 type Props = {}
 
-const Landing = (props: Props) => {
+const Pricing = (props: Props) => {
     return (
         <AnimatePresence mode="wait">
             <div className="relative w-full h-full overflow-hidden bg-white">
                 <Navigation />
-                <div className="absolute overflow-hidden -right-72 -top-72">
+                <div className="absolute overflow-hidden right-28 -top-12">
                     <svg width="1162" height="1207" viewBox="0 0 1162 1207" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_397_3769)">
                             <g filter="url(#filter0_f_397_3769)">
@@ -51,18 +47,7 @@ const Landing = (props: Props) => {
                     </svg>
                 </div>
                 <div className="max-w-[1440px] px-4 md:px-10 lg:px-20 relative mx-auto h-full min-h-dvh">
-                    <Hero />
-                    <Logos />
-                    <TextImage orientation="left" color="lightPrimary" tag="Administrering" title="Nem administrering af ansatte" link="/" linkText="Se funktioner" text="Vores system gør det nemt og danner overblik over alle dine medarbejder og gør det nemt at holde styr på deres informationer">
-                        <div className="absolute bottom-0 left-0">
-                            <img src={AdminImage} alt="Something here" />
-                        </div>
-                    </TextImage>
-                    <TextImage orientation="right" color="lightPrimaryLight" tag="Lønsedler" title="Lønsedler på den nemme måde" link="/" linkText="Se udkast af lønseddel" text="Ved MinLøn gør vi det nemmere for dig at kunne holde styr på dine medarbejders lønsedler og sørger for at du kan oprette og redigere kommende lønsedler">
-                        <div className="absolute -translate-x-1/2 left-1/2 w-full 301 -translate-y-1/2 top-1/2 max-w-[401px] h-auto">
-                            <img src={CheckImage} alt="Something here" />
-                        </div>
-                    </TextImage>
+                    <PricingHero />
                 </div>
                 <MeetTheApp />
                 <Footer />
@@ -71,4 +56,4 @@ const Landing = (props: Props) => {
     )
 }
 
-export default Landing
+export default Pricing

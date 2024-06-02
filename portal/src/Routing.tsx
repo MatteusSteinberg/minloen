@@ -20,6 +20,7 @@ const Error404 = lazy(() => import("./routes/404"))
 const Login = lazy(() => import("./routes/login"))
 const Signup = lazy(() => import("./routes/signup"))
 const Landing = lazy(() => import("./routes/Landing"))
+const Pricing = lazy(() => import("./routes/pricing"))
 
 interface IAppRoute {
     path: string
@@ -31,6 +32,7 @@ interface IAppRoute {
 
 const routes: Array<IAppRoute> = [
     { path: "/", element: <Landing />, layout: false },
+    { path: "/pricing", element: <Pricing />, layout: false },
     { path: "/overblik", element: <Overview />, layout: true, protected: true },
     { path: "/kontrolpanel", element: <Dashboard />, layout: true, protected: true },
     { path: "/loensedler", element: <PaymentDocuments />, layout: true, protected: true },

@@ -104,21 +104,25 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                         </NavLink>
                     ))}
                 </div>
-                <div className="my-4 h-[1px] bg-lightSecondaryLight dark:bg-darkBorder dark:opacity-10 -mx-2 md:mx-0" />
-                <div className="pb-6 mb-auto">
-                    <button onClick={() => setHideAdmin(!hideAdmin)} className="flex items-center h-12 font-light text-[13px] font-default text-[rgba(255,255,255,0.5)] dark:text-[rgba(232,236,239,.75)] rounded-lg px-[23px]">
-                        <ChevronDownIcon className={`stroke-2 inline-block w-5 h-5 transition-transform duration-150 ${hideAdmin ? "rotate-180" : "rotate-0"}`} />
-                        {showSidebar && <span className="ml-5 -mt-[3px]">Admin navigation</span>}
-                    </button>
-                    <div className={`${hideAdmin ? "invisible" : "visible"} ${showSidebar ? "px-0" : "px-2"}`}>
-                        {AdminLinks.map((link: ILinkProps) => (
-                            <NavLink to={link.link} className={`w-full flex items-center h-12 font-normal text-[15px] font-default text-[rgba(255,255,255,0.6)] dark:text-[rgba(232,236,239,.75)] rounded-lg transition-all dark:hover:text-white ${showSidebar ? "px-5" : "px-3"}`}>
-                                {link.icon}
-                                {showSidebar && <span className="ml-5 -mt-[3px]">{link.text}</span>}
-                            </NavLink>
-                        ))}
-                    </div>
-                </div>
+                {user?.organizationRole === "admin" && (
+                    <>
+                        <div className="my-4 h-[1px] bg-lightSecondaryLight dark:bg-darkBorder dark:opacity-10 -mx-2 md:mx-0" />
+                        <div className="pb-6 mb-auto">
+                            <button onClick={() => setHideAdmin(!hideAdmin)} className="flex items-center h-12 font-light text-[13px] font-default text-[rgba(255,255,255,0.5)] dark:text-[rgba(232,236,239,.75)] rounded-lg px-[23px]">
+                                <ChevronDownIcon className={`stroke-2 inline-block w-5 h-5 transition-transform duration-150 ${hideAdmin ? "rotate-180" : "rotate-0"}`} />
+                                {showSidebar && <span className="ml-5 -mt-[3px]">Admin navigation</span>}
+                            </button>
+                            <div className={`${hideAdmin ? "invisible" : "visible"} ${showSidebar ? "px-0" : "px-2"}`}>
+                                {AdminLinks.map((link: ILinkProps) => (
+                                    <NavLink to={link.link} className={`w-full flex items-center h-12 font-normal text-[15px] font-default text-[rgba(255,255,255,0.6)] dark:text-[rgba(232,236,239,.75)] rounded-lg transition-all dark:hover:text-white ${showSidebar ? "px-5" : "px-3"}`}>
+                                        {link.icon}
+                                        {showSidebar && <span className="ml-5 -mt-[3px]">{link.text}</span>}
+                                    </NavLink>
+                                ))}
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
             <div className="absolute left-0 bottom-0 right-0 pb-6 dark:bg-darkPrimarySupport px-3 before:absolute before:left-0 before:right-0 before:bottom-full before:h-10 dark:before:bg-gradient-to-t dark:before:from-[#131617] dark:before:to-[rgba(19,22,23,0)] dark:before:pointer-events-none md:px-4">
                 <div className={`mb-3 rounded-[14px] border border-solid border-lightBorder dark:border-none ${showSidebar ? "bg-lightSecondary dark:bg-darkSecondarySupport dark:shadow-[0_1.25rem_1.5rem_0_rgba(0,0,0,0.5)]" : "bg-transparent shadow-none flex justify-center border-none"}`}>
