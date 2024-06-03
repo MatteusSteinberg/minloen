@@ -23,6 +23,8 @@ const ChangeProfile = ({ handleClose }: IChangeProfile) => {
         }
     }
 
+    console.log(form)
+
     const handleFormChange = (ev: any, path: string) => {
         const newValue = typeof ev === "string" || ev instanceof Date || _isArray(ev) ? ev : ev.target.value
 
