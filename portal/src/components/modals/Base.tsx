@@ -35,12 +35,12 @@ const Base = ({ isOpen, title, toggleModal, children, className, saveOnClick, su
 
     return (
         <Portal wrapperId="modal">
-            <div className={`fixed top-0 left-0 z-[100050] w-full h-full overflow-x-hidden bg-[rgba(0,0,0,0.5)] overflow-y-hidden outline px-5 transition-all duration-500 ease-[cubic-bezier(0.77, 0.2, 0.05, 1)] ${isOpen ? "opacity-100" : "opacity-0"} ${isClosing ? "opacity-0" : ""}`}>
-                <div className="relative w-auto h-full pointer-events-auto z-[1075] flex items-center max-w-[650px] mx-auto">
+            <div className={`fixed top-0 left-0 z-[100050] w-full h-full overflow-x-hidden bg-[rgba(0,0,0,0.5)] overflow-y-hidden outline md:px-5 transition-all duration-500 ease-[cubic-bezier(0.77, 0.2, 0.05, 1)] ${isOpen ? "opacity-100" : "opacity-0"} ${isClosing ? "opacity-0" : ""}`}>
+                <div className="relative w-full md:w-auto h-full pointer-events-auto z-[1075] flex items-center md:max-w-[650px] mx-auto">
                     <div className={`relative flex flex-col w-full text-white pointer-events-auto bg-darkPrimarySupport bg-clip-padding rounded-2xl outline-0 max-h-full my-[50px] border border-solid border-darkBorder ${isOpen ? "animate-inAnimation" : ""} ${isClosing ? "animate-outAnimation" : ""}`}>
-                        <div className="flex justify-between items-center py-6 px-12">
+                        <div className="flex items-center justify-between px-12 py-6">
                             <h4 className="font-h4">{title}</h4>
-                            <button className="w-10 h-10 bg-gradientmain text-darkPrimaryLight flex justify-center align items-center absolute right-6 rounded-xl border border-solid border-darkBorder" onClick={handleClose}>
+                            <button className="absolute flex items-center justify-center w-10 h-10 border border-solid bg-gradientmain text-darkPrimaryLight align right-6 rounded-xl border-darkBorder" onClick={handleClose}>
                                 <XMarkIcon className="h-[24px] w-[24px]" />
                             </button>
                         </div>

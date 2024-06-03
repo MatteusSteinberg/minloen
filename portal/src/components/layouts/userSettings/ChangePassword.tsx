@@ -45,6 +45,8 @@ const ChangePassword = ({ handleClose }: IChangePassword) => {
     const samePassword = form.password !== form.repeatPassword ? "Adgangskode er ikke ens" : undefined
     const passwordLength = (form.password || "").length < 8 && !!form.password ? "Minimum 8 tegn" : undefined
 
+    console.log(form)
+
     return (
         <>
             <div className="flex flex-col items-start justify-start gap-[42px] w-full">
@@ -55,7 +57,7 @@ const ChangePassword = ({ handleClose }: IChangePassword) => {
                     <Input value={form.repeatPassword} onChange={(ev) => handleFormChange(ev, "repeatPassword")} label="Bekræft password" placeholder="Bekræft" name="confirmPassword" icon={<LockClosedIcon className="text-lightPrimary dark:text-darkBorder" />} />
                 </div>
             </div>
-            <div className="flex w-full gap-4">
+            <div className="flex flex-col w-full gap-4 sm:flex-row">
                 <button type="submit" className="w-full py-5 text-white bg-lightPrimary dark:bg-darkPrimaryLight dark:text-text rounded-2xl" onClick={handleOnSave}>
                     Gem ændringer
                 </button>
