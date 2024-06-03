@@ -63,7 +63,6 @@ export const AuthProvider = memo(({ children }: { children: React.ReactNode }) =
 
   const updateMe = async (user: Partial<IUser>) => {
     setData(_cloneDeep(user))
-    console.log(user)
     return await update(user)
   }
 
