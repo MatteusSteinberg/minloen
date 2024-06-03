@@ -10,7 +10,7 @@ interface IChangePassword {
 }
 
 const ChangePassword = ({ handleClose }: IChangePassword) => {
-    const { user, updateMe } = useAuth()
+    const { updateMe } = useAuth()
     const [form, setForm] = useState<Partial<IUser> & { currentPassword?: string; repeatPassword?: string }>({})
 
     const handleFormChange = (ev: any, path: string) => {

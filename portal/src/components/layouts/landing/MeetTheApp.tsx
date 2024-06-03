@@ -18,13 +18,13 @@ const MeetTheApp = (props: Props) => {
             </div>
             <div className="flex items-center justify-center gap-2 px-10 mt-20 lg:gap-16 lg:px-40 ">
                 <div className="">
-                    <img src={Forside} />
+                    <img src={Forside} alt="forside" />
                 </div>
                 <div className="">
-                    <img src={Lønsedler} />
+                    <img src={Lønsedler} alt="lønseddler" />
                 </div>
                 <div className="">
-                    <img src={Fravær} />
+                    <img src={Fravær} alt="fravær" />
                 </div>
             </div>
         </section>

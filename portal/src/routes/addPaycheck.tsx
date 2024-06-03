@@ -1,7 +1,5 @@
-import _ from "lodash"
-import { useCallback, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useSearchParam, useSet } from "react-use"
 import { IPayrollSetup } from "../../../interfaces/payroll.interface"
 import { IUser } from "../../../interfaces/user.interface"
 import ContentContainer from "../components/globals/ContentContainer"
@@ -12,12 +10,12 @@ import { useAPI } from "../hooks/use-api"
 
 const AddPaycheck = () => {
   const { id } = useParams()
-  const isFixedPayrollParam = useSearchParam("fast")
+  //const isFixedPayrollParam = useSearchParam("fast")
 
   const [form, setForm] = useState<IPayrollSetup>({})
-  const [edited, { add }] = useSet<string>()
+  // const [edited, { add }] = useSet<string>()
 
-  const isFixedPayroll = isFixedPayrollParam === "true"
+  // const isFixedPayroll = isFixedPayrollParam === "true"
 
   const { data } = useAPI<IUser>({ url: "/user", id })
 
@@ -28,13 +26,13 @@ const AddPaycheck = () => {
     }
   }, [form])
 
-  const formChange = useCallback((path: string, value: any) => {
+  /* const formChange = useCallback((path: string, value: any) => {
     add(path)
     setForm(f => {
       f = _.set(f, path, value)
       return { ...f }
     })
-  }, [add])
+  }, [add]) */
 
   return (
     <ContentContainer>

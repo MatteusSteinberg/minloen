@@ -50,7 +50,7 @@ const Dropdown = ({ options, name, placeholder, error, label, onChange, spacing,
         return () => {
             window.removeEventListener("resize", checkIfTooCloseToBottom)
         }
-    }, [isVisible])
+    }, [isVisible, dropdownRef])
 
     const isPlaceholder = !currentOption && placeholder
 

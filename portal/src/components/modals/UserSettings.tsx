@@ -1,5 +1,5 @@
 import { LockClosedIcon, MapPinIcon } from "@heroicons/react/24/outline"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Dropdown, { DropdownOption } from "../elements/Dropdown"
 import Portal from "../globals/Portal"
 import ChangePassword from "../layouts/userSettings/ChangePassword"
@@ -23,7 +23,7 @@ const UserSettings = ({ isOpen, toggleModal }: IUserSettings) => {
         if (isOpen) document.body.classList.add("sc-modal-open")
     }, [isOpen])
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         if (isOpen) {
             setIsClosing(true)
             setTimeout(() => {
@@ -31,7 +31,7 @@ const UserSettings = ({ isOpen, toggleModal }: IUserSettings) => {
                 setIsClosing(false)
             }, 260)
         }
-    }
+    }, [isOpen, setIsClosing, toggleModal])
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -45,7 +45,7 @@ const UserSettings = ({ isOpen, toggleModal }: IUserSettings) => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside)
         }
-    }, [modalRef])
+    }, [modalRef, handleClose])
 
     if (!isOpen) return null
 
