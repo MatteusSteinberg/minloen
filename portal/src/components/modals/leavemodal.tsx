@@ -13,9 +13,7 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
     const options = [
         { value: "Option 1", label: "Sygdom" },
         { value: "Option 2", label: "Fridag" },
-        { value: "Option 3", label: "Feriedag" },
-        { value: "Option 4", label: "Option 4" },
-        { value: "Option 5", label: "Option 5" }
+        { value: "Option 3", label: "Feriedag" }
     ];
 
     const [selectedOption, setSelectedOption] = useState(options[0].value);
@@ -80,8 +78,6 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                             </div>
                         </>
                     )}
-                    {selectedOption === "Option 4" && (<div>View for Option 4</div>)}
-                    {selectedOption === "Option 5" && (<div>View for Option 5</div>)}
                 </div>
             </div>
         </Base>
