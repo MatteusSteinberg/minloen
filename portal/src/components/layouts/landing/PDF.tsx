@@ -48,8 +48,8 @@ const PDF = (props: Props) => {
 
 export default PDF
 
-{
-    /* <div className="bg-white shadow-custom rounded-2xl">
+/*{
+     <div className="bg-white shadow-custom rounded-2xl">
             <div className="h-[38px] w-full px-5 relative border-b border-solid border-lightBorder flex items-center justify-start gap-2">
                 <div className="h-2 w-2 rounded-full bg-[#FF6058]"></div>
                 <div className="h-2 w-2 rounded-full bg-[#FEBE30]"></div>
@@ -114,5 +114,5 @@ export default PDF
                     </div>
                 </div>
             </div>
-        </div> */
-}
+        </div> 
+}*/
