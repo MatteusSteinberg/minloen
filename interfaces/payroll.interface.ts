@@ -8,6 +8,7 @@ export interface IPayrollSetup {
     standardHours?: number
     /** Gage */
     salary?: number
+    salaryType?: string
 
     /** Timeløn */
     hourlyWage?: number
