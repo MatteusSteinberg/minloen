@@ -41,6 +41,10 @@ const drivingSchema = new Schema<IDriving>(
             type: Number,
             required: true,
         },
+        compensation: {
+            type: Number,
+            required: true,
+        },
     },
     {
         timestamps: true,

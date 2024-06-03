@@ -1,7 +1,8 @@
 import { Types } from "mongoose"
 
 export interface IDriving {
-    id?: any
+    id: any
+    _id?: any
     user: Types.ObjectId
     organization: Types.ObjectId
     locationFrom: string
@@ -11,6 +12,7 @@ export interface IDriving {
     description: string
     roundtrip?: boolean
     distance: number
+    compensation: number
     updatedAt?: Date
     createdAt?: Date
 }

@@ -1,3 +1,4 @@
+import { HydratedDocument } from "mongoose"
 import { IDriving } from "../../interfaces/driving.interface"
 import { validateObject } from "../lib/validator"
 import drivingModel from "../models/driving.model"
@@ -21,22 +22,32 @@ export const add = baseHandler(async ({ user, body }) => {
         return { data: invalid, status: StatusCodes.BadRequest }
     }
 
-    new drivingModel({ ...body, user: user._id, organization: user.activeOrganization })
+    const compensation = body.roundtrip ? body.distance * 3.79 * 2 : body.distance * 3.79
+
+    new drivingModel({ ...body, user: user._id, organization: user.activeOrganization, compensation })
 
     return { data: {}, status: StatusCodes.Created }
 }, "user")
 
 export const list = baseHandler(async ({ user, query }) => {
-    const { page = 1, limit = 10 } = query
-    const startIndex = (page - 1) * limit
+    const { page } = query as { page?: string }
 
-    const total = await drivingModel.countDocuments({ user: user._id })
+    const drivings: HydratedDocument<IDriving>[] = await drivingModel
+        .find({
+            user: user._id,
+        })
+        .skip((parseInt(page || "1") - 1) * 10)
+        .limit(10)
 
-    const drivings = await drivingModel.find({ user: user._id }).skip(startIndex).limit(limit)
+    return { data: drivings, status: StatusCodes.Ok }
+}, "user")
 
-    const totalPages = Math.ceil(total / limit)
+export const listMetadata = baseHandler(async ({ user }) => {
+    const count = await drivingModel.countDocuments({
+        user: { $eq: user._id },
+    })
 
-    return { data: drivings, totalPages, status: StatusCodes.Ok }
+    return { data: { count: count, size: 10 }, status: StatusCodes.Ok }
 }, "user")
 
 // NOTE: What to do if the admin wants to see the list?

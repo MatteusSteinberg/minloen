@@ -1,49 +1,45 @@
+import { useMemo } from "react"
+import { useSearchParams } from "react-router-dom"
+import { IDriving } from "../../../interfaces/driving.interface"
 import DataTable from "../components/elements/DataTable"
 import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
-
-const drivingData = {
-    headers: ["ID #", "Dato", "Til", "Fra", "Km"],
-    rows: [
-        {
-            "ID #": 1,
-            Dato: "01-01-2021",
-            Til: "Aarhus C",
-            Fra: "Odder",
-            Km: "31 KM",
-        },
-        {
-            "ID #": 2,
-            Dato: "01-01-2021",
-            Til: "Aarhus C",
-            Fra: "Odder",
-            Km: "31 KM",
-        },
-        {
-            "ID #": 3,
-            Dato: "01-01-2021",
-            Til: "Aarhus C",
-            Fra: "Odder",
-            Km: "31 KM",
-        },
-        {
-            "ID #": 4,
-            Dato: "01-01-2021",
-            Til: "Aarhus C",
-            Fra: "Odder",
-            Km: "31 KM",
-        },
-    ],
-}
+import { useAPI } from "../hooks/use-api"
 
 const Drivingcompensation = () => {
+    let [searchParams, setSearchParams] = useSearchParams()
+
+    const currentPage = parseInt(searchParams.get("page") || "1")
+    const { data } = useAPI<IDriving[]>({ url: "/driving/list", params: { page: currentPage } })
+    const { data: metadata } = useAPI<{ count: number; size: number }>({ url: "/driving/list/meta" })
+
+    const formattedData = useMemo(() => {
+        const rows = (data || []).map((v) => {
+            return {
+                ID: v.id,
+                Dato: v.date,
+                Fra: v.locationFrom,
+                Til: v.locationTo,
+                Km: v.distance + " km",
+            }
+        })
+        return {
+            headers: ["ID #", "Dato", "Til", "Fra", "Km"],
+            rows,
+        }
+    }, [data])
+
     return (
         <ContentContainer>
             <div>
                 <Header title="Din kørsel" />
             </div>
             <div className="">
-                <DataTable title="Kørsel" tableData={drivingData} />
+                <DataTable title="Kørsel" 
+                metadata={metadata} 
+                currentPage={currentPage} 
+                onPageClick={(p) => setSearchParams((s) => ({ ...s, page: p }))} 
+                tableData={formattedData} />
             </div>
         </ContentContainer>
     )

@@ -1,5 +1,5 @@
 import express from "express"
-import { add, get, list, update } from "../services/driving.route"
+import { add, get, list, listMetadata, update } from "../services/driving.route"
 
 const drivingRouter = express.Router()
 
@@ -7,8 +7,9 @@ const drivingRouter = express.Router()
 drivingRouter.post("/", add)
 
 // GET
-drivingRouter.get("/", list)
+drivingRouter.get("/list", list)
 drivingRouter.get("/:id", get)
+drivingRouter.get("/list/meta", listMetadata)
 
 // PATCH
 drivingRouter.patch("/:id", update)
