@@ -24,7 +24,7 @@ const Absence = () => {
             <div>
                 <Header title="Dine fravær/sygedage" />
             </div>
-            <div className="grid grid-cols-3 grid-rows-1 gap-4 mb-12">
+            <div className="grid grid-cols-1 grid-rows-1 gap-4 mb-12 md:grid-cols-3">
                 {boxData.map((data, index) => (
                     <Box title={data.title} value={data.value} />
                 ))}
