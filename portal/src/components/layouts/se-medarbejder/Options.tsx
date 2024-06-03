@@ -1,20 +1,22 @@
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 type Props = {}
 
 const Options = (props: Props) => {
+    const { id } = useParams()
+
     return (
-        <div className="flex items-center justify-between pb-3 mb-16 border-b border-solid border-border">
+        <div className="flex items-center justify-between pb-3 mb-16 border-b border-solid border-lightBorder dark:border-darkBorder">
             <div className="flex items-center justify-center gap-4">
-                <p className="text-white font-small-normal">Profil</p>
-                <p className="text-primaryLight font-small-normal">Medarbejder</p>
+                <p className="text-text dark:text-white font-small-normal">Profil</p>
+                <p className="text-lightPrimary dark:text-darkPrimaryLight font-small-normal">Medarbejder</p>
             </div>
             <div className="flex items-center justify-center gap-4">
-                <Link to="/opret-loenseddel" className="text-white font-small-normal">
+                <Link to={`/opret-loenseddel/${id}?fast=true`} className="text-text dark:text-white font-small-normal">
                     Opret fast lønseddel
                 </Link>
-                <Link to="/opret-kommende-loenseddel" className="text-primaryLight font-small-normal">
-                    Opret tilpasset for kommende måned
+                <Link to={"/opret-loenseddel/" + id} className="text-lightPrimary dark:text-darkPrimaryLight font-small-normal">
+                    Opret tilpasset lønseddel for kommende måned
                 </Link>
             </div>
         </div>

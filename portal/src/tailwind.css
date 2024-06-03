@@ -23,23 +23,26 @@
     body {
         line-height: 1;
         width: 100%;
-        @apply text-text;
         font-size: 16px;
-        @apply font-default;
-        @apply bg-primarySupport;
+        @apply font-default dark:bg-darkPrimarySupport bg-lightPrimary text-text;
     }
 }
 
 a.active {
     @apply border-solid
+    transition-all
+    duration-150
     border-[1px]
-    border-[rgba(51,54,62,0.50)]
-    bg-gradientmain
-    text-white;
+    border-lightBorder
+    bg-white
+    text-text
+    dark:border-[rgba(51,54,62,0.50)]
+    dark:bg-gradientmain
+    dark:text-white;
 }
 
 a.active svg {
-    @apply stroke-primaryLight;
+    @apply transition-all duration-150 dark:stroke-darkPrimaryLight stroke-lightPrimary;
 }
 
 @layer utilities {
@@ -49,6 +52,10 @@ a.active svg {
 
     .bg-gradientmain {
         background: linear-gradient(90deg, rgba(36, 40, 51, 0.5) 0%, rgba(50, 51, 55, 0.5) 53.86%);
+    }
+
+    .bg-gradientsecondary {
+        background: linear-gradient(180deg, #00997e 0%, #fff 100%);
     }
 
     /* Hide scrollbar for Chrome, Safari and Opera */
@@ -180,7 +187,7 @@ a.active svg {
     }
 
     .shadow-custom {
-        box-shadow: 0px 8px 32px 0px rgba(0, 0, 0, 0.05), 0px 4px 16px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(0, 0, 0, 0.05);
+        box-shadow: 0px 2px 75px 0px rgba(37, 37, 37, 0.1);
     }
 }
 

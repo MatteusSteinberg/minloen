@@ -6,9 +6,9 @@ import { IUser } from "../../../interfaces/user.interface"
 import { IRequestData, requestWithBody, useAPI } from "./use-api"
 
 interface IAuth {
-  authenticate: (email: string, password: string) => Promise<{ error?: any }>,
-  unauthenticate: () => void,
-  updateMe: (user: Partial<IUser>) => Promise<IRequestData<IUser>>,
+  authenticate: (email: string, password: string) => Promise<{ error?: any }>
+  unauthenticate: () => void
+  updateMe: (user: Partial<IUser>) => Promise<IRequestData<IUser>>
   user?: IUser
 }
 
@@ -24,7 +24,7 @@ export const useAuth = () => {
   return useContext<IAuth>(AuthContext)
 }
 
-const api = (process.env.REACT_APP_API || '') + "/api"
+const api = (process.env.REACT_APP_API || "") + "/api"
 
 export const AuthProvider = memo(({ children }: { children: React.ReactNode }) => {
   const [token, setToken, clearToken] = useLocalStorage<string>("token")
@@ -39,7 +39,8 @@ export const AuthProvider = memo(({ children }: { children: React.ReactNode }) =
 
   const authenticate = async (email: string, password: string) => {
     const result = await requestWithBody(`${api}/user/login`, "post", {
-      email, password
+      email,
+      password,
     })
 
     if (result?.data) {
@@ -47,8 +48,7 @@ export const AuthProvider = memo(({ children }: { children: React.ReactNode }) =
       setToken(token)
       axios.defaults.headers.common.Authorization = `Bearer ${token}`
       await mutate()
-    }
-    else {
+    } else {
       return { error: result?.error }
     }
 
@@ -63,17 +63,15 @@ export const AuthProvider = memo(({ children }: { children: React.ReactNode }) =
 
   const updateMe = async (user: Partial<IUser>) => {
     setData(_cloneDeep(user))
-    return await update({ body: user })
+    return await update(user)
   }
 
   const contextValue = {
     user: data,
     authenticate,
     unauthenticate,
-    updateMe
+    updateMe,
   }
 
-  return <AuthContext.Provider value={contextValue}>
-    {children}
-  </AuthContext.Provider>
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
 })

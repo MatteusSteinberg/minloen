@@ -15,26 +15,29 @@ const userDetailsSchema: SchemaDefinition<IUserDetails> = {
       incomeType: { type: String }
     }
   },
+  salaryType: { type: String },
+  city: { type: String },
+  zipCode: { type: String },
   employmentDate: { type: Date },
   firstName: { type: String },
   lastName: { type: String },
-  hourlyWage: { type: String },
+  hourlyWage: { type: Number },
   paymentArrangement: { type: String, trim: true },
   pension: {
     type: {
       pensionType: { type: String },
       ownContributionPercentage: { type: Number },
-      ownAmount: { type: String },
+      ownAmount: { type: Number },
       companyContributionPercentage: { type: Number },
-      companyAmount: { type: String }
+      companyAmount: { type: Number }
     }
   },
   phoneNumber: { type: String },
   position: { type: String },
   resignationDate: { type: Date },
-  salary: { type: String },
+  salary: { type: Number },
   socialSecurityNumber: { type: String, trim: true },
-  standardHours: { type: String, required: false },
+  standardHours: { type: Number, required: false },
   vacation: {
     type: {
       scheme: { type: String },
@@ -48,9 +51,9 @@ const userDetailsSchema: SchemaDefinition<IUserDetails> = {
       institute: { type: String },
       agreementCode: { type: String },
       ownContributionPercentage: { type: Number },
-      ownAmount: { type: String },
+      ownAmount: { type: Number },
       companyContributionPercentage: { type: Number },
-      companyAmount: { type: String }
+      companyAmount: { type: Number }
     }
   }
 }

@@ -1,0 +1,31 @@
+name: Portal Build and Test branches
+on:
+    pull_request:
+        branches:
+            - "main"
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Set repo name to lowercase
+              id: repo
+              run: echo "::set-output name=repo::$(echo ${{ github.repository }} | awk '{print tolower($0)}')"
+
+            - name: Get current date
+              id: date
+              run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+            - name: Build
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  file: ./portal/Dockerfile
+                  push: false
+                  tags: ghcr.io/${{ steps.repo.outputs.repo }}/api-test-${{ steps.date.outputs.date }}:latest

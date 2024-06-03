@@ -19,6 +19,7 @@ COPY ./interfaces ./interfaces
 
 WORKDIR /app/api
 ENV NODE_ENV production
+ENV CI true
 RUN yarn build
 
 

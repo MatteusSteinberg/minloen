@@ -6,6 +6,8 @@ export interface IUserDetails {
   firstName?: string
   lastName?: string
   address?: string
+  city?: string
+  zipCode?: string
   phoneNumber?: string
 
   workerNumber?: string
@@ -18,13 +20,13 @@ export interface IUserDetails {
   bankRegistrationNumber?: string
   bankAccountNumber?: string
 
-  standardHours?: string
+  standardHours?: number
   salaryType?: "salary" | "hourly"
   /** Gage */
-  salary?: string
+  salary?: number
 
   /** Timeløn */
-  hourlyWage?: string
+  hourlyWage?: number
 
   /** ATP-ordning */
   ATP?: string
@@ -34,7 +36,7 @@ export interface IUserDetails {
 
   /** Ferieordning */
   vacation?: {
-    scheme?: string
+    scheme?: "vacationSavings" | "vacationWithPay"
     recipient?: string
     eachYear?: string
   }
@@ -44,11 +46,11 @@ export interface IUserDetails {
     /** Eget bidrag % */
     ownContributionPercentage?: number
     /** Eget beløb */
-    ownAmount?: string
+    ownAmount?: number
     /** Firma bidrag % */
     companyContributionPercentage?: number
     /** Firma beløb */
-    companyAmount?: string
+    companyAmount?: number
   }
 
   eIncome?: {
@@ -62,9 +64,9 @@ export interface IUserDetails {
     institute?: string
     agreementCode?: string
     ownContributionPercentage?: number
-    ownAmount?: string
+    ownAmount?: number
     companyContributionPercentage?: number
-    companyAmount?: string
+    companyAmount?: number
   }
 }
 

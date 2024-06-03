@@ -1,0 +1,134 @@
+{
+  "employee": {
+    "name": "John",
+    "address": "123 Main St",
+    "zipCode": "94043",
+    "cpr": "1234567890",
+    "employeeNumber": "12345678",
+    "hiredDate": "2015/01/01",
+    "bankAccount": "1234567890"
+  },
+  "company": {
+    "name": "Google",
+    "address": "1600 Amphitheatre Parkway",
+    "zipCode": "94043",
+    "cvr": "12345678"
+  },
+  "payroll": {
+    "month": "May 2015",
+    "datePeriod": "2015/05/01 - 2015/05/31",
+    "paymentDate": "2015/06/01",
+    "salary": "10000 kr"
+  },
+  "details": [
+    {
+      "description": "Work hours",
+      "basis": "160",
+      "rate": "2.5%",
+      "total": "180"
+    },
+    {
+      "description": "Overtime",
+      "basis": "20",
+      "rate": "3.5%",
+      "total": "70"
+    },
+    {
+      "description": "Bonus",
+      "basis": "1",
+      "rate": "100%",
+      "total": "1000"
+    },
+    {
+      "description": "Total",
+      "basis": "",
+      "rate": "",
+      "total": "1250"
+    },
+    {
+      "description": "Tax",
+      "basis": "1250",
+      "rate": "40%",
+      "total": "500"
+    },
+    {
+      "description": "Net salary",
+      "basis": "",
+      "rate": "",
+      "total": "750"
+    }
+  ],
+  "balance": {
+    "holidays": [
+      {
+        "description": "Holidays",
+        "optionOne": "Grundlag",
+        "optionTwo": "Sats",
+        "optionThree": "Yeah",
+        "holidayLines": [
+          {
+            "description": "Holidays earned",
+            "optionOne": "5",
+            "optionTwo": "10",
+            "optionThree": "15"
+          },
+          {
+            "description": "Holidays taken",
+            "optionOne": "5",
+            "optionTwo": "10",
+            "optionThree": "15"
+          },
+          {
+            "description": "Holidays left",
+            "optionOne": "5",
+            "optionTwo": "10",
+            "optionThree": "15"
+          }
+        ]
+      },
+      {
+        "description": "Ferie",
+        "optionOne": "",
+        "optionTwo": "Brugt",
+        "optionThree": "Total",
+        "holidayLines": [
+          {
+            "description": "Holidays Hash",
+            "optionOne": "5",
+            "optionTwo": "10",
+            "optionThree": "15"
+          },
+          {
+            "description": "Holidays OOI",
+            "optionOne": "5",
+            "optionThree": "15"
+          },
+          {
+            "description": "Holidays Yeah",
+            "optionOne": "5",
+            "optionThree": "15"
+          }
+        ]
+      }
+    ],
+    "saldi": [
+      {
+        "description": "Kage",
+        "value": "100"
+      },
+      {
+        "description": "Kaffe",
+        "value": "50"
+      },
+      {
+        "description": "Frokost",
+        "value": "200"
+      },
+      {
+        "description": "Total",
+        "value": "350"
+      }
+    ]
+  }
+
+}
