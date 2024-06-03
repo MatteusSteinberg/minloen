@@ -3,6 +3,7 @@ import Box from "../components/globals/Box"
 import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
 import CurrentPaycheck from "../components/layouts/overview/CurrentPaycheck"
+import { useAuth } from "../hooks/use-auth"
 
 const boxData = [
     {
@@ -50,11 +51,13 @@ const graphData = {
     data: [65, 59, 72, 75, 52, 55],
 }
 
-const overview = () => {
+const Overview = () => {
+    const { user } = useAuth()
+
     return (
         <ContentContainer>
             <div className="">
-                <Header title="Hejsa Tobias!" />
+                <Header title={`Hejsa ${user?.firstName}!`} />
             </div>
             <div>
                 <p className="mb-2 text-text dark:text-white font-large-normal">Statistikker</p>
@@ -75,4 +78,4 @@ const overview = () => {
     )
 }
 
-export default overview
+export default Overview
