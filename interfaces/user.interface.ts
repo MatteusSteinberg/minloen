@@ -90,6 +90,8 @@ export interface IUser extends IUserDetails {
     expriryAt: Date
     usedAt?: Date
   }
+
+  profileImage?: Types.ObjectId
   organizations?: Array<Types.ObjectId>
   activeOrganization?: Types.ObjectId | IOrganization | string
   organizationRole?: "admin" | "user",

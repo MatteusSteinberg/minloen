@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express"
 import { HydratedDocument } from "mongoose"
 import { IFile } from "../../../interfaces/file.interface"
 import { IUser } from "../../../interfaces/user.interface"
+import { readFile } from './file-helper'
 
 export type File = Partial<IFile>
 
@@ -51,7 +52,8 @@ export type HandlerRequest = {
   body: any
   params: any
   query: any
-  user: HydratedDocument<IUser> | undefined
+  user: HydratedDocument<IUser> | undefined,
+  file?: Express.MulterS3.File
 }
 
 const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, requiresRole?: "admin" | "user" | "any") => {
@@ -73,11 +75,19 @@ const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, 
     }
 
     try {
-      const { data, status, redirect } = await cb({ body: req.body, params: req.params, query: req.query, user: (req as any).user })
+      const { data, status, redirect, file } = await cb({ file: req.file as any, body: req.body, params: req.params, query: req.query, user: (req as any).user })
 
       if (redirect) {
         res.redirect(status, redirect)
         return redirect // For testing
+      }
+
+      if (file) {
+        const stream = await readFile(file.key)
+        res.setHeader("Content-Type", file.contentType)
+        stream.pipe(res)
+        res.status(200)
+        return file // For testing
       }
 
       res.status(status as number).json(data)

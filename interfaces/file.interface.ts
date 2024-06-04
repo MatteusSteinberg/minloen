@@ -4,10 +4,10 @@ type fileType = "image" | "video" | "audio" | "document" | "other"
 
 export interface IFile {
   id?: any
-  organization: Types.ObjectId
+  organization?: Types.ObjectId
   key: string
-  type: string
-  file_type: fileType
+  contentType: string
+  fileType: fileType
   updatedAt?: Date
   createdAt?: Date
 }
