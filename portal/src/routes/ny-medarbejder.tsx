@@ -4,13 +4,14 @@ import { useParams } from "react-router-dom"
 import { useSet } from "react-use"
 import { IUser, IUserAdd } from "../../../interfaces/user.interface"
 import Button from "../components/elements/Button"
+import Checkbox from "../components/elements/Checkbox"
 import Dropdown, { DropdownOption } from "../components/elements/Dropdown"
 import Input from "../components/elements/Input"
 import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
 import { useAPI } from "../hooks/use-api"
 
-type field = { placeholder: string; autocomplete?: HTMLInputAutoCompleteAttribute; locked?: boolean, keyPath: string; name: string; type?: React.HTMLInputTypeAttribute | "boolean" | "dropdown"; options?: Array<DropdownOption> }
+type field = { placeholder: string; autocomplete?: HTMLInputAutoCompleteAttribute; locked?: boolean; keyPath: string; name: string; type?: React.HTMLInputTypeAttribute | "boolean" | "dropdown"; options?: Array<DropdownOption> }
 interface CoworkerSection {
   form?: IUserAdd
   title: string
@@ -58,21 +59,9 @@ const Section = ({ title, undertitle, error, form, onChange, fields, children }:
           <React.Fragment key={v.name}>
             {v.type === "dropdown" && <Dropdown name={v.name} options={v.options || []} placeholder={v.placeholder} {...inputHandler(v)} onChange={(h) => onChange?.(v.keyPath, h)} />}
 
-            {v.type === "boolean" && (
-              <div className="flex flex-row gap-2">
-                <span className="text-white">{v.placeholder}</span>
-                <input name={v.name} placeholder={v.placeholder} {...inputHandler(v)} onChange={(ev) => onChange(v.keyPath, ev.target.checked)} type="checkbox" />
-              </div>
-            )}
+            {v.type === "boolean" && <Checkbox name={v.name} text={v.placeholder} {...inputHandler(v)} onChange={(ev) => onChange(v.keyPath, ev.target.checked)} />}
 
-            {!["dropdown", "boolean"].includes(v.type as any) && <Input
-              type={v.type || "text"}
-              autocomplete={v.autocomplete}
-              name={v.name}
-              placeholder={v.placeholder}
-              locked={v.locked}
-              {...inputHandler(v)}
-            />}
+            {!["dropdown", "boolean"].includes(v.type as any) && <Input type={v.type || "text"} autocomplete={v.autocomplete} name={v.name} placeholder={v.placeholder} locked={v.locked} {...inputHandler(v)} />}
           </React.Fragment>
         ))}
       </div>
@@ -101,7 +90,7 @@ const NewCoworker = () => {
     return {
       ..._.omit(data, Array.from(edited)),
       ...formInner,
-      organizationRole: data?.organizationRole || formInner.organizationRole
+      organizationRole: data?.organizationRole || formInner.organizationRole,
     }
   }, [formInner, data, edited])
 
@@ -152,7 +141,7 @@ const NewCoworker = () => {
             </div>
           </div>
           <div className="flex items-center justify-between p-8 bg-white dark:bg-darkPrimarySupport rounded-3xl shadow-custom ">
-            <p className="text-text dark:text-white font-large-normal">Færdiggør tilføjelse</p>
+            <p className="text-text dark:text-white font-large-normal">Færdiggør</p>
             <Button onClick={handleOnSubmit} background="primaryLight" color="text">
               {!!id ? "Gem medarbejder" : "Tilføj medarbejder"}
             </Button>
@@ -169,16 +158,11 @@ const NewCoworker = () => {
             title="Bruger oplysninger"
             undertitle="Brugeroplysninger til at logge ind"
             onChange={handleSectionOnChange}>
-            <div className="flex items-center justify-between mt-5">
+            <div className="flex items-center justify-between">
               <p className="pt-2 text-text dark:text-white font-large-normal">Medarbejder rettigheder</p>
               <div className=" min-w-[320px]">
-                {!!id && <p className="text-text dark:text-white font-bold text-right">{roles.find(v => v.value === form.organizationRole)?.label}</p>}
-                {!id && <Dropdown
-                  value={form.organizationRole}
-                  name="organizationRole"
-                  options={roles}
-                  onChange={(v) => setForm((f) => ({ ...f, organizationRole: v }))}
-                />}
+                {!!id && <p className="font-bold text-right text-text dark:text-white">{roles.find((v) => v.value === form.organizationRole)?.label}</p>}
+                {!id && <Dropdown value={form.organizationRole} name="organizationRole" options={roles} onChange={(v) => setForm((f) => ({ ...f, organizationRole: v }))} />}
               </div>
             </div>
           </Section>
@@ -190,7 +174,7 @@ const NewCoworker = () => {
               { keyPath: "phoneNumber", name: "phoneNumber", placeholder: "Telefon" },
               { keyPath: "address", name: "address", placeholder: "Adresse" },
               { keyPath: "city", name: "city", placeholder: "By" },
-              { keyPath: "zipCode", name: "zipCode", placeholder: "Post nr." }
+              { keyPath: "zipCode", name: "zipCode", placeholder: "Post nr." },
             ]}
             form={form}
             error={error}

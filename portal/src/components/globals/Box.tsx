@@ -19,7 +19,7 @@ const Box = ({ title, value, graph, graphData }: IBox) => {
     return (
         <div className="px-6 py-6 bg-white border border-solid shadow-custom dark:bg-darkPrimarySupport rounded-2xl border-lightBorder dark:border-darkBorder">
             <p className="mb-1 font-standard-semibold text-text dark:text-darkPrimaryLight">{title}</p>
-            <p className="text-lightPrimary dark:text-white font-h3">{value}</p>
+            <p className="text-lightPrimary dark:text-white font-h4 ">{value}</p>
             {graph && graphData && (
                 <div className="mt-4" style={{ height: "85px" }}>
                     <ResponsiveContainer width="100%" height="100%">

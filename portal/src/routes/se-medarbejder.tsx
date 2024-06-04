@@ -62,31 +62,28 @@ const SeeCoworker = () => {
   const { data } = useAPI<IUser>({ url: "/user", id })
 
   const agreements = useMemo(() => {
-
     const agreementDictionaries = {
       salaryType: {
-        "hourly": {
+        hourly: {
           title: "Personen er timelønnet",
-          description: "Denne medarbejder er oprettet som timelønnet"
+          description: "Denne medarbejder er oprettet som timelønnet",
         },
-        "salary": {
+        salary: {
           title: "Personen er fastlønnet",
-          description: "Denne medarbejder er oprettet til at modtage gage"
-        }
+          description: "Denne medarbejder er oprettet til at modtage gage",
+        },
       } as any,
-      workplacePension: {
-
-      } as any,
+      workplacePension: {} as any,
       vacation: {
         vacationSavings: {
           title: `${data?.name} har ferie opsparing`,
-          description: "Denne medarbejder er sat til at modtage ferie opsparing"
+          description: "Denne medarbejder er sat til at modtage ferie opsparing",
         },
         vacationWithPay: {
           title: `${data?.name} har ferie med løn`,
-          description: "Denne medarbejder er sat at få modtage ferie med løn"
-        }
-      } as any
+          description: "Denne medarbejder er sat at få modtage ferie med løn",
+        },
+      } as any,
     }
 
     return [
@@ -106,9 +103,7 @@ const SeeCoworker = () => {
         type: !!data?.workplacePension?.institute ? "approved" : "warning",
         icon: !!data?.workplacePension?.institute ? SuccessIcon : WarningIcon,
         title: !!data?.workplacePension?.institute ? "Personen får pension" : "Personen får ikke pension",
-        description: !!data?.workplacePension?.institute ?
-          `Denne medarbejder modtager pension fra ${workplacePensionInstitues.find(x => x.value === data?.workplacePension?.institute)?.label ?? `Ukendt ${data?.workplacePension?.institute}`}`
-          : "Denne medarbejder modtager ikke pension",
+        description: !!data?.workplacePension?.institute ? `Denne medarbejder modtager pension fra ${workplacePensionInstitues.find((x) => x.value === data?.workplacePension?.institute)?.label ?? `Ukendt ${data?.workplacePension?.institute}`}` : "Denne medarbejder modtager ikke pension",
       },
     ]
   }, [data])
@@ -118,11 +113,11 @@ const SeeCoworker = () => {
       <div>
         <Header title={data?.name ?? ""} history="/medarbejdere" />
       </div>
-      <Options />
+      <Options canCreatePayroll={!!data?.salaryType} />
       <div className="flex items-start justify-between">
         <div className="flex flex-col items-start w-full">
-          <p className="text-white font-large-semibold">Aftaler</p>
-          <p className="text-white opacity-30">Tilpassede medarbejder aftaler</p>
+          <p className="text-text dark:text-white font-large-semibold">Aftaler</p>
+          <p className="text-text dark:text-white opacity-30">Tilpassede medarbejder aftaler</p>
         </div>
         <div className="flex flex-col w-full gap-3">
           {agreements.map((agreement: IAgreements, index: number) => (

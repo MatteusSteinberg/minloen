@@ -1,5 +1,6 @@
 import { BuildingOfficeIcon, LockClosedIcon, Square2StackIcon, UserIcon } from "@heroicons/react/24/outline"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { IOrganizationRegister } from "../../../../../interfaces/organization.interface"
 import { useAPI } from "../../../hooks/use-api"
 import { useAuth } from "../../../hooks/use-auth"
@@ -12,6 +13,7 @@ type Props = {}
 const Form = (props: Props) => {
     const { authenticate } = useAuth()
     const [form, setForm] = useState<IOrganizationRegister>({})
+    const navigate = useNavigate()
 
     const { create, error } = useAPI({ url: "/organization/register", opts: { autoGet: false } })
 
@@ -26,6 +28,7 @@ const Form = (props: Props) => {
         const result = await create(form)
         if (!result.error) {
             await authenticate(form?.adminEmail || "", form.password || "")
+            navigate("/overblik")
         }
     }
 

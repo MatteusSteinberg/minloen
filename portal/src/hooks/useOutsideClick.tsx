@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 type Handler = (show: boolean) => void
 
@@ -6,11 +6,11 @@ export const useOutsideClick = (initialState: boolean, buttonRef: React.RefObjec
     const ref = useRef<HTMLDivElement>(null)
     const [isVisible, setIsVisible] = useState(initialState)
 
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = useCallback((event: MouseEvent) => {
         if (ref.current && !ref.current.contains(event.target as Node) && buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
             setIsVisible(false)
         }
-    }
+    }, [ref, buttonRef, setIsVisible]);
 
     const toggleVisibility = (show: boolean) => {
         setIsVisible(show)
@@ -21,7 +21,7 @@ export const useOutsideClick = (initialState: boolean, buttonRef: React.RefObjec
         return () => {
             document.removeEventListener("mousedown", handleClickOutside)
         }
-    }, [])
+    }, [handleClickOutside])
 
     return [isVisible, ref, toggleVisibility]
 }

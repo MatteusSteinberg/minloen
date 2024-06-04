@@ -1,6 +1,6 @@
 import { LockClosedIcon, UserIcon } from "@heroicons/react/24/outline"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../../hooks/use-auth"
 import { Svg } from "../../../svgs"
 import Button from "../../elements/Button"
@@ -12,6 +12,7 @@ const Form = (props: Props) => {
     const { authenticate } = useAuth()
     const [form, setForm] = useState<{ email?: string; password?: string }>({})
     const [error, setError] = useState(false)
+    const navigate = useNavigate()
 
     const updateForm = (path: "email" | "password") => (ev: React.ChangeEvent<HTMLInputElement>) => {
         setForm((f) => ({ ...f, [path]: ev.target.value }))
@@ -25,6 +26,10 @@ const Form = (props: Props) => {
 
         if (error) {
             setError(true)
+        }
+
+        if (!error) {
+            navigate("/overblik")
         }
     }
 

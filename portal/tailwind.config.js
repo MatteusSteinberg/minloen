@@ -65,6 +65,7 @@ module.exports = {
 
     },
     extend: {
+
       colors: {
         "light-start": '#005445',
         'light-end': '#005445',
@@ -73,7 +74,7 @@ module.exports = {
       },
       animation: {
         inAnimation: "inAnimation 500ms cubic-bezier(0.77, 0.2, 0.05, 1)",
-        outAnimation: "outAnimation 500ms cubic-bezier(0.77, 0.2, 0.05, 1) forwards",
+        outAnimation: "outAnimation 500ms cubic-bezier(0.77, 0.2, 0.05, 1)",
       },
     },
   },

@@ -3,6 +3,7 @@ import Box from "../components/globals/Box"
 import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
 import CurrentPaycheck from "../components/layouts/overview/CurrentPaycheck"
+import { useAuth } from "../hooks/use-auth"
 
 const boxData = [
     {
@@ -50,15 +51,17 @@ const graphData = {
     data: [65, 59, 72, 75, 52, 55],
 }
 
-const overview = () => {
+const Overview = () => {
+    const { user } = useAuth()
+
     return (
         <ContentContainer>
             <div className="">
-                <Header title="Hejsa Tobias!" />
+                <Header title={`Hejsa ${user?.firstName}!`} />
             </div>
             <div>
                 <p className="mb-2 text-text dark:text-white font-large-normal">Statistikker</p>
-                <div className="grid grid-cols-3 grid-rows-1 gap-4 mb-12">
+                <div className="grid grid-cols-1 gap-4 mb-12 md:grid-cols-2 lg:grid-rows-1 lg:grid-cols-3">
                     {boxData.map((data, index) => (
                         <Box graph title={data.title} graphData={graphData} value={data.value} />
                     ))}
@@ -75,4 +78,4 @@ const overview = () => {
     )
 }
 
-export default overview
+export default Overview
