@@ -5,6 +5,7 @@ import DataTable from "../components/elements/DataTable"
 import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
 import { useAPI } from "../hooks/use-api"
+import dayjs, { Dayjs } from 'dayjs'
 
 const Drivingcompensation = () => {
     let [searchParams, setSearchParams] = useSearchParams()
@@ -16,15 +17,15 @@ const Drivingcompensation = () => {
     const formattedData = useMemo(() => {
         const rows = (data || []).map((v) => {
             return {
-                ID: v.id,
-                Dato: v.date,
+                ID: v._id,
+                Dato: dayjs(v.date).format("YYYY-MM-DD"),
                 Fra: v.locationFrom,
                 Til: v.locationTo,
                 Km: v.distance + " km",
             }
         })
         return {
-            headers: ["ID #", "Dato", "Til", "Fra", "Km"],
+            headers: ["ID", "Dato", "Til", "Fra", "Km"],
             rows,
         }
     }, [data])
