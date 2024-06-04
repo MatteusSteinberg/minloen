@@ -23,13 +23,9 @@ const Header = ({ title, history }: IHeader) => {
                         <ChevronLeftIcon className="w-6 h-6" />
                     </button>
                 )}
-                <h1 className="-mt-2 text-text dark:text-white font-h2">{title}</h1>
+                <h1 className="-mt-2 text-text dark:text-white font-default font-semibold text-[24px] sm:font-h2">{title}</h1>
             </div>
-            <div className="relative z-50 flex items-center justify-center gap-5 p-5 md:p-4 rounded-xl bg-lightPrimary dark:bg-darkPrimarySupport">
-                <button className="relative z-[25] gap-1 shrink-0 flex flex-col items-center justify-center w-8 h-8 ml-auto tap-highlight-color md:hidden">
-                    <span className="w-7 h-[3px] bg-darkBorder rounded-full transition-all"></span>
-                    <span className="w-7 h-[3px] bg-darkBorder rounded-full transition-all"></span>
-                </button>
+            <div className="relative z-50 items-center justify-center hidden gap-5 p-5 md:p-4 rounded-xl bg-lightPrimary dark:bg-darkPrimarySupport md:flex">
                 <div className="items-center justify-center hidden gap-5 md:flex">
                     {/* <NotificationsMenu /> */}
                     <UserMenu image={ProfileImage} />

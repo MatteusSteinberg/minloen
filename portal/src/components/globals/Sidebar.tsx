@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ClipboardDocumentIcon, FaceFrownIcon, MoonIcon, Squares2X2Icon, SunIcon, TruckIcon } from "@heroicons/react/24/outline"
+import { ChevronDownIcon, ClipboardDocumentIcon, FaceFrownIcon, MoonIcon, Squares2X2Icon, SunIcon, TruckIcon, UsersIcon } from "@heroicons/react/24/outline"
 import React, { useState } from "react"
 import { Link, NavLink } from "react-router-dom"
 import { useLocalStorage } from "react-use"
@@ -42,7 +42,7 @@ const AdminLinks: ILinkProps[] = [
     },
     {
         link: "/medarbejdere",
-        icon: <ClipboardDocumentIcon className="inline-block w-6 h-6" />,
+        icon: <UsersIcon className="inline-block w-6 h-6" />,
         text: "Medarbejdere",
     },
 ]
@@ -54,7 +54,7 @@ interface ISidebar {
 
 const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
     const [hideAdmin, setHideAdmin] = useState(false)
-    const [isDarkMode, setIsDarkMode] = useLocalStorage("colormode", true)
+    const [isDarkMode, setIsDarkMode] = useLocalStorage("colormode", false)
 
     const { user } = useAuth()
 
@@ -128,7 +128,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                 <div className={`mb-3 rounded-[14px] border border-solid border-lightBorder dark:border-none ${showSidebar ? "bg-lightSecondary dark:bg-darkSecondarySupport dark:shadow-[0_1.25rem_1.5rem_0_rgba(0,0,0,0.5)]" : "bg-transparent shadow-none flex justify-center border-none"}`}>
                     {showSidebar ? (
                         <div className="p-2.5 rounded-xl">
-                            <div className="flex items-start justify-between px-2.5 py-2.5 pb-4.5">
+                            <div className="flex items-start relative justify-between px-2.5 py-2.5 pb-4.5">
                                 <div className="flex items-center">
                                     <div className="relative w-10 h-10">
                                         <div className="absolute -right-0.75 -bottom-0.75 w-4.5 h-4.5 bg-primary-2 rounded-full border-4 overflow-hidden">
@@ -140,7 +140,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                                         <p className="text-text dark:text-white font-small-normal opacity-30">{user?.email}</p>
                                     </div>
                                 </div>
-                                <p className="px-3 py-1 rounded-full font-default text-[12px] font-bold bg-lightPrimaryLight dark:bg-darkPrimaryLight leading-[15px] uppercase">Free</p>
+                                <p className="px-3 py-1 rounded-full font-default text-[12px] font-bold bg-lightPrimaryLight dark:bg-darkPrimaryLight leading-[15px] uppercase absolute right-0">Free</p>
                             </div>
                             <Link className="border-solid border-2 border-lightPrimary dark:border-[rgb(52,56,57)] bg-lightPrimary dark:bg-transparent text-white font-standard-medium py-3 mt-4 w-full rounded-[14px] flex justify-center hover:bg-lightSecondaryLight hover:border-lightSecondaryLight dark:hover:border-[rgb(52,56,57)] dark:hover:bg-[rgb(52,56,57)] transition-colors duration-150" to="/pricing">
                                 Upgrade til Pro
