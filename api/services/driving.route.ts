@@ -13,7 +13,7 @@ export const add = baseHandler(async ({ user, body }) => {
             locationTo: ["required"],
             distance: ["required"],
             licensePlate: ["required"],
-            description: ["required"],
+            //description: ["required"],
         },
         drivingBody
     )
@@ -24,7 +24,7 @@ export const add = baseHandler(async ({ user, body }) => {
 
     const compensation = body.roundtrip ? body.distance * 3.79 * 2 : body.distance * 3.79
 
-    new drivingModel({ ...body, user: user._id, organization: user.activeOrganization, compensation })
+    await new drivingModel({ ...body, user: user._id, organization: user.activeOrganization, compensation }).save()
 
     return { data: {}, status: StatusCodes.Created }
 }, "user")

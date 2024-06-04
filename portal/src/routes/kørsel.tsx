@@ -39,7 +39,9 @@ const Drivingcompensation = () => {
                 metadata={metadata} 
                 currentPage={currentPage} 
                 onPageClick={(p) => setSearchParams((s) => ({ ...s, page: p }))} 
-                tableData={formattedData} />
+                tableData={formattedData}
+                drivingModal
+                />
             </div>
         </ContentContainer>
     )

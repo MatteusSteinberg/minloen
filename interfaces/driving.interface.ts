@@ -9,7 +9,7 @@ export interface IDriving {
     locationTo: string
     date: Date
     licensePlate: string
-    description: string
+    description?: string
     roundtrip?: boolean
     distance: number
     compensation: number

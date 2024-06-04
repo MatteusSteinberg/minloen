@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 import Pagination from "../globals/Pagination"
+import DrivingModal from '../modals/DrivingModal'
+import { useState } from 'react'
 
 interface IDataTable {
     tableData: {
@@ -12,9 +14,11 @@ interface IDataTable {
     currentPage?: number
     onPageClick?: (page: number) => void
     metadata?: { count: number; size: number }
+    drivingModal?: boolean
 }
 
-const DataTable = ({ tableData, currentPage, onPageClick, metadata, button, actions, title }: IDataTable) => {
+const DataTable = ({ tableData, currentPage, onPageClick, metadata, button, actions, title, drivingModal }: IDataTable) => {
+    const [showModal, setShowModal] = useState(false)
     return (
         <div className="relative z-10 w-full h-full border border-solid shadow-custom rounded-2xl border-lightBorder dark:border-darkBorder">
             <div className="relative flex items-center justify-between h-full py-6 bg-white px-9 dark:bg-darkPrimarySupport rounded-t-2xl">
@@ -23,6 +27,14 @@ const DataTable = ({ tableData, currentPage, onPageClick, metadata, button, acti
                     <Link className="border-solid border-2  bg-lightPrimary border-lightPrimary dark:border-[rgb(52,56,57)] dark:bg-transparent text-white font-standard-medium py-3 px-6 rounded-[14px] flex justify-center hover:bg-lightSecondaryLight hover:border-lightSecondaryLight hover:text-text dark:hover:bg-[rgb(52,56,57)] transition-colors duration-150" to={button}>
                         Tilføj medarbejder
                     </Link>
+                )}
+                {drivingModal && (
+                    <>
+                        <button onClick={() => setShowModal(true)} className="border-solid border-2  bg-lightPrimary border-lightPrimary dark:border-[rgb(52,56,57)] dark:bg-transparent text-white font-standard-medium py-3 px-6 rounded-[14px] flex justify-center hover:bg-lightSecondaryLight hover:border-lightSecondaryLight hover:text-text dark:hover:bg-[rgb(52,56,57)] transition-colors duration-150">
+                            Tilføj Kørsel
+                            <DrivingModal isOpen={showModal} toggleModal={setShowModal} />
+                        </button>
+                    </>
                 )}
             </div>
             <div className="relative overflow-x-auto no-scrollbar scroll-smooth">

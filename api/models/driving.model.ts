@@ -27,7 +27,6 @@ const drivingSchema = new Schema<IDriving>(
         },
         description: {
             type: String,
-            required: true,
         },
         roundtrip: {
             type: Boolean,
@@ -42,8 +41,7 @@ const drivingSchema = new Schema<IDriving>(
             required: true,
         },
         compensation: {
-            type: Number,
-            required: true,
+            type: Number
         },
     },
     {

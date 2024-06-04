@@ -4,6 +4,8 @@ import Checkbox from "../elements/Checkbox";
 import Input from "../elements/Input";
 import Base from "./Base";
 import './customDatePicker.css';
+import { useAPI } from '../../hooks/use-api';
+import { IDriving } from '../../../../interfaces/driving.interface';
 
 interface IDrivingModal {
     isOpen: boolean;
@@ -11,17 +13,21 @@ interface IDrivingModal {
 }
 
 const DrivingModal = ({ isOpen, toggleModal }: IDrivingModal) => {
+    const { create, error } = useAPI<IDriving>({ url: "/driving" })
 
-    const retur = {
-        km: 0,
-    }
-    console.log(retur)
+    const [form, setForm] = useState<Partial<IDriving>>({})
 
-    const [value, setValue] = useState<[Date, Date] | undefined>([new Date(), new Date()]);
+    const formPathHandler = (path: keyof IDriving, onError: string) => ({
+        onChange: (ev: React.ChangeEvent<HTMLInputElement>) => {
+            setForm((f) => ({ ...f, [path]: ev.target.value }))
+        },
+        error: error?.path === path ? onError : undefined,
+    })
 
-    const date = {
-        dateFrom: value?.[0],
-        dateTo: value?.[1]
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+        await create(form)
+        toggleModal(false)
     }
 
     return (
@@ -32,26 +38,26 @@ const DrivingModal = ({ isOpen, toggleModal }: IDrivingModal) => {
                     Fra - Til
                 </h1>
                 <div>
-                    <input className="rounded-[8px] h-[48.6px] border-[1px] border-solid text-white border-darkBorder outline-0 bg-[rgba(33,33,34,0.2)] py-4 pl-4" name="Fra" placeholder="fks. Aarhus"></input>
-                    <input className="rounded-[8px] h-[48.6px] border-[1px] border-solid text-white border-darkBorder outline-0 bg-[rgba(33,33,34,0.2)] py-4 pl-4 justify-center align items-center absolute right-12" name="Til" placeholder="fks. København"></input>
+                    <input  {...formPathHandler("locationFrom", "Fra")} className="rounded-[8px] h-[48.6px] border-[1px] border-solid text-white border-darkBorder outline-0 bg-[rgba(33,33,34,0.2)] py-4 pl-4" name="Fra" placeholder="fks. Aarhus"></input>
+                    <input  {...formPathHandler("locationTo", "Til")}  className="rounded-[8px] h-[48.6px] border-[1px] border-solid text-white border-darkBorder outline-0 bg-[rgba(33,33,34,0.2)] py-4 pl-4 justify-center align items-center absolute right-12" name="Til" placeholder="fks. København"></input>
                 </div>
                 <div>
-                    <Checkbox name="retur" text="Tur-retur" value=""></Checkbox>
+                    <Checkbox {...formPathHandler("roundtrip", "Tur-retur")}  name="retur" text="Tur-retur" value=""></Checkbox>
                 </div>
                 <div className="my-6">
                     <h1 className="block mb-3 text-white">
                         Dato KM
                     </h1>
                     <div>
-                        <DatePicker className="custom-date-range-picker" onChange={(value) => setValue(value as [Date, Date] | undefined)} value={value} />
-                        <input className="rounded-[8px] h-[48.6px] border-[1px] border-solid text-white border-darkBorder outline-0 bg-[rgba(33,33,34,0.2)] py-4 pl-4 justify-center align items-center absolute right-12" type="number" name="km" placeholder="antal KM"></input>
+                        <DatePicker className="custom-date-range-picker"  onChange={(value) => setForm((f) => ({ ...f, "date": value as Date }))} value={form.date} />
+                        <input {...formPathHandler("distance", "afstand")} className="rounded-[8px] h-[48.6px] border-[1px] border-solid text-white border-darkBorder outline-0 bg-[rgba(33,33,34,0.2)] py-4 pl-4 justify-center align items-center absolute right-12" type="number" name="km" placeholder="antal KM"></input>
                     </div>
                 </div>
                 <div>
-                    <Input name="Nummerplade" placeholder="AB12345" label="Nummerplade"></Input>
+                    <Input {...formPathHandler("licensePlate", "Nummerplade")} name="Nummerplade" placeholder="AB12345" label="Nummerplade"></Input>
                 </div>
                 <div className="my-12">
-                    <button className="w-[120px] h-[44px] bg-darkPrimaryLight text-text rounded-xl border border-solid border-darkBorder mr-3">Tilføj</button>
+                    <button onClick={(e) => handleSubmit(e)} className="w-[120px] h-[44px] bg-darkPrimaryLight text-text rounded-xl border border-solid border-darkBorder mr-3">Tilføj</button>
                     <button className="w-[120px] h-[44px] bg-secondarySupport text-white rounded-xl border border-solid border-border">Annullere</button>
                 </div>
             </div>
