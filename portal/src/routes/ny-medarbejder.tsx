@@ -1,6 +1,8 @@
+import { CheckIcon } from "@heroicons/react/24/outline"
 import _ from "lodash"
 import React, { HTMLInputAutoCompleteAttribute, useMemo, useRef, useState } from "react"
-import { useParams } from "react-router-dom"
+import toast from "react-hot-toast"
+import { useNavigate, useParams } from "react-router-dom"
 import { useSet } from "react-use"
 import { IUser, IUserAdd } from "../../../interfaces/user.interface"
 import Button from "../components/elements/Button"
@@ -70,12 +72,24 @@ const Section = ({ title, undertitle, error, form, onChange, fields, children }:
     )
 }
 
+const SuccessToast = (t: any) => {
+    return (
+        <div className={`${t.visible ? "animate-enter" : "animate-leave"} w-auto bg-white shadow-custom rounded-2xl pointer-events-auto flex gap-4 p-3 ring-1 ring-black ring-opacity-5`}>
+            <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-success">
+                <CheckIcon className="w-6 h-6 text-white" />
+            </div>
+            <p className="mt-1 text-text font-standard-normal">Medarbejder oprettet i systemet</p>
+        </div>
+    )
+}
+
 const roles = [
     { value: "admin", label: "Administrator" },
     { value: "user", label: "Medarbejder" },
 ]
 
 const NewCoworker = () => {
+    const navigate = useNavigate()
     const { id } = useParams()
     const profileInputRef = useRef<HTMLInputElement>(null)
 
@@ -104,7 +118,12 @@ const NewCoworker = () => {
 
     const handleOnSubmit = async () => {
         const method = !!id ? update : create
-        await method(form)
+        const res = await method(form)
+
+        if (!res.error) {
+            toast.custom((t) => <SuccessToast t={t} />)
+            navigate("/medarbejdere")
+        }
     }
 
     const handleProfileClick = () => {

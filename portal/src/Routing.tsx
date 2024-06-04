@@ -2,12 +2,12 @@ import { lazy, useState } from "react"
 
 // Components
 import { Route, Routes, matchPath, useLocation } from "react-router-dom"
-import TranImage from "./assets/images/jonas1.png"
 import Hamburger from "./components/elements/Hamburger"
 import ProtectedRoute from "./components/globals/ProtectedRoute"
 import Sidebar from "./components/globals/Sidebar"
 import UserMenu from "./components/globals/UserMenu"
 import { useAuth } from "./hooks/use-auth"
+import { profileImage } from "./lib/utils/profileImage"
 
 // Pages
 const Overview = lazy(() => import("./routes/overview"))
@@ -71,7 +71,7 @@ const Routing = () => {
                     </aside>
                     <div className={`absolute top-0 left-0 right-0 z-10 flex items-center justify-end h-20  lg:pr-18 md:pr-16  ${toggleMenu ? "border-lightBorder dark:border-darkBorder bg-white border-b border-solid dark:bg-darkSecondarySupport" : "bg-transparent border-none"}`}>
                         <div className="flex items-center gap-4 px-6">
-                            {toggleMenu && <UserMenu image={TranImage} />}
+                            {toggleMenu && <UserMenu image={profileImage({ userId: user?._id })} />}
                             <Hamburger color="lightPrimary" active={toggleMenu} setActive={setToggleMenu} />
                         </div>
                     </div>

@@ -2,14 +2,13 @@ import { MapPinIcon } from "@heroicons/react/24/outline"
 import _isArray from "lodash/isArray"
 import _isEmpty from "lodash/isEmpty"
 import _set from "lodash/set"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { IUser } from "../../../../../interfaces/user.interface"
+import { useAPI } from "../../../hooks/use-api"
 import { useAuth } from "../../../hooks/use-auth"
+import { compressImage } from "../../../lib/utils/imageCompressor"
+import { profileImage } from "../../../lib/utils/profileImage"
 import Input from "../../elements/Input"
-import { useRef } from 'react'
-import { useAPI } from '../../../hooks/use-api'
-import { compressImage } from '../../../lib/utils/imageCompressor'
-import { profileImage } from '../../../lib/utils/profileImage'
 
 interface IChangeProfile {
     handleClose: () => void
@@ -40,7 +39,7 @@ const ChangeProfile = ({ handleClose }: IChangeProfile) => {
     }
 
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const { create, error } = useAPI({ url: "/user/profile/image", opts: { autoGet: false }})
+    const { create, error } = useAPI({ url: "/user/profile/image", opts: { autoGet: false } })
 
     const handleButtonClick = () => {
         fileInputRef.current?.click()
@@ -63,7 +62,6 @@ const ChangeProfile = ({ handleClose }: IChangeProfile) => {
             if (error) {
                 console.log(error)
             }
-
         }
     }
     return (
@@ -73,10 +71,12 @@ const ChangeProfile = ({ handleClose }: IChangeProfile) => {
                 <div className="flex flex-col items-start gap-4">
                     <p>Profil billede</p>
                     <div className="flex flex-col gap-6 sm:items-center sm:flex-row">
-                        <img src={profileImage({userId: user?._id})} alt="ProfileImage" className="rounded-full w-28 h-28" />
+                        <img src={profileImage({ userId: user?._id })} alt="ProfileImage" className="rounded-full w-28 h-28" />
                         <div className="flex flex-col justify-start gap-[8px]">
-                            <button onClick={handleButtonClick} className="border-solid border-2 border-lightBorder dark:border-[rgb(52,56,57)] bg-transparent text-text dark:text-white font-standard-medium py-3 px-5 rounded-[14px] flex justify-center hover:bg-lightBorder dark:hover:bg-[rgb(52,56,57)] transition-colors duration-150">Upload billede</button>
-                            <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
+                            <button onClick={handleButtonClick} className="border-solid border-2 border-lightBorder dark:border-[rgb(52,56,57)] bg-transparent text-text dark:text-white font-standard-medium py-3 px-5 rounded-[14px] flex justify-center hover:bg-lightBorder dark:hover:bg-[rgb(52,56,57)] transition-colors duration-150">
+                                Upload billede
+                            </button>
+                            <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} style={{ display: "none" }} />
                             <p className="font-normal text-text dark:text-white font-default text-[14px] leading-4 opacity-30">
                                 mindst 800x800 px er anbefalet
                                 <br />
