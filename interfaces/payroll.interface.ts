@@ -39,6 +39,11 @@ export interface IPayrollSetup {
   }
 
   fixed?: boolean
+  /** 
+   * Er lønsedlen blevet givet til medarbejderen for den kommende måned
+   * Kun for kommende måned lønsedler
+   */
+  hasBeenRolled?: boolean
 
   supplements?: Array<CustomPayrollSupplement>
   deduction?: Array<CustomPayrollSupplement>
