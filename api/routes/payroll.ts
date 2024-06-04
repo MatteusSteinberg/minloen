@@ -1,5 +1,5 @@
 import express from "express";
-import { create, update } from "../services/payroll.route";
+import { create, getByUser, update } from "../services/payroll.route";
 
 const payrollRouter = express.Router()
 
@@ -8,6 +8,7 @@ const payrollRouter = express.Router()
 payrollRouter.post('/', create)
 
 // GET
+payrollRouter.get('/:user', getByUser)
 
 // PATCH
 payrollRouter.patch('/:id', update)

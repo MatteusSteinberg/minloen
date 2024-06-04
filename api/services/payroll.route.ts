@@ -9,18 +9,21 @@ export const create = baseHandler(async ({ user, body }) => {
   return { data: await payrollSetup.getter(), status: StatusCodes.Created }
 }, "admin")
 
-export const get = baseHandler(async ({ user, params }) => {
-  const { id } = params
-  const payrollSetup = new Payroll(user, id)
+export const getByUser = baseHandler(async ({ user, params, query }) => {
+  const { user: userId } = params
+  const { fixed } = query
 
-  const payrollSetupInfo = await payrollSetup.getter()
+  const payroll = new Payroll(user)
 
-  if (payrollSetupInfo) {
-    return { data: payrollSetupInfo, status: StatusCodes.NotFound }
-  } else {
-    return { data: {}, status: StatusCodes.NotFound }
+  const payrollSetup = fixed === "true" ?
+    await payroll.getFixed(userId)
+    : await payroll.getComing(userId)
+
+  return {
+    data: payrollSetup,
+    status: !!payrollSetup ? StatusCodes.Ok : StatusCodes.NotFound
   }
-}, "any")
+}, "admin")
 
 export const update = baseHandler(async ({ user, params, body }) => {
   const { id } = params

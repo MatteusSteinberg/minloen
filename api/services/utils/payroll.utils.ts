@@ -6,13 +6,15 @@ import payrollSetupModel from "../../models/payroll-setup.model"
 
 
 export default class Payroll {
-  payrollSetup: HydratedDocument<IPayrollSetup>
+  public payrollSetup: HydratedDocument<IPayrollSetup>
   payrollSetupId: string
-  user: HydratedDocument<IUser>
+  public user: HydratedDocument<IUser>
 
   constructor(user: HydratedDocument<IUser>, payrollSetupId?: string) {
-    this.payrollSetupId = payrollSetupId
     this.user = user
+    if (payrollSetupId) {
+      this.payrollSetupId = payrollSetupId
+    }
   }
 
   private async setup() {
@@ -30,6 +32,23 @@ export default class Payroll {
   public async getter() {
     await this.setup()
     return this.payrollSetup.toObject({ virtuals: true })
+  }
+
+  public async getFixed(userId: string) {
+    return await payrollSetupModel.findOne({
+      organization: this.user.activeOrganization,
+      user: new Types.ObjectId(userId),
+      fixed: { $eq: true }
+    })
+  }
+
+  public async getComing(userId: string) {
+    return await payrollSetupModel.findOne({
+      organization: this.user.activeOrganization,
+      user: new Types.ObjectId(userId),
+      fixed: { $ne: true },
+      hasBeenRolled: { $ne: true }
+    })
   }
 
   public async create(setup: IPayrollSetup, createdBy: HydratedDocument<IUser>) {

@@ -15,7 +15,7 @@ export interface IUserDetails {
   resignationDate?: Date
   position?: string
   /** Betalingsordning */
-  paymentArrangement?: string
+  paymentArrangement?: "ahead" | "behind"
 
   bankRegistrationNumber?: string
   bankAccountNumber?: string
