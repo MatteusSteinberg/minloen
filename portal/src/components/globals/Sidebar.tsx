@@ -1,9 +1,9 @@
-import { ChevronDownIcon, ClipboardDocumentIcon, FaceFrownIcon, MoonIcon, Squares2X2Icon, SunIcon, TruckIcon, UsersIcon } from "@heroicons/react/24/outline"
+import { BuildingOfficeIcon, ChevronDownIcon, ClipboardDocumentIcon, FaceFrownIcon, MoonIcon, Squares2X2Icon, SunIcon, TruckIcon, UsersIcon } from "@heroicons/react/24/outline"
 import React, { useState } from "react"
 import { Link, NavLink } from "react-router-dom"
 import { useLocalStorage } from "react-use"
 import { useAuth } from "../../hooks/use-auth"
-import { profileImage } from '../../lib/utils/profileImage'
+import { profileImage } from "../../lib/utils/profileImage"
 
 interface ILinkProps {
     link: string
@@ -37,8 +37,8 @@ const Links: ILinkProps[] = [
 const AdminLinks: ILinkProps[] = [
     {
         link: "/kontrolpanel",
-        icon: <Squares2X2Icon className="inline-block w-6 h-6" />,
-        text: "Dashboard",
+        icon: <BuildingOfficeIcon className="inline-block w-6 h-6" />,
+        text: "Virksomheds Oversigt",
     },
     {
         link: "/medarbejdere",
@@ -133,7 +133,7 @@ const Sidebar = ({ setShowSidebar, showSidebar, isMenuActive }: ISidebar) => {
                                 <div className="flex items-center">
                                     <div className="relative w-10 h-10">
                                         <div className="absolute -right-0.75 -bottom-0.75 w-10 h-10 bg-primary-2 rounded-full border-4 overflow-hidden">
-                                            <img src={profileImage({userId: user?._id})} alt="profile" />
+                                            <img src={profileImage({ userId: user?._id })} alt="profile" />
                                         </div>
                                     </div>
                                     <div className="ml-4 mr-4">
@@ -150,7 +150,7 @@ const Sidebar = ({ setShowSidebar, showSidebar, isMenuActive }: ISidebar) => {
                     ) : (
                         <div className="relative w-10 h-10">
                             <div className="absolute -right-0.75 -bottom-0.75 w-10 h-10 rounded-full overflow-hidden">
-                                <img src={profileImage({userId: user?._id})} alt="profile" />
+                                <img src={profileImage({ userId: user?._id })} alt="profile" />
                             </div>
                         </div>
                     )}
