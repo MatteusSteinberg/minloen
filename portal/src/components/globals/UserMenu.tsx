@@ -19,8 +19,8 @@ const UserMenu = ({ image }: IUserMenu) => {
             <button ref={buttonRef} className="relative w-10 h-10 rounded-full group" onClick={() => setToggleMenu(!toggleMenu)}>
                 <img src={image} alt="ProfileImage" className="block w-full h-full rounded-full" />
             </button>
-            <div ref={node} className={`absolute transition-all duration-150 md:right-0 transform ${toggleMenu ? "scale-100 opacity-100 visible" : "scale-95 opacity-0 invisible"}`}>
-                <div className="absolute top-full -right-[158px] md:right-0 w-[286px] mt-10 p-4 bg-white dark:bg-darkPrimarySupport border border-solid border-lightBorder dark:border-[rgba(51,54,62,0.50)] rounded-2xl shadow-[0px_48px_64px_-16px_rgba(0,0,0,0.25)]">
+            <div ref={node} className={`absolute transition-all duration-150 right-0 md:right-0 transform ${toggleMenu ? "scale-100 opacity-100 visible" : "scale-95 opacity-0 invisible"}`}>
+                <div className="absolute right-4  top-4 md:top-full md:right-0 w-[286px] mt-10 p-4 bg-white dark:bg-darkPrimarySupport border border-solid border-lightBorder dark:border-[rgba(51,54,62,0.50)] rounded-2xl shadow-[0px_48px_64px_-16px_rgba(0,0,0,0.25)]">
                     <div className="flex items-center gap-4">
                         <img src={image} alt="ProfileImage" className="rounded-full w-14 h-14" />
                         <div className="flex flex-col items-start justify-start gap-1">

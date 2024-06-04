@@ -27,7 +27,7 @@ const Header = ({ title, history }: IHeader) => {
                 )}
                 <h1 className="-mt-2 text-text dark:text-white font-default font-semibold text-[24px] sm:font-h2">{title}</h1>
             </div>
-            <div className="relative z-50 items-center justify-center hidden gap-5 p-5 md:p-4 rounded-xl bg-lightPrimary dark:bg-darkPrimarySupport md:flex">
+            <div className="relative z-50 items-center justify-center hidden gap-5 p-5 bg-white border border-solid md:p-4 rounded-xl border-lightBorder dark:border-darkPrimarySupport dark:bg-darkPrimarySupport md:flex">
                 <div className="items-center justify-center hidden gap-5 md:flex">
                     {/* <NotificationsMenu /> */}
                     <UserMenu image={profileImage({ userId: user?._id})} />

@@ -50,9 +50,10 @@ const AdminLinks: ILinkProps[] = [
 interface ISidebar {
     showSidebar: boolean
     setShowSidebar: (value: boolean) => void
+    isMenuActive: boolean
 }
 
-const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
+const Sidebar = ({ setShowSidebar, showSidebar, isMenuActive }: ISidebar) => {
     const [hideAdmin, setHideAdmin] = useState(false)
     const [isDarkMode, setIsDarkMode] = useLocalStorage("colormode", false)
 
@@ -72,7 +73,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
 
     return (
         <>
-            <div className={`absolute top-0 left-0 right-0 flex items-center pr-6 h-[120px] pl-7 ${showSidebar ? "justify-between" : "justify-center"}`}>
+            <div className={`absolute top-0 left-0 right-0 flex items-center h-[120px]  ${showSidebar ? "justify-between pr-6 pl-7" : "justify-center"} ${isMenuActive ? "p-0" : "pr-6 pl-7"}`}>
                 {showSidebar && (
                     <svg width="167" height="38" viewBox="0 0 167 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M38.3456 19C38.3456 29.4934 29.7601 38 19.1693 38C9.58797 38 1.64786 31.0378 0.221254 21.9408L4.29602 22.7999C5.99935 29.3641 12.0126 34.2148 19.1693 34.2148C27.6502 34.2148 34.5253 27.4029 34.5253 19C34.5253 10.5971 27.6502 3.78516 19.1693 3.78516C10.6884 3.78516 3.81323 10.5971 3.81323 19C3.81323 19.0949 3.81411 19.1896 3.81585 19.284L0 18.4795C0.278292 8.22675 8.75414 0 19.1693 0C29.7601 0 38.3456 8.50659 38.3456 19Z" fill="#CDE4BA" />
@@ -124,7 +125,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                     </>
                 )}
             </div>
-            <div className="absolute left-0 bottom-0 right-0 pb-6 dark:bg-darkPrimarySupport px-3 before:absolute before:left-0 before:right-0 before:bottom-full before:h-10 dark:before:bg-gradient-to-t dark:before:from-[#131617] dark:before:to-[rgba(19,22,23,0)] dark:before:pointer-events-none md:px-4">
+            <div className="absolute left-0 bottom-0 right-0 pb-6 bg-logh dark:bg-darkPrimarySupport px-3 before:absolute before:left-0 before:right-0 before:bottom-full before:h-10 dark:before:bg-gradient-to-t dark:before:from-[#131617] dark:before:to-[rgba(19,22,23,0)] dark:before:pointer-events-none md:px-4">
                 <div className={`mb-3 rounded-[14px] border border-solid border-lightBorder dark:border-none ${showSidebar ? "bg-lightSecondary dark:bg-darkSecondarySupport dark:shadow-[0_1.25rem_1.5rem_0_rgba(0,0,0,0.5)]" : "bg-transparent shadow-none flex justify-center border-none"}`}>
                     {showSidebar ? (
                         <div className="p-2.5 rounded-xl">
@@ -169,12 +170,12 @@ const Sidebar = ({ setShowSidebar, showSidebar }: ISidebar) => {
                     ) : (
                         <>
                             {isDarkMode && (
-                                <button onClick={() => toggleTheme()} className={`relative items-center justify-center font-standard-medium transition-colors z-1 hover:text-white ${isDarkMode ? "text-white" : "text-[#6C7275]"} h-14`}>
+                                <button onClick={() => toggleTheme()} className={`relative items-center justify-center font-standard-medium transition-colors z-1 hover:text-white ${isDarkMode ? "text-white" : "text-[#6C7275]"} h-8 md:h-14`}>
                                     <SunIcon className={`inline-block w-6 h-6 transition-colors group-hover:stroke-white ${isDarkMode ? "stroke-white" : "stroke-[#6C7275]"}`} />
                                 </button>
                             )}
                             {!isDarkMode && (
-                                <button onClick={() => toggleTheme()} className={`relative flex items-center  font-standard-medium transition-colors z-1 hover:text-text dark:hover:text-white ${!isDarkMode ? "text-text dark:text-white" : "text-[#6C7275]"} h-14`}>
+                                <button onClick={() => toggleTheme()} className={`relative flex items-center  font-standard-medium transition-colors z-1 hover:text-text dark:hover:text-white ${!isDarkMode ? "text-text dark:text-white" : "text-[#6C7275]"} h-8 md:h-14`}>
                                     <MoonIcon className={`inline-block w-6 h-6 transition-colors group-hover:stroke-white ${!isDarkMode ? "stroke-lightPrimary" : "stroke-[#6C7275]"}`} />
                                 </button>
                             )}
