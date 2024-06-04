@@ -5,8 +5,8 @@ import Base from "./Base";
 import './customDatePicker.css';
 
 interface ILeavemodal {
-    isOpen: boolean
-    toggleModal: (v: boolean) => void
+    isOpen: boolean;
+    toggleModal: (v: boolean) => void;
 }
 
 const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
@@ -16,13 +16,17 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
         { value: "Option 3", label: "Feriedag" }
     ];
 
-    const [selectedOption, setSelectedOption] = useState(options[0].value)
+    const [selectedOption, setSelectedOption] = useState(options[0].value);
 
     const handleChange = (value: string) => {
-        setSelectedOption(value)
-    }
-
+        setSelectedOption(value);
+    };
     const [value, setValue] = useState<[Date, Date] | undefined>([new Date(), new Date()]);
+
+    const date = {
+        dateFrom: value?.[0],
+        dateTo: value?.[1]
+    }
 
     return (
         <Base isOpen={isOpen} title="Fravær" toggleModal={toggleModal}>
@@ -64,7 +68,7 @@ const LeaveModal = ({ isOpen, toggleModal }: ILeavemodal) => {
                                 <DateRangePicker className="custom-date-range-picker" onChange={(value) => setValue(value as [Date, Date] | undefined)} value={value} />
                             </div>
                             <div className="my-12">
-                                <button className="w-[120px] h-[44px] bg-primaryLight text-text rounded-xl border border-solid border-border mr-3">Godkend</button>
+                                <button className="w-[120px] h-[44px] bg-darkPrimaryLight text-text rounded-xl border border-solid border-darkBorder mr-3">Godkend</button>
                                 <button className="w-[120px] h-[44px] bg-secondarySupport text-white rounded-xl border border-solid border-border">Annullere</button>
                             </div>
                         </>
