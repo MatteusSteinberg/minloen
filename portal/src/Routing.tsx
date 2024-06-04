@@ -67,9 +67,9 @@ const Routing = () => {
                     <aside className={`fixed top-0 bottom-0 left-0 z-20 flex flex-col invisible opacity-0 pt-[120px] md:visible md:opacity-100 md:transition-opacity bg-lightPrimary dark:bg-darkPrimarySupport ${showSidebar ? "w-80 pb-[232px] px-4" : "w-16 pb-[120px] md:w-24 px-0 md:px-4 md:pb-[152px]"} `}>
                         <Sidebar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
                     </aside>
-                    <div className="absolute right-2 top-4">
+                    <div className="absolute right-2 top-4 md:hidden">
                         <div className="flex items-center justify-center w-8 h-8 p-8 bg-lightPrimary rounded-2xl">
-                            <Hamburger color="lightPrimary" active={toggleMenu} setActive={setToggleMenu} />
+                            <Hamburger colorDark="darkBorder" colorLight="lightPrimary" active={toggleMenu} setActive={setToggleMenu} />
                         </div>
                     </div>
                 </>
