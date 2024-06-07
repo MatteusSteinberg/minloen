@@ -66,15 +66,12 @@ export const get = baseHandler(async ({ user, params }) => {
 }, "user")
 
 export const update = baseHandler(async ({ user, params, body }) => {
-    const driving = await drivingModel.findOne({ _id: params.id, user: user._id })
+    const updateBody = body as Partial<IDriving>
+    const driving = await drivingModel.findOneAndUpdate({ _id: params.id, user: user._id }, updateBody, { new: true })
 
     if (!driving) {
         return { data: {}, status: StatusCodes.NotFound }
     }
-
-    const updateBody = body as Partial<IDriving>
-
-    await driving.updateOne(updateBody)
 
     return { data: {}, status: StatusCodes.Ok }
 }, "user")

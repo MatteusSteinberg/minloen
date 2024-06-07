@@ -13,3 +13,10 @@ export interface IAbsence {
     updatedAt?: Date
     createdAt?: Date
 }
+
+export interface IAbsenceRange {
+    dateFrom: Date
+    dateTo: Date
+    type: AbsenceType
+    description?: string
+}

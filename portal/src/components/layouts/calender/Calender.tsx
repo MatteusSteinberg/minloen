@@ -1,16 +1,10 @@
 import { useMemo, useState } from "react"
-import { AbsenceType } from "../../../../../interfaces/absence.interface"
+import { IAbsenceRange } from "../../../../../interfaces/absence.interface"
 import { useAPI } from "../../../hooks/use-api"
 import LeaveModal from "../../modals/LeaveModal"
 import CalenderTags from "./CalenderTags"
 
 const daysInMonth = (year: number, month: number): number => new Date(year, month + 1, 0).getDate()
-
-interface IAbsenceRange {
-    dateFrom: Date
-    dateTo: Date
-    cause: AbsenceType
-}
 
 const Calendar = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -45,7 +39,7 @@ const Calendar = () => {
         () => (day: number) => {
             const date = new Date(year, month, day)
             const range = absenceRanges?.find((range) => date >= new Date(range.dateFrom) && date <= new Date(range.dateTo))
-            return range ? range.cause : null
+            return range ? range.type : null
         },
         [absenceRanges, year, month]
     )

@@ -13,7 +13,7 @@ interface IDrivingModal {
 }
 
 const DrivingModal = ({ isOpen, toggleModal }: IDrivingModal) => {
-    const { create, error } = useAPI<IDriving>({ url: "/driving" })
+    const { create, error } = useAPI<IDriving>({ url: "/driving", opts: { autoGet: false } })
 
     const [form, setForm] = useState<Partial<IDriving>>({})
 

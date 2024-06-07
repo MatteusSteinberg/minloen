@@ -40,32 +40,16 @@ export const list = baseHandler(async ({ user, query }) => {
 
     const dateFrom = new Date(year, month, 1)
     const dateTo = new Date(year, month + 1, 0)
+    console.log(dateFrom, dateTo)
 
-    const absencesAggregate = [
-        {
-            $match: {
-                user: user._id,
-                dateFrom: { $gte: dateFrom },
-                dateTo: { $lte: dateTo },
-            },
-        },
-        {
-            $project: {
-                _id: 0,
-                dateFrom: 1,
-                dateTo: 1,
-                cause: "$type",
-                description: "$description",
-            },
-        },
-        {
-            $sort: {
-                dateFrom: 1 as const,
-            },
-        },
-    ]
-
-    let absences = await absenceModel.aggregate(absencesAggregate)
+    const absences = await absenceModel
+        .find({
+            user: user._id,
+            dateFrom: { $gte: dateFrom },
+            dateTo: { $lte: dateTo },
+        })
+        .select("dateFrom dateTo type description")
+        .sort("dateFrom")
 
     return { data: absences, status: StatusCodes.Ok }
 }, "user")

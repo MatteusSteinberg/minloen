@@ -20,7 +20,7 @@ const options = [
 ]
 
 const LeaveModal = ({ isOpen, toggleModal, selectedDate }: ILeavemodal) => {
-    const { create } = useAPI<IAbsence>({ url: "/absence" })
+    const { create } = useAPI<IAbsence>({ url: "/absence", opts: { autoGet: false } })
     const [selectedOption, setSelectedOption] = useState(options[0].value)
     const [date, setDate] = useState<[Date, Date] | undefined>(selectedDate)
     const [form, setForm] = useState<Partial<IAbsence>>({})
