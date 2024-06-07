@@ -7,11 +7,15 @@ const fileSchema = new Schema<IFile>(
       type: String,
       required: true,
     },
-    type: {
+    contentType: {
       type: String,
       required: true,
     },
-    file_type: {
+    organization: {
+      type: Schema.Types.ObjectId,
+      ref: "Organization",
+    },
+    fileType: {
       type: String,
       enum: ["image", "video", "audio", "document", "other"],
       required: true,

@@ -84,6 +84,16 @@ const SeeCoworker = () => {
                     description: "Denne medarbejder er sat at få modtage ferie med løn",
                 },
             } as any,
+            paymentArrangement: {
+                ahead: {
+                    title: `${data?.name} får løn måneden forud`,
+                    description: `Betales måneden forud`,
+                },
+                behind: {
+                    title: `${data?.name} får løn måneden bagud`,
+                    description: `Betales måneden bagud`,
+                },
+            } as any,
         }
 
         return [
@@ -105,6 +115,12 @@ const SeeCoworker = () => {
                 title: !!data?.workplacePension?.institute ? "Personen får pension" : "Personen får ikke pension",
                 description: !!data?.workplacePension?.institute ? `Denne medarbejder modtager pension fra ${workplacePensionInstitues.find((x) => x.value === data?.workplacePension?.institute)?.label ?? `Ukendt ${data?.workplacePension?.institute}`}` : "Denne medarbejder modtager ikke pension",
             },
+            {
+                type: !!data?.paymentArrangement ? "approved" : "warning",
+                icon: !!data?.paymentArrangement ? SuccessIcon : WarningIcon,
+                title: !!data?.paymentArrangement ? agreementDictionaries.paymentArrangement[data?.paymentArrangement].title : "Personen mangler en betalingsordning",
+                description: !!data?.paymentArrangement ? agreementDictionaries.paymentArrangement[data?.paymentArrangement].description : "Denne medarbejder har ikke fået opsat en betalingsordning til sin løn",
+            },
         ]
     }, [data])
 
@@ -113,8 +129,8 @@ const SeeCoworker = () => {
             <div>
                 <Header title={data?.name ?? ""} history="/medarbejdere" />
             </div>
-            <Options />
-            <div className="flex items-start justify-between">
+            <Options canCreatePayroll={!!data?.salaryType} />
+            <div className="flex flex-col items-start justify-between gap-4 xxl:gap-0 xxl:flex-row">
                 <div className="flex flex-col items-start w-full">
                     <p className="text-text dark:text-white font-large-semibold">Aftaler</p>
                     <p className="text-text dark:text-white opacity-30">Tilpassede medarbejder aftaler</p>

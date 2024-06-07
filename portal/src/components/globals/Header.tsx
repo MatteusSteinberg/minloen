@@ -1,7 +1,8 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/outline"
 import { useNavigate } from "react-router-dom"
-import ProfileImage from "../../assets/images/jonas1.png"
 import UserMenu from "./UserMenu"
+import { profileImage } from '../../lib/utils/profileImage'
+import { useAuth } from '../../hooks/use-auth'
 
 interface IHeader {
     title: string
@@ -10,6 +11,7 @@ interface IHeader {
 
 const Header = ({ title, history }: IHeader) => {
     const navigate = useNavigate()
+    const { user } = useAuth()
 
     const handleHistoryClick = () => {
         if (history) navigate(history, { replace: true })
@@ -25,10 +27,10 @@ const Header = ({ title, history }: IHeader) => {
                 )}
                 <h1 className="-mt-2 text-text dark:text-white font-default font-semibold text-[24px] sm:font-h2">{title}</h1>
             </div>
-            <div className="relative z-50 items-center justify-center hidden gap-5 p-5 md:p-4 rounded-xl bg-lightPrimary dark:bg-darkPrimarySupport md:flex">
+            <div className="relative z-50 items-center justify-center hidden gap-5 p-5 bg-white border border-solid md:p-4 rounded-xl border-lightBorder dark:border-darkPrimarySupport dark:bg-darkPrimarySupport md:flex">
                 <div className="items-center justify-center hidden gap-5 md:flex">
                     {/* <NotificationsMenu /> */}
-                    <UserMenu image={ProfileImage} />
+                    <UserMenu image={profileImage({ userId: user?._id})} />
                 </div>
             </div>
         </header>

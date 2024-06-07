@@ -1,5 +1,9 @@
 import { Types } from "mongoose"
-
+export interface CustomPayrollSupplement {
+  id: any,
+  name: string
+  value: number,
+}
 export interface IPayrollSetup {
   id?: any
   user?: Types.ObjectId
@@ -9,9 +13,12 @@ export interface IPayrollSetup {
     /** Gage */
     salary?: number
 
+    /** Antal timer */
+    numberOfHours?: number
     /** Timeløn */
     hourlyWage?: number
     personalAdditions?: number
+    taxDeduction?: number
   }
 
   benefits?: {
@@ -27,9 +34,20 @@ export interface IPayrollSetup {
     /** Frikort til offentlig befordring */
     freepassForPublicCarriage?: number
     healthInsurance?: number
+    lunch?: number
   }
 
-  supplements?: Array<string>
+  fixed?: boolean
+  /** 
+   * Er lønsedlen blevet givet til medarbejderen for den kommende måned
+   * Kun for kommende måned lønsedler
+   */
+  hasBeenRolled?: boolean
+
+  supplements?: Array<CustomPayrollSupplement>
+  deduction?: Array<CustomPayrollSupplement>
+
+  createdBy?: any
 }
 
 export interface IPayroll {

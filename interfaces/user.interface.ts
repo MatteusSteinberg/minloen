@@ -15,7 +15,7 @@ export interface IUserDetails {
   resignationDate?: Date
   position?: string
   /** Betalingsordning */
-  paymentArrangement?: string
+  paymentArrangement?: "ahead" | "behind"
 
   bankRegistrationNumber?: string
   bankAccountNumber?: string
@@ -90,6 +90,8 @@ export interface IUser extends IUserDetails {
     expriryAt: Date
     usedAt?: Date
   }
+
+  profileImage?: Types.ObjectId
   organizations?: Array<Types.ObjectId>
   activeOrganization?: Types.ObjectId | IOrganization | string
   organizationRole?: "admin" | "user",

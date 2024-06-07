@@ -1,6 +1,8 @@
+import { CheckIcon } from "@heroicons/react/24/outline"
 import _ from "lodash"
 import React, { HTMLInputAutoCompleteAttribute, useMemo, useRef, useState } from "react"
-import { useParams } from "react-router-dom"
+import toast from "react-hot-toast"
+import { useNavigate, useParams } from "react-router-dom"
 import { useSet } from "react-use"
 import { IUser, IUserAdd } from "../../../interfaces/user.interface"
 import Button from "../components/elements/Button"
@@ -49,23 +51,36 @@ const Section = ({ title, undertitle, error, form, onChange, fields, children }:
   })
 
   return (
-    <div className="p-8 bg-white dark:bg-darkPrimarySupport rounded-3xl shadow-custom ">
+    <div className="p-4 bg-white sm:p-6 md:p-8 dark:bg-darkPrimarySupport rounded-3xl shadow-custom ">
       <div className="mb-4">
         <h2 className="text-text dark:text-white font-large-normal">{title}</h2>
         <p className="opacity-50 text-text dark:text-white font-small-normal">{undertitle}</p>
       </div>
-      <div className="flex flex-col items-stretch justify-start gap-1">
+      <div className="flex flex-col items-stretch justify-start gap-5">
         {fields.map((v) => (
           <React.Fragment key={v.name}>
-            {v.type === "dropdown" && <Dropdown name={v.name} options={v.options || []} placeholder={v.placeholder} {...inputHandler(v)} onChange={(h) => onChange?.(v.keyPath, h)} />}
+            {v.type === "dropdown" && <Dropdown name={v.name} label={v.placeholder} options={v.options || []} placeholder={v.placeholder} {...inputHandler(v)} onChange={(h) => onChange?.(v.keyPath, h)} />}
 
             {v.type === "boolean" && <Checkbox name={v.name} text={v.placeholder} {...inputHandler(v)} onChange={(ev) => onChange(v.keyPath, ev.target.checked)} />}
 
-            {!["dropdown", "boolean"].includes(v.type as any) && <Input type={v.type || "text"} autocomplete={v.autocomplete} name={v.name} placeholder={v.placeholder} locked={v.locked} {...inputHandler(v)} />}
+            {!["dropdown", "boolean"].includes(v.type as any) && <Input label={v.placeholder} type={v.type || "text"} autocomplete={v.autocomplete} name={v.name} placeholder={v.placeholder} locked={v.locked} {...inputHandler(v)} />}
           </React.Fragment>
         ))}
       </div>
       {children}
+    </div>
+  )
+}
+
+const SuccessToast = ({ type, visible }: { type: "new" | "update", visible: any }) => {
+  return (
+    <div className={`${visible ? "animate-enter" : "animate-leave"} w-auto bg-white shadow-custom rounded-2xl pointer-events-auto flex gap-4 p-3 ring-1 ring-black ring-opacity-5`}>
+      <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-success">
+        <CheckIcon className="w-6 h-6 text-white" />
+      </div>
+      <p className="mt-1 text-text font-standard-normal">
+        {type === "new" ? "Medarbejder oprettet i systemet" : "Medarbejder oplysninger blev opdateret i systemet"}
+      </p>
     </div>
   )
 }
@@ -76,6 +91,7 @@ const roles = [
 ]
 
 const NewCoworker = () => {
+  const navigate = useNavigate()
   const { id } = useParams()
   const profileInputRef = useRef<HTMLInputElement>(null)
 
@@ -104,7 +120,12 @@ const NewCoworker = () => {
 
   const handleOnSubmit = async () => {
     const method = !!id ? update : create
-    await method(form)
+    const res = await method(form)
+
+    if (!res.error) {
+      toast.custom((t) => <SuccessToast {...t} type={!!id ? "update" : "new"} />)
+      navigate("/medarbejdere")
+    }
   }
 
   const handleProfileClick = () => {
@@ -118,9 +139,9 @@ const NewCoworker = () => {
       <div className="">
         <Header history="/medarbejdere" title="Ny Medarbejder" />
       </div>
-      <div className="relative flex items-start justify-between gap-4">
-        <div className="relative flex flex-col w-2/5 gap-4">
-          <div className="p-8 bg-white dark:bg-darkPrimarySupport rounded-3xl shadow-custom">
+      <div className="relative flex flex-col-reverse items-start justify-between gap-4 xl:flex-row">
+        <div className="left-0 flex flex-col w-full gap-4 xl:w-2/5 xl:sticky top-4">
+          <div className="p-4 bg-white sm:p-6 md:p-8 dark:bg-darkPrimarySupport rounded-3xl shadow-custom">
             <h2 className="mb-4 text-text dark:text-white font-large-normal">Medarbejder bilede</h2>
             <div>
               <input type="file" ref={profileInputRef} className="hidden" />
@@ -140,17 +161,16 @@ const NewCoworker = () => {
               </button>
             </div>
           </div>
-          <div className="flex items-center justify-between p-8 bg-white dark:bg-darkPrimarySupport rounded-3xl shadow-custom ">
-            <p className="text-text dark:text-white font-large-normal">Færdiggør</p>
+          <div className="flex items-center justify-between w-full p-4 bg-white sm:p-6 md:p-8 dark:bg-darkPrimarySupport rounded-3xl shadow-custom ">
             <Button onClick={handleOnSubmit} background="primaryLight" color="text">
               {!!id ? "Gem medarbejder" : "Tilføj medarbejder"}
             </Button>
           </div>
         </div>
-        <div className="relative flex flex-col w-3/5 h-full gap-4">
+        <div className="relative flex flex-col w-full h-full gap-4 xl:w-3/5">
           <Section
             fields={[
-              { keyPath: "email", name: "email", placeholder: "E-mail", locked: !!id },
+              { keyPath: "email", type: "email", name: "email", placeholder: "E-mail", locked: !!id },
               { keyPath: "disabled", type: "boolean", name: "disabled", placeholder: "Deaktiver brugeren?" },
             ]}
             form={form}
@@ -159,10 +179,9 @@ const NewCoworker = () => {
             undertitle="Brugeroplysninger til at logge ind"
             onChange={handleSectionOnChange}>
             <div className="flex items-center justify-between">
-              <p className="pt-2 text-text dark:text-white font-large-normal">Medarbejder rettigheder</p>
-              <div className=" min-w-[320px]">
+              <div className="w-full ">
                 {!!id && <p className="font-bold text-right text-text dark:text-white">{roles.find((v) => v.value === form.organizationRole)?.label}</p>}
-                {!id && <Dropdown value={form.organizationRole} name="organizationRole" options={roles} onChange={(v) => setForm((f) => ({ ...f, organizationRole: v }))} />}
+                {!id && <Dropdown label="Medarbejder rettigheder" value={form.organizationRole} name="organizationRole" options={roles} onChange={(v) => setForm((f) => ({ ...f, organizationRole: v }))} />}
               </div>
             </div>
           </Section>
@@ -170,11 +189,11 @@ const NewCoworker = () => {
             fields={[
               { keyPath: "firstName", name: "Fornavn", placeholder: "Fornavn " },
               { keyPath: "lastName", name: "Efternavn", placeholder: "Efternavn " },
-              { keyPath: "socialSecurityNumber", name: "cpr", placeholder: "CPR-nummer " },
-              { keyPath: "phoneNumber", name: "phoneNumber", placeholder: "Telefon" },
+              { keyPath: "socialSecurityNumber", type: "number", name: "cpr", placeholder: "CPR-nummer " },
+              { keyPath: "phoneNumber", type: "number", name: "phoneNumber", placeholder: "Telefon" },
               { keyPath: "address", name: "address", placeholder: "Adresse" },
               { keyPath: "city", name: "city", placeholder: "By" },
-              { keyPath: "zipCode", name: "zipCode", placeholder: "Post nr." },
+              { keyPath: "zipCode", type: "number", name: "zipCode", placeholder: "Post nr." },
             ]}
             form={form}
             error={error}
@@ -187,7 +206,7 @@ const NewCoworker = () => {
             <>
               <Section
                 fields={[
-                  { keyPath: "workerNumber", name: "workerNumber", placeholder: "Medarbejdernummer " },
+                  { keyPath: "workerNumber", type: "number", name: "workerNumber", placeholder: "Medarbejdernummer " },
                   { keyPath: "employmentDate", name: "employmentDate", type: "date", placeholder: "Ansættelses dato " },
                   { keyPath: "resignationDate", name: "resignationDate", placeholder: "Fratrædelses dato", type: "date" },
                   { keyPath: "position", name: "position", placeholder: "Stilling " },

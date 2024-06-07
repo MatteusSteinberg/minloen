@@ -5,7 +5,9 @@ import { Route, Routes, matchPath, useLocation } from "react-router-dom"
 import Hamburger from "./components/elements/Hamburger"
 import ProtectedRoute from "./components/globals/ProtectedRoute"
 import Sidebar from "./components/globals/Sidebar"
+import UserMenu from "./components/globals/UserMenu"
 import { useAuth } from "./hooks/use-auth"
+import { profileImage } from "./lib/utils/profileImage"
 
 // Pages
 const Overview = lazy(() => import("./routes/overview"))
@@ -64,12 +66,13 @@ const Routing = () => {
         <main className={`${notfound && "w-full"} ${showLayout && !notfound ? "md:pl-24 md:pr-6 p-0 bg-lightPrimary dark:bg-darkPrimarySupport h-screen" : "relative flex items-start justify-between w-full min-h-dvh"} ${showLayout && showSidebar ? "md:pl-24 lg:pl-80" : "pl-0"}`}>
             {showLayout && (
                 <>
-                    <aside className={`fixed top-0 bottom-0 left-0 z-20 flex flex-col invisible opacity-0 pt-[120px] md:visible md:opacity-100 md:transition-opacity bg-lightPrimary dark:bg-darkPrimarySupport ${showSidebar ? "w-80 pb-[232px] px-4" : "w-16 pb-[120px] md:w-24 px-0 md:px-4 md:pb-[152px]"} `}>
-                        <Sidebar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
+                    <aside className={`border-r border-lightBorder dark:border-darkBorder border-solid md:border-none fixed top-0 bottom-0 left-0 z-20 flex flex-col opacity-0 pt-[120px] md:opacity-100 md:transition-opacity bg-lightPrimary dark:bg-darkPrimarySupport ${showSidebar ? "w-80 pb-[232px] px-4" : "w-16 pb-[120px] md:w-24 px-0 md:px-4 md:pb-[152px]"} ${toggleMenu ? "visible opacity-100" : "md:visible invisible"}`}>
+                        <Sidebar isMenuActive={toggleMenu} setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
                     </aside>
-                    <div className="absolute right-2 top-4 md:hidden">
-                        <div className="flex items-center justify-center w-8 h-8 p-8 bg-lightPrimary rounded-2xl">
-                            <Hamburger colorDark="darkBorder" colorLight="lightPrimary" active={toggleMenu} setActive={setToggleMenu} />
+                    <div className={`absolute top-0 left-0 right-0 z-10 flex items-center justify-end h-20  lg:pr-18 md:pr-16  ${toggleMenu ? "border-lightBorder dark:border-darkBorder bg-white border-b border-solid dark:bg-darkSecondarySupport" : "bg-transparent border-none"}`}>
+                        <div className="flex items-center gap-4 px-6">
+                            {toggleMenu && <UserMenu image={profileImage({ userId: user?._id })} />}
+                            <Hamburger color="lightPrimary" active={toggleMenu} setActive={setToggleMenu} />
                         </div>
                     </div>
                 </>

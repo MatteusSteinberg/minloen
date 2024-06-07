@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose"
-import { IPayroll, IPayrollSetup } from "../../interfaces/payroll.interface"
+import { IPayrollSetup } from "../../interfaces/payroll.interface"
 
 const payrollSchema = new Schema<IPayrollSetup>(
   {
@@ -17,17 +17,25 @@ const payrollSchema = new Schema<IPayrollSetup>(
       type: {},
       required: false
     },
+    fixed: {
+      type: Boolean,
+      required: false
+    },
     supplements: {
-      type: [String],
+      type: [],
+      required: false
+    },
+    deduction: {
+      type: [],
       required: false
     },
     wageInfo: {
-      type: {
-        standardHours: String,
-        salaryType: String,
-        salary: String,
-        hourlyWage: String,
-      }
+      type: {}
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     }
   },
   {
@@ -35,6 +43,6 @@ const payrollSchema = new Schema<IPayrollSetup>(
   }
 )
 
-const payrollSetupModel = model<IPayroll>("PayrollSetup", payrollSchema)
+const payrollSetupModel = model<IPayrollSetup>("PayrollSetup", payrollSchema)
 
 export default payrollSetupModel

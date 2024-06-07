@@ -25,7 +25,7 @@ const Input = ({ name, autocomplete, children, defaultValue, locked, error, labe
 
     return (
         <div className={`relative block w-full ${spacing ? "mb-4" : "mb-0"}`}>
-            <label className="block mb-3 text-text dark:text-white">{label}</label>
+            {label && <label className="block mb-3 text-text dark:text-white">{label}</label>}
             <div className={`p-0 relative rounded-[14px] w-full h-[68px] border-[1px] border-solid ${error ? "border-error" : "border-lightPrimary dark:border-[#33363E]"} bg-[rgba(0,84,69,0.1)] dark:bg-[rgba(33,33,34,0.2)]`}>
                 {icon && <div className="absolute top-1/2 left-4 -translate-y-1/2 flex items-center h-6 w-6 text-[rgba(255,255,255,0.6)] dark:text-[rgba(255,255,255,0.3)]">{icon}</div>}
                 <input defaultValue={defaultValue} disabled={locked} autoComplete={autocomplete} className={`w-full h-full text-text dark:text-white bg-transparent outline-0 ${icon ? "pr-4 pl-12" : "px-5"} placeholder:rgba(231,231,233,0.3) dark:placeholder:text-[rgba(255,255,255,0.3)] placeholder:font-normal`} name={name} onChange={onChange} placeholder={placeholder} type={type} value={value} />
