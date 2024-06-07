@@ -40,7 +40,6 @@ export const list = baseHandler(async ({ user, query }) => {
 
     const dateFrom = new Date(year, month, 1)
     const dateTo = new Date(year, month + 1, 0)
-    console.log(dateFrom, dateTo)
 
     const absences = await absenceModel
         .find({
@@ -85,10 +84,11 @@ export const metadata = baseHandler(async ({ user }) => {
                     $add: [
                         1,
                         {
-                            $divide: [
-                                { $subtract: ["$dateTo", "$dateFrom"] },
-                                1000 * 60 * 60 * 24, // Convert milliseconds to days
-                            ],
+                            $dateDiff: {
+                                startDate: "$dateFrom",
+                                endDate: "$dateTo",
+                                unit: "day",
+                            },
                         },
                     ],
                 },
@@ -97,7 +97,7 @@ export const metadata = baseHandler(async ({ user }) => {
         {
             $group: {
                 _id: "$type",
-                total: { $sum: { $floor: "$days" } },
+                total: { $sum: "$days" },
             },
         },
     ]
