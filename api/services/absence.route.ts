@@ -25,7 +25,7 @@ export const add = baseHandler(async ({ user, body }) => {
     })
 
     if (hasAbsence) {
-        return { data: "User already has an absence in this period", status: StatusCodes.BadRequest }
+        return { data: "Bruger har allerede oprettet fravær i denne periode", status: StatusCodes.BadRequest }
     }
 
     await new absenceModel({ ...body, user: user._id, organization: user.activeOrganization }).save()

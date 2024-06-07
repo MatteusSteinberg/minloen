@@ -32,12 +32,12 @@ const LeaveModal = ({ isOpen, toggleModal, selectedDate }: ILeavemodal) => {
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         const { error } = await create(form)
-        console.log(error)
-        if (!(await error)) {
+
+        if (!error) {
             toggleModal(false)
             toast.success("Fravær oprettet")
         } else {
-            toast.error("Der skete en fejl")
+            toast.error(error)
         }
     }
 
