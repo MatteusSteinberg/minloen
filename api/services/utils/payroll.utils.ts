@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { HydratedDocument, Types } from "mongoose"
 import { IPayrollSetup } from "../../../interfaces/payroll.interface"
 import { IUser } from "../../../interfaces/user.interface"
@@ -7,30 +6,25 @@ import payrollSetupModel from "../../models/payroll-setup.model"
 
 export default class Payroll {
   public payrollSetup: HydratedDocument<IPayrollSetup>
-  payrollSetupId: string
   public user: HydratedDocument<IUser>
+  public fixed: boolean = true
+  public payrollUser: HydratedDocument<IUser>
 
-  constructor(user: HydratedDocument<IUser>, payrollSetupId?: string) {
+  constructor(user: HydratedDocument<IUser>) {
     this.user = user
-    if (payrollSetupId) {
-      this.payrollSetupId = payrollSetupId
-    }
   }
 
-  private async setup() {
-    if (!this.payrollSetup && this.payrollSetupId) {
+  private async setup(fixed: boolean = this.fixed, payrollUser: HydratedDocument<IUser> = this.payrollUser) {
+    if (!this.payrollSetup) {
       this.payrollSetup = await payrollSetupModel.findOne({
-        _id: new Types.ObjectId(this.payrollSetupId),
+        user: payrollUser._id,
+        fixed: { $eq: fixed }
       })
     }
   }
 
-  public async load() {
-    await this.setup()
-  }
-
-  public async getter() {
-    await this.setup()
+  public async getter(fixed: boolean = this.fixed, payrollUser: HydratedDocument<IUser>) {
+    await this.setup(fixed, payrollUser)
     return this.payrollSetup.toObject({ virtuals: true })
   }
 
@@ -51,23 +45,32 @@ export default class Payroll {
     })
   }
 
-  public async create(setup: IPayrollSetup, createdBy: HydratedDocument<IUser>) {
-    if (createdBy.organizationRole === "admin") {
+  public async create(setup: IPayrollSetup, payrollUser: HydratedDocument<IUser>, fixed: boolean = true) {
+    if (this.user.organizationRole === "admin") {
       this.payrollSetup = await payrollSetupModel.create({
         ...setup,
-        organization: createdBy.activeOrganization,
-        createdBy: createdBy._id
+        user: payrollUser,
+        organization: this.user.activeOrganization,
+        createdBy: this.user._id,
+        fixed
       })
-      this.payrollSetupId = this.payrollSetup.id
+      this.payrollUser = payrollUser
+      this.fixed = fixed
     }
   }
 
-  public async update(setup: Partial<IPayrollSetup>, updatedBy: HydratedDocument<IUser>) {
-    await this.setup()
-    if (updatedBy.organizationRole === "admin") {
-      this.payrollSetup = _.merge(this.payrollSetup, setup)
-      this.payrollSetup.createdBy = updatedBy._id
+  public async update(setup: Partial<IPayrollSetup>, payrollUser: HydratedDocument<IUser>, fixed: boolean = true) {
+    await this.setup(fixed, payrollUser)
+    if (this.user.organizationRole === "admin") {
+      this.payrollSetup.wageInfo = { ...this.payrollSetup.wageInfo, ...setup.wageInfo }
+      this.payrollSetup.benefits = { ...this.payrollSetup.benefits, ...setup.benefits }
+      this.payrollSetup.supplements = setup.supplements
+      this.payrollSetup.deduction = setup.deduction
+      this.payrollSetup.createdBy = this.user._id
+      this.user = payrollUser
       await this.payrollSetup.save({ validateModifiedOnly: true })
+      this.payrollUser = payrollUser
+      this.fixed = fixed
     }
   }
 } 

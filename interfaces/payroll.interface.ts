@@ -12,7 +12,6 @@ export interface IPayrollSetup {
     standardHours?: number
     /** Gage */
     salary?: number
-    salaryType?: string
 
     /** Antal timer */
     numberOfHours?: number

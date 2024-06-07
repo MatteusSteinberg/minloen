@@ -5,12 +5,12 @@ const payrollRouter = express.Router()
 
 
 // POST
-payrollRouter.post('/', create)
+payrollRouter.post('/:user', create)
 
 // GET
 payrollRouter.get('/:user', getByUser)
 
 // PATCH
-payrollRouter.patch('/:id', update)
+payrollRouter.patch('/:user', update)
 
 export default payrollRouter
