@@ -18,6 +18,16 @@ export const add = baseHandler(async ({ user, body }) => {
         return { data: invalid, status: StatusCodes.BadRequest }
     }
 
+    const hasAbsence = await absenceModel.findOne({
+        user: user._id,
+        dateFrom: { $lte: absenceBody.dateTo },
+        dateTo: { $gte: absenceBody.dateFrom },
+    })
+
+    if (hasAbsence) {
+        return { data: "User already has an absence in this period", status: StatusCodes.BadRequest }
+    }
+
     await new absenceModel({ ...body, user: user._id, organization: user.activeOrganization }).save()
 
     return { data: {}, status: StatusCodes.Created }

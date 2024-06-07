@@ -1,6 +1,7 @@
 import DateRangePicker from "@wojtekmaj/react-daterange-picker"
 import { useEffect, useState } from "react"
-import { IAbsence } from "../../../../interfaces/absence.interface"
+import toast from "react-hot-toast"
+import { AbsenceType, IAbsence } from "../../../../interfaces/absence.interface"
 import { useAPI } from "../../hooks/use-api"
 import Dropdown from "../elements/Dropdown"
 import Base from "./Base"
@@ -19,7 +20,7 @@ const options = [
 ]
 
 const LeaveModal = ({ isOpen, toggleModal, selectedDate }: ILeavemodal) => {
-    const { create, error } = useAPI<IAbsence>({ url: "/absence" })
+    const { create } = useAPI<IAbsence>({ url: "/absence" })
     const [selectedOption, setSelectedOption] = useState(options[0].value)
     const [date, setDate] = useState<[Date, Date] | undefined>(selectedDate)
     const [form, setForm] = useState<Partial<IAbsence>>({})
@@ -30,8 +31,14 @@ const LeaveModal = ({ isOpen, toggleModal, selectedDate }: ILeavemodal) => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
-        await create(form)
-        toggleModal(false)
+        const { error } = await create(form)
+        console.log(error)
+        if (!(await error)) {
+            toggleModal(false)
+            toast.success("Fravær oprettet")
+        } else {
+            toast.error("Der skete en fejl")
+        }
     }
 
     const handleDateChange = (value: [Date, Date] | undefined) => {
@@ -42,8 +49,7 @@ const LeaveModal = ({ isOpen, toggleModal, selectedDate }: ILeavemodal) => {
 
     useEffect(() => {
         setDate(selectedDate)
-        setForm((f) => ({ ...f, dateFrom: selectedDate ? selectedDate[0] : undefined }))
-        setForm((f) => ({ ...f, dateTo: selectedDate ? selectedDate[1] : undefined }))
+        setForm((f) => ({ ...f, dateFrom: selectedDate ? selectedDate[0] : undefined, dateTo: selectedDate ? selectedDate[1] : undefined, type: options[0].value as AbsenceType }))
     }, [selectedDate])
 
     return (

@@ -60,7 +60,7 @@ const Navigation = (props: Props) => {
                     <Link to="/signup" className="hidden py-4 text-white px-7 rounded-xl bg-lightPrimary sm:flex">
                         <span className="-mt-1">Kom igang</span>
                     </Link>
-                    <Hamburger active={menuActive} setActive={setMenuActive} colorDark="darkBorder" colorLight="lightPrimary" />
+                    <Hamburger active={menuActive} setActive={setMenuActive} color="lightPrimary" />
                 </div>
             </header>
             <aside className={`fixed top-0 left-0 z-10 w-full bg-white transition-all duration-300 ${menuActive ? "translate-y-0" : "-translate-y-full"}`}>

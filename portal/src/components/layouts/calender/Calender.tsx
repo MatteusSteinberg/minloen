@@ -42,12 +42,11 @@ const Calendar = () => {
     }
 
     const isDayInAbsenceRange = useMemo(
-        () =>
-            (day: number): AbsenceType[] => {
-                const date = new Date(year, month, day)
-                const ranges = absenceRanges?.filter((range) => date >= new Date(range.dateFrom) && date <= new Date(range.dateTo))
-                return ranges?.map((range) => range.cause) || []
-            },
+        () => (day: number) => {
+            const date = new Date(year, month, day)
+            const range = absenceRanges?.find((range) => date >= new Date(range.dateFrom) && date <= new Date(range.dateTo))
+            return range ? range.cause : null
+        },
         [absenceRanges, year, month]
     )
 
@@ -99,11 +98,7 @@ const Calendar = () => {
                             key={day}
                             className="relative p-2 text-center bg-white text-text dark:text-white h-28 dark:bg-darkPrimarySupport py-9 font-medium-semibold">
                             <span className="absolute left-3 top-3">{day}</span>
-                            <div className="bang fix det lige :) kh: din polak">
-                                {isDayInAbsenceRange(day).map((type, index) => (
-                                    <CalenderTags key={type + index} type={type} />
-                                ))}
-                            </div>
+                            {isDayInAbsenceRange(day) && <CalenderTags key={isDayInAbsenceRange(day)} type={isDayInAbsenceRange(day)} />}
                         </button>
                     ))}
                     {trailingDays.map((day, index) => (
