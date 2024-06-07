@@ -1,5 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/outline"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import Portal from "../globals/Portal"
 
 interface IBase {
@@ -21,7 +21,7 @@ const Base = ({ isOpen, title, toggleModal, children, className, saveOnClick, su
         if (isOpen) document.body.classList.add("sc-modal-open")
     }, [isOpen])
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         if (isOpen) {
             setIsClosing(true)
             setTimeout(() => {
@@ -29,7 +29,7 @@ const Base = ({ isOpen, title, toggleModal, children, className, saveOnClick, su
                 setIsClosing(false)
             }, 260)
         }
-    }
+    }, [isOpen, toggleModal])
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -43,7 +43,7 @@ const Base = ({ isOpen, title, toggleModal, children, className, saveOnClick, su
         return () => {
             document.removeEventListener("mousedown", handleClickOutside)
         }
-    }, [modalRef])
+    }, [modalRef, handleClose])
 
     if (!isOpen) return null
 

@@ -1,3 +1,4 @@
+import dayjs from "dayjs"
 import { useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
 import { IDriving } from "../../../interfaces/driving.interface"
@@ -5,7 +6,6 @@ import DataTable from "../components/elements/DataTable"
 import ContentContainer from "../components/globals/ContentContainer"
 import Header from "../components/globals/Header"
 import { useAPI } from "../hooks/use-api"
-import dayjs, { Dayjs } from 'dayjs'
 
 const Drivingcompensation = () => {
     let [searchParams, setSearchParams] = useSearchParams()
@@ -36,13 +36,7 @@ const Drivingcompensation = () => {
                 <Header title="Din kørsel" />
             </div>
             <div className="">
-                <DataTable title="Kørsel" 
-                metadata={metadata} 
-                currentPage={currentPage} 
-                onPageClick={(p) => setSearchParams((s) => ({ ...s, page: p }))} 
-                tableData={formattedData}
-                drivingModal
-                />
+                <DataTable title="Kørsel" metadata={metadata} currentPage={currentPage} onPageClick={(p) => setSearchParams((s) => ({ ...s, page: p }))} tableData={formattedData} drivingModal />
             </div>
         </ContentContainer>
     )
