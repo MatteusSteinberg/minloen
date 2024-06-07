@@ -5,21 +5,6 @@ import Header from "../components/globals/Header"
 import Calender from "../components/layouts/calender/Calender"
 import { useAPI } from "../hooks/use-api"
 
-const boxData = [
-    {
-        title: "Fridage (pr. år)",
-        value: "41",
-    },
-    {
-        title: "Sygedage i alt (pr. år)",
-        value: "12",
-    },
-    {
-        title: "Feriedage (pr. år)",
-        value: "26",
-    },
-]
-
 interface IAbsenceMetadata {
     _id: AbsenceType
     total: number
