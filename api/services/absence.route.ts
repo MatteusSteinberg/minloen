@@ -61,9 +61,13 @@ export const listMetadata = baseHandler(async ({ user }) => {
     return { data: { count: count, size: 10 }, status: StatusCodes.Ok }
 }, "user")
 
+// Shows the number of absence during current vacation year
 export const metadata = baseHandler(async ({ user }) => {
     const currentDate = new Date()
     const currentYear = currentDate.getFullYear()
+
+    // Vacation year starts on September 1st of the previous year and ends on August 31st of the current year
+    // Here we filter that mofo
     const isBeforeSeptember = currentDate < new Date(`${currentYear}-09-01`)
 
     const dateFrom = new Date(`${isBeforeSeptember ? currentYear - 1 : currentYear}-09-01`)
