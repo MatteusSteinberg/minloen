@@ -1,9 +1,11 @@
 import { Types } from "mongoose"
 
+export type AbsenceType = "sick" | "offday" | "vacation"
+
 export interface IAbsence {
     id?: any
     user: Types.ObjectId
-    type: string
+    type: AbsenceType
     dateFrom: Date
     organization: Types.ObjectId
     dateTo: Date

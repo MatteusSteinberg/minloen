@@ -4,7 +4,6 @@ import absenceModel from "../models/absence.model"
 import baseHandler, { StatusCodes } from "./helpers/base-handler"
 
 export const add = baseHandler(async ({ user, body }) => {
-    console.log(body)
     const absenceBody = body as IAbsence
     const invalid = validateObject(
         {
@@ -24,10 +23,13 @@ export const add = baseHandler(async ({ user, body }) => {
     return { data: {}, status: StatusCodes.Created }
 }, "user")
 
-export const list = baseHandler(async ({ user }) => {
-    const currentYear = new Date().getFullYear()
-    const dateFrom = new Date(`${currentYear}-01-01`)
-    const dateTo = new Date(`${currentYear}-12-31`)
+export const list = baseHandler(async ({ user, query }) => {
+    const searchDate = new Date(query.date)
+    const year = searchDate.getFullYear()
+    const month = searchDate.getMonth()
+
+    const dateFrom = new Date(year, month, 1)
+    const dateTo = new Date(year, month + 1, 0)
 
     const absencesAggregate = [
         {
@@ -83,9 +85,25 @@ export const metadata = baseHandler(async ({ user }) => {
             },
         },
         {
+            $project: {
+                type: "$type",
+                days: {
+                    $add: [
+                        1,
+                        {
+                            $divide: [
+                                { $subtract: ["$dateTo", "$dateFrom"] },
+                                1000 * 60 * 60 * 24, // Convert milliseconds to days
+                            ],
+                        },
+                    ],
+                },
+            },
+        },
+        {
             $group: {
                 _id: "$type",
-                total: { $sum: 1 },
+                total: { $sum: { $floor: "$days" } },
             },
         },
     ]
