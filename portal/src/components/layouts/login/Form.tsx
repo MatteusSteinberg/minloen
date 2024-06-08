@@ -59,7 +59,7 @@ const Form = (props: Props) => {
                         <p className="font-small-medium text-lightPrimary dark:text-darkPrimaryLight">Har du ikke et login?</p>
                         <p className="text-text dark:text-white pt-[10px] font-medium-medium max-w-[350px]">Kontakt din administrator for at blive inviteret</p>
                     </div>
-                    <Link to="/register" className="w-full bg-white dark:bg-darkPrimarySupport border-lightBorder border border-solid shadow-custom rounded-[22px] p-6 relative">
+                    <Link to="/signup" className="w-full bg-white dark:bg-darkPrimarySupport border-lightBorder border border-solid shadow-custom rounded-[22px] p-6 relative">
                         <p className="font-small-medium text-lightPrimary dark:text-darkPrimaryLight">Er du en virksomhed?</p>
                         <p className="text-text dark:text-white pt-[10px] font-medium-medium max-w-[300px]">Klik her for at registrere dig som Virksomhed</p>
                     </Link>
