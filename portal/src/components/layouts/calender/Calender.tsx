@@ -1,9 +1,17 @@
-import React, { useState } from "react"
+import { useMemo, useState } from "react"
+import { IAbsenceRange } from "../../../../../interfaces/absence.interface"
+import { useAPI } from "../../../hooks/use-api"
+import LeaveModal from "../../modals/LeaveModal"
+import CalenderTags from "./CalenderTags"
 
 const daysInMonth = (year: number, month: number): number => new Date(year, month + 1, 0).getDate()
 
-const Calendar: React.FC = () => {
+const Calendar = () => {
+    const [isOpen, setIsOpen] = useState(false)
+    const [selectedDate, setSelectedDate] = useState<[Date, Date] | undefined>(undefined)
     const [currentDate, setCurrentDate] = useState(new Date())
+
+    const { data: absenceRanges } = useAPI<IAbsenceRange[]>({ url: "/absence/list", opts: { autoGet: true }, params: { date: currentDate } })
 
     const year = currentDate.getFullYear()
     const month = currentDate.getMonth()
@@ -26,6 +34,15 @@ const Calendar: React.FC = () => {
     const handleNextMonth = () => {
         setCurrentDate(new Date(year, month + 1, 1))
     }
+
+    const isDayInAbsenceRange = useMemo(
+        () => (day: number) => {
+            const date = new Date(year, month, day)
+            const range = absenceRanges?.find((range) => date >= new Date(range.dateFrom) && date <= new Date(range.dateTo))
+            return range ? range.type : null
+        },
+        [absenceRanges, year, month]
+    )
 
     return (
         <div>
@@ -56,23 +73,42 @@ const Calendar: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-7 gap-px overflow-hidden rounded-b-2xl">
                     {blankDays.map((day, index) => (
-                        <button key={`prev-${index}`} className="relative p-2 h-28 text-center text-text dark:text-darkBorder py-9 bg-[rgba(20,23,24,0.1)] dark:bg-[rgba(20,23,24,0.3)] font-medium-semibold">
+                        <button
+                            onClick={() => {
+                                setIsOpen(true)
+                                setSelectedDate([new Date(year, month, day), new Date(year, month, day)])
+                            }}
+                            key={`prev-${index}`}
+                            className="relative p-2 h-28 text-center text-text dark:text-darkBorder py-9 bg-[rgba(20,23,24,0.1)] dark:bg-[rgba(20,23,24,0.3)] font-medium-semibold">
                             <span className="absolute left-3 top-3">{day}</span>
                         </button>
                     ))}
                     {daysArray.map((day) => (
-                        <button key={day} className="relative p-2 text-center bg-white text-text dark:text-white h-28 dark:bg-darkPrimarySupport py-9 font-medium-semibold">
+                        <button
+                            onClick={() => {
+                                setIsOpen(true)
+                                setSelectedDate([new Date(year, month, day), new Date(year, month, day)])
+                            }}
+                            key={day}
+                            className="relative p-2 text-center bg-white text-text dark:text-white h-28 dark:bg-darkPrimarySupport py-9 font-medium-semibold">
                             <span className="absolute left-3 top-3">{day}</span>
-                            {/* <CalenderTags type="vacation" message="Ferie" /> */}
+                            {isDayInAbsenceRange(day) && <CalenderTags key={isDayInAbsenceRange(day)} type={isDayInAbsenceRange(day)} />}
                         </button>
                     ))}
                     {trailingDays.map((day, index) => (
-                        <button key={`next-${index}`} className="relative p-2 h-28 text-center py-9 text-text bg-[rgba(20,23,24,0.1)] dark:bg-[rgba(20,23,24,0.3)] font-medium-semibold">
+                        <button
+                            onClick={() => {
+                                setIsOpen(true)
+                                setSelectedDate([new Date(year, month, day), new Date(year, month, day)])
+                            }}
+                            key={`next-${index}`}
+                            className="relative p-2 h-28 text-center py-9 text-text bg-[rgba(20,23,24,0.1)] dark:bg-[rgba(20,23,24,0.3)] font-medium-semibold">
                             <span className="absolute left-3 top-3">{day}</span>
                         </button>
                     ))}
                 </div>
             </div>
+            <LeaveModal isOpen={isOpen} selectedDate={selectedDate} toggleModal={setIsOpen} />
         </div>
     )
 }
