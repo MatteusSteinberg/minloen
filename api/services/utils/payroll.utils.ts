@@ -161,6 +161,19 @@ function handlePayrollDetailsAndSalary(user: HydratedDocument<IUser>, payrollSet
   return { details, salaryPayment }
 }
 
+function lastWorkingDay(date: Date | dayjs.Dayjs) {
+  let day = dayjs(date)
+  day = day.endOf("month")
+  if (day.day() === 0) { // sunday
+    day = day.subtract(2, 'days')
+  }
+  if (day.day() === 6) { // saturday
+    day = day.subtract(1, 'days')
+  }
+
+  return day
+}
+
 export async function generatePayrollPDF(user: HydratedDocument<IUser>, payrollSetup: HydratedDocument<IPayrollSetup>) {
   const organization = await organizationModel.findById(user.activeOrganization)
 
@@ -174,6 +187,8 @@ export async function generatePayrollPDF(user: HydratedDocument<IUser>, payrollS
     paymentPeriod[0] = paymentPeriod[0].startOf('month')
     paymentPeriod[1] = paymentPeriod[1].endOf('month')
   }
+
+  const paymentDate = lastWorkingDay(day)
 
   const { details, salaryPayment } = handlePayrollDetailsAndSalary(user, payrollSetup)
 
@@ -203,7 +218,7 @@ export async function generatePayrollPDF(user: HydratedDocument<IUser>, payrollS
       payroll: {
         datePeriod: `${paymentPeriod[0].format("DD-MM-YYYY")} - ${paymentPeriod[1].format("DD-MM-YYYY")}`,
         month: months[paymentPeriod[0].month()],
-        paymentDate: "WIP",
+        paymentDate: paymentDate.format("DD-MM-YYYY"),
         salary: salaryPayment.toFixed(2).toString()
       }
     } as IPayrollPDF
