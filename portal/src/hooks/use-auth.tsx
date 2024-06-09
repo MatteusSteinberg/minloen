@@ -2,6 +2,7 @@ import axios from "axios"
 import _cloneDeep from "lodash/cloneDeep"
 import React, { memo, useContext } from "react"
 import useLocalStorage from "react-use/lib/useLocalStorage"
+import { IOrganization } from "../../../interfaces/organization.interface"
 import { IUser } from "../../../interfaces/user.interface"
 import { IRequestData, requestWithBody, useAPI } from "./use-api"
 
@@ -9,6 +10,8 @@ interface IAuth {
   authenticate: (email: string, password: string) => Promise<{ error?: any }>
   unauthenticate: () => void
   updateMe: (user: Partial<IUser>) => Promise<IRequestData<IUser>>
+  updateOrganization: (org: Partial<IOrganization>) => Promise<IRequestData<IOrganization>>
+  organization?: IOrganization
   user?: IUser
 }
 
@@ -36,6 +39,7 @@ export const AuthProvider = memo(({ children }: { children: React.ReactNode }) =
   }
 
   const { data, update, mutate, setData } = useAPI<IUser>({ url: "/user" })
+  const organizationAPI = useAPI<IOrganization>({ url: "/organization", opts: { autoGet: !!token } })
 
   const authenticate = async (email: string, password: string) => {
     const result = await requestWithBody(`${api}/user/login`, "post", {
@@ -66,11 +70,18 @@ export const AuthProvider = memo(({ children }: { children: React.ReactNode }) =
     return await update(user)
   }
 
+  const updateOrganization = async (org: Partial<IOrganization>) => {
+    organizationAPI.setData(_cloneDeep(org))
+    return await organizationAPI.update(org)
+  }
+
   const contextValue = {
     user: data,
     authenticate,
     unauthenticate,
     updateMe,
+    organization: organizationAPI.data,
+    updateOrganization
   }
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

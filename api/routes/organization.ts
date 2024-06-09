@@ -1,5 +1,5 @@
 import express from "express";
-import { me, register } from "../services/organization.route";
+import { me, register, update } from "../services/organization.route";
 
 const organizationRouter = express.Router()
 
@@ -11,5 +11,6 @@ organizationRouter.post('/register', register)
 organizationRouter.get('/', me)
 
 // PATCH
+organizationRouter.patch('/', update)
 
 export default organizationRouter

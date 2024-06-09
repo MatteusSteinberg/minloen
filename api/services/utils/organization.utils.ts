@@ -40,6 +40,13 @@ export default class Organization {
     this.organization = _.set(this.organization, path, value)
   }
 
+  public async update(org: Partial<IOrganization>) {
+    await this.setup()
+    this.organization = _.merge(this.organization, org)
+    await this.organization.save({ validateModifiedOnly: true })
+    return this.organization
+  }
+
   public async addUser(user: IUserAdd) {
     await this.setup()
 

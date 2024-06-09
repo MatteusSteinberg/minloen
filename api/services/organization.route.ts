@@ -57,3 +57,20 @@ export const me = baseHandler(async ({ user }) => {
 
   return { data: org.organization.toObject({ virtuals: true }), status: StatusCodes.Ok }
 })
+
+export const update = baseHandler(async ({ user, body }) => {
+
+  const invalid = validateObject({
+    name: ["required"],
+    cvr: ["required"]
+  }, body)
+
+  if (invalid) {
+    return { data: invalid, status: StatusCodes.BadRequest }
+  }
+
+  const org = new Organization(user.activeOrganization as any)
+  await org.update(body)
+
+  return { data: org.organization.toObject({ virtuals: true }), status: StatusCodes.Ok }
+}, "admin")

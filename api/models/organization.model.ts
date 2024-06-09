@@ -14,6 +14,14 @@ const organizationSchema = new Schema<IOrganization>(
       required: true,
       unique: true
     },
+    address: {
+      type: String,
+      required: false
+    },
+    zipCode: {
+      type: String,
+      required: false
+    },
     active: {
       type: Boolean,
       required: true,

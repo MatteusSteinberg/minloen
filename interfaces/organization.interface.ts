@@ -3,6 +3,8 @@ export interface IOrganization {
   name: string
   cvr: string
   active?: boolean
+  address?: string
+  zipCode?: string
   updatedAt?: Date
   createdAt?: Date
 }

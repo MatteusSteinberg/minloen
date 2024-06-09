@@ -194,10 +194,10 @@ export async function generatePayrollPDF(user: HydratedDocument<IUser>, payrollS
         saldi: []
       },
       company: {
-        address: "Manglende firma addresse",
-        cvr: "Manglende firma cvr",
+        address: organization.address,
+        cvr: organization.cvr,
         name: organization.name,
-        zipCode: "Manglende firma post. nr."
+        zipCode: organization.zipCode
       },
       details: details,
       payroll: {
