@@ -57,7 +57,11 @@ const Coworkers = () => {
             </>
           )}
           tableData={formattedData}
-          button="/ny-medarbejder"
+          tableHeaderActions={<>
+            <Link className="border-solid border-2  bg-lightPrimary border-lightPrimary dark:border-[rgb(52,56,57)] dark:bg-transparent text-white font-standard-medium py-3 px-6 rounded-[14px] flex justify-center hover:bg-lightSecondaryLight hover:border-lightSecondaryLight hover:text-text dark:hover:bg-[rgb(52,56,57)] transition-colors duration-150" to={"/ny-medarbejder"}>
+              Tilføj medarbejder
+            </Link>
+          </>}
         />
       </div>
     </ContentContainer>

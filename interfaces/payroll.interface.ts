@@ -54,14 +54,15 @@ export interface IPayroll {
   id?: any
   user: Types.ObjectId
   organization: Types.ObjectId
-  preTaxAmount: number
-  afterTaxAmount: number
+
+  payrollSetup?: Types.ObjectId
+  payrollSetupAtGeneration?: IPayrollSetup
+  pdf?: IPayrollPDF
 
   dateFrom: Date
   dateTo: Date
   updatedAt?: Date
   createdAt?: Date
-  files: Array<Types.ObjectId>
 }
 
 export interface IPayrollEmployeeInfo {
@@ -85,14 +86,14 @@ export interface IPayrollInfo {
   month: string
   datePeriod: string
   paymentDate: string
-  salary: string
+  salary: number
 }
 
 export interface IPayrollDetailLine {
   description: string
-  basis?: string
+  basis?: number
   rate?: string
-  total?: string
+  total?: number
 }
 
 export interface IPayrollSaldiLine {

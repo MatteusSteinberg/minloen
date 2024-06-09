@@ -58,7 +58,7 @@ const Base = ({ isOpen, title, toggleModal, children, className, saveOnClick, su
                 <XMarkIcon className="h-[24px] w-[24px] text-lightSecondaryLight dark:text-darkPrimaryLight" />
               </button>
             </div>
-            <div>{children}</div>
+            <div>{children ? children : <></>}</div>
           </div>
         </div>
       </div>

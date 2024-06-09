@@ -1,12 +1,12 @@
 import dayjs from "dayjs"
+import _ from "lodash"
 import { HydratedDocument, Types } from "mongoose"
 import { IPayrollDetailLine, IPayrollPDF, IPayrollSetup } from "../../../interfaces/payroll.interface"
 import { IUser } from "../../../interfaces/user.interface"
 import organizationModel from "../../models/organization.model"
 import payrollSetupModel from "../../models/payroll-setup.model"
-import { pdfMaker } from "../helpers/pdf-generator"
+import { IPdf, pdfMaker } from "../helpers/pdf-generator"
 
-import fs from "fs"
 
 export default class Payroll {
   public payrollSetup: HydratedDocument<IPayrollSetup>
@@ -94,6 +94,26 @@ const months = {
   11: "December"
 } as { [key: number]: string }
 
+const monthsFirst = {
+  "Januar": 0,
+  "Februar": 1,
+  "Marts": 2,
+  "April": 3,
+  "Maj": 4,
+  "Juni": 5,
+  "Juli": 6,
+  "August": 7,
+  "September": 8,
+  "Oktober": 9,
+  "November": 10,
+  "December": 11
+}
+
+export const monthDictionaries = {
+  months,
+  monthsFirst
+}
+
 function handlePayrollDetailsAndSalary(user: HydratedDocument<IUser>, payrollSetup: HydratedDocument<IPayrollSetup>) {
   const details: Array<IPayrollDetailLine> = []
   const salary = user?.salaryType === "salary" ? payrollSetup?.wageInfo?.salary || 0 : (payrollSetup?.wageInfo?.hourlyWage || 0) * (payrollSetup?.wageInfo?.numberOfHours || 0)
@@ -101,9 +121,9 @@ function handlePayrollDetailsAndSalary(user: HydratedDocument<IUser>, payrollSet
   const hourlyWage = user.salaryType === "salary" ? user.salary : payrollSetup.wageInfo?.hourlyWage
   details.push({
     description: "Løn",
-    basis: hours.toFixed(2).toString(),
+    basis: hours,
     rate: hourlyWage.toFixed(2).toString(),
-    total: salary.toFixed(2).toString()
+    total: salary
   })
 
   /** Til udbetaling */
@@ -113,7 +133,7 @@ function handlePayrollDetailsAndSalary(user: HydratedDocument<IUser>, payrollSet
   for (const supplement of payrollSetup.supplements) {
     details.push({
       description: supplement.name ?? "Unavngivet tillæg",
-      total: supplement.value.toFixed(2).toString()
+      total: supplement.value
     })
     totalSupplements += supplement.value
   }
@@ -122,8 +142,8 @@ function handlePayrollDetailsAndSalary(user: HydratedDocument<IUser>, payrollSet
   const atp = -99
   details.push({
     description: "ATP af Løn",
-    basis: hours.toFixed(2),
-    total: atp.toFixed(2)
+    basis: hours,
+    total: atp
   })
   salaryPayment = atp + salaryPayment
 
@@ -131,20 +151,20 @@ function handlePayrollDetailsAndSalary(user: HydratedDocument<IUser>, payrollSet
   details.push({
     description: "AM-pension - Eget bidrag",
     rate: "2%",
-    basis: salaryPayment.toFixed(2),
-    total: (amPension * -1).toFixed(2)
+    basis: salaryPayment,
+    total: (amPension * -1)
   })
   salaryPayment -= amPension
   details.push({
     description: "AM-Indkomst",
-    basis: salaryPayment.toFixed(2)
+    basis: salaryPayment
   })
   const amContribution = salaryPayment * 0.08
   details.push({
     description: "AM-Bidrag",
-    basis: salaryPayment.toFixed(2),
+    basis: salaryPayment,
     rate: "8%",
-    total: (amContribution * -1).toFixed(2)
+    total: (amContribution * -1)
   })
   salaryPayment -= amContribution
   const taxDeduction = payrollSetup.wageInfo?.taxDeduction
@@ -153,10 +173,18 @@ function handlePayrollDetailsAndSalary(user: HydratedDocument<IUser>, payrollSet
   details.push({
     description: `A-skat (Fradrag: ${taxDeduction.toFixed(2)} DKK)`,
     rate: "38%",
-    basis: salaryPaymentWithTaxDeduction.toFixed(2),
-    total: taxPayed.toFixed(2)
+    basis: salaryPaymentWithTaxDeduction,
+    total: taxPayed
   })
   salaryPayment -= taxPayed
+
+  if (!_.isNil(payrollSetup.benefits?.lunch)) {
+    details.push({
+      description: "Frokost",
+      total: (payrollSetup.benefits.lunch * -1)
+    })
+    salaryPayment -= payrollSetup.benefits.lunch
+  }
 
   return { details, salaryPayment }
 }
@@ -174,10 +202,10 @@ function lastWorkingDay(date: Date | dayjs.Dayjs) {
   return day
 }
 
-export async function generatePayrollPDF(user: HydratedDocument<IUser>, payrollSetup: HydratedDocument<IPayrollSetup>) {
+export async function generatePayrollPDF(user: HydratedDocument<IUser>, payrollSetup: HydratedDocument<IPayrollSetup>, generateFile: boolean = false, generateDate: dayjs.Dayjs | Date = dayjs()) {
   const organization = await organizationModel.findById(user.activeOrganization)
 
-  const day = dayjs()
+  const day = dayjs(generateDate)
   const paymentPeriod = [dayjs(day), dayjs(day)]
 
   if (user.paymentArrangement === "ahead") {
@@ -192,7 +220,7 @@ export async function generatePayrollPDF(user: HydratedDocument<IUser>, payrollS
 
   const { details, salaryPayment } = handlePayrollDetailsAndSalary(user, payrollSetup)
 
-  const pdf = await pdfMaker({
+  const pdfConfig: IPdf = {
     key: "payroll",
     data: {
       employee: {
@@ -219,15 +247,12 @@ export async function generatePayrollPDF(user: HydratedDocument<IUser>, payrollS
         datePeriod: `${paymentPeriod[0].format("DD-MM-YYYY")} - ${paymentPeriod[1].format("DD-MM-YYYY")}`,
         month: months[paymentPeriod[0].month()],
         paymentDate: paymentDate.format("DD-MM-YYYY"),
-        salary: salaryPayment.toFixed(2).toString()
+        salary: salaryPayment
       }
     } as IPayrollPDF
-  })
+  }
 
-  fs.unlink("./test.pdf", err => { })
-  fs.appendFile("./test.pdf", Buffer.from(pdf), (err) => {
-    if (err) {
-      throw err
-    }
-  })
+  const pdf = generateFile ? await pdfMaker(pdfConfig) : undefined
+
+  return { pdf, pdfConfig, paymentPeriod }
 }

@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from "express"
 import { HydratedDocument } from "mongoose"
+import { Readable } from "stream"
 import { IFile } from "../../../interfaces/file.interface"
 import { IUser } from "../../../interfaces/user.interface"
 import { readFile } from './file-helper'
 
 export type File = Partial<IFile>
+
+export type CustomStream = { contentType: string, buffer: any }
 
 export enum StatusCodes {
   Ok = 200,
@@ -23,6 +26,7 @@ export type HandlerResponse =
     status: StatusCodes
     /** `res.json(data)` */
     data: any
+    stream?: CustomStream,
     redirect?: string
     file?: File
   }
@@ -31,6 +35,7 @@ export type HandlerResponse =
     status: StatusCodes
     redirect: string
     data?: any
+    stream?: CustomStream,
     file?: File
   }
   | {
@@ -38,14 +43,23 @@ export type HandlerResponse =
     status: StatusCodes
     file: File
     data?: any
+    stream?: CustomStream,
     redirect?: string
   }
   | {
     /** `res.status(status).pipe(stream)` */
     status: StatusCodes
     data?: any
+    stream?: CustomStream,
     redirect?: string
     file?: File
+  }
+  | {
+    status: StatusCodes
+    stream: CustomStream,
+    file?: File
+    redirect?: string
+    data?: any
   }
 
 export type HandlerRequest = {
@@ -75,7 +89,7 @@ const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, 
     }
 
     try {
-      const { data, status, redirect, file } = await cb({ file: req.file as any, body: req.body, params: req.params, query: req.query, user: (req as any).user })
+      const { data, status, redirect, stream, file } = await cb({ file: req.file as any, body: req.body, params: req.params, query: req.query, user: (req as any).user })
 
       if (redirect) {
         res.redirect(status, redirect)
@@ -86,8 +100,17 @@ const baseHandler = (cb: (request: HandlerRequest) => Promise<HandlerResponse>, 
         const stream = await readFile(file.key)
         res.setHeader("Content-Type", file.contentType)
         stream.pipe(res)
-        res.status(200)
+        res.status(status)
         return file // For testing
+      }
+
+      if (stream) {
+        res.header("content-type", stream.contentType)
+        const fileBuffer = Buffer.from(stream.buffer)
+        const readableStream = Readable.from(fileBuffer)
+        readableStream.pipe(res)
+        res.status(200)
+        return
       }
 
       res.status(status as number).json(data)

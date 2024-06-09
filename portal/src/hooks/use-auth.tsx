@@ -13,6 +13,7 @@ interface IAuth {
   updateOrganization: (org: Partial<IOrganization>) => Promise<IRequestData<IOrganization>>
   organization?: IOrganization
   user?: IUser
+  token?: string
 }
 
 interface IAuthToken {
@@ -81,7 +82,8 @@ export const AuthProvider = memo(({ children }: { children: React.ReactNode }) =
     unauthenticate,
     updateMe,
     organization: organizationAPI.data,
-    updateOrganization
+    updateOrganization,
+    token
   }
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

@@ -8,27 +8,33 @@ const payrollSchema = new Schema<IPayroll>(
       required: true,
       ref: "User",
     },
-    preTaxAmount: {
-      type: Number,
+    organization: {
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: "Organization"
     },
-    afterTaxAmount: {
-      type: Number,
+    payrollSetup: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "PayrollSetup"
+    },
+    payrollSetupAtGeneration: {
+      type: {},
       required: true,
     },
     dateFrom: {
       type: Date,
       required: true,
+      index: true
     },
     dateTo: {
       type: Date,
       required: true,
     },
-    files: {
-      type: [Schema.Types.ObjectId],
-      required: true,
-      ref: "File",
-    },
+    pdf: {
+      type: {},
+      required: true
+    }
   },
   {
     timestamps: true,

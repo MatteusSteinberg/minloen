@@ -6,7 +6,7 @@ import { IPayrollPDF } from '../../../interfaces/payroll.interface'
 
 export interface IPdf {
   key: "payroll" | "driving" | "file"
-  data: IPayrollPDF | any
+  data: IPayrollPDF
   mock?: boolean
 }
 

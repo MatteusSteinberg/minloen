@@ -5,6 +5,8 @@ import { defaultPage } from "./defaultPage"
 
 const leftSideStartPix = 35
 
+const decimals = 2
+
 export async function payrollPdfTemplate(data: IPayrollPDF) {
   const doc = await PDFDocument.create()
 
@@ -92,7 +94,7 @@ function generateBanner(page: PDFPage, payroll: IPayrollInfo) {
     size: 8,
     color: rgb(1, 1, 1),
   })
-  page.drawText(payroll.salary, {
+  page.drawText(payroll.salary ? payroll.salary.toFixed(decimals) : "", {
     x: page.getWidth() - 110,
     y: page.getHeight() - 180,
     size: 14,
@@ -159,7 +161,7 @@ function generateDetailLine(page: PDFPage, line: IPayrollDetailLine, index: numb
     color: rgb(0, 0, 0),
   })
 
-  page.drawText(line.basis ?? "", {
+  page.drawText(line.basis ? line.basis.toFixed(decimals) : "", {
     x: page.getWidth() / 2 - 50,
     y: page.getHeight() - 250 - index * 10,
     size: 8,
@@ -173,7 +175,7 @@ function generateDetailLine(page: PDFPage, line: IPayrollDetailLine, index: numb
     color: rgb(0, 0, 0),
   })
 
-  page.drawText(line.total ?? "", {
+  page.drawText(line.total ? line.total.toFixed(decimals) : "", {
     x: page.getWidth() - 100,
     y: page.getHeight() - 250 - index * 10,
     size: 8,
