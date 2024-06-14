@@ -3,6 +3,7 @@ import { HydratedDocument, Types } from "mongoose"
 import { IOrganization } from "../../../interfaces/organization.interface"
 import { IUser } from "../../../interfaces/user.interface"
 import userModel from "../../models/user.model"
+import { encrypt } from "../helpers/encryptor"
 
 
 export namespace User {
@@ -31,6 +32,7 @@ export namespace User {
     }, {
       $set: {
         ...omitted,
+        socialSecurityNumber: user.socialSecurityNumber ? encrypt(user.socialSecurityNumber) : undefined,
         ...(!!user.firstName ? {
           name: [user.firstName.trim(), user.lastName.trim()].join(' ').trim()
         } : {}),

@@ -4,6 +4,7 @@ import { IOrganization } from "../../../interfaces/organization.interface"
 import { IUser, IUserAdd } from "../../../interfaces/user.interface"
 import organizationModel from "../../models/organization.model"
 import userModel from "../../models/user.model"
+import { encrypt } from "../helpers/encryptor"
 import { inviteUserEmail } from "./email.utils"
 
 export default class Organization {
@@ -55,6 +56,7 @@ export default class Organization {
     if (user.organizationRole === "user") {
       newUser = await userModel.create({
         ...user,
+        socialSecurityNumber: user.socialSecurityNumber ? encrypt(user.socialSecurityNumber) : undefined,
         name: [user.firstName, user.lastName].join(' ').trim(),
         organizationRole: "user",
         organizations: [this.organization._id],
