@@ -94,7 +94,7 @@ function generateBanner(page: PDFPage, payroll: IPayrollInfo) {
     size: 8,
     color: rgb(1, 1, 1),
   })
-  page.drawText(payroll.salary ? payroll.salary.toFixed(decimals) : "", {
+  page.drawText(payroll.salary ? payroll.salary.toFixed(decimals) + " kr." : "", {
     x: page.getWidth() - 110,
     y: page.getHeight() - 180,
     size: 14,
