@@ -5,7 +5,7 @@ import drivingModel from "../models/driving.model"
 import baseHandler, { StatusCodes } from "./helpers/base-handler"
 
 export const add = baseHandler(async ({ user, body }) => {
-    const drivingBody = body as IDriving
+    let drivingBody = body as IDriving
     const invalid = validateObject(
         {
             date: ["required"],
@@ -22,9 +22,10 @@ export const add = baseHandler(async ({ user, body }) => {
         return { data: invalid, status: StatusCodes.BadRequest }
     }
 
-    const compensation = body.roundtrip ? body.distance * 3.79 * 2 : body.distance * 3.79
+    const compensation = drivingBody.roundtrip ? drivingBody.distance * 3.79 * 2 : drivingBody.distance * 3.79
+    drivingBody.distance = drivingBody.roundtrip ? drivingBody.distance * 2 : drivingBody.distance
 
-    await new drivingModel({ ...body, user: user._id, organization: user.activeOrganization, compensation }).save()
+    await new drivingModel({ ...drivingBody, user: user._id, organization: user.activeOrganization, compensation }).save()
 
     return { data: {}, status: StatusCodes.Created }
 }, "user")
