@@ -58,7 +58,7 @@ const Dropdown = ({ options, name, placeholder, error, label, onChange, spacing,
     <div className={`relative block w-full ${spacing ? "mb-4" : "mb-0"}`}>
       {label && <label className="block mb-3 text-text dark:text-white">{label}</label>}
       <button className={`px-5 relative rounded-[14px] text-[rgba(0,0,0,0.4)] dark:text-white w-full h-[68px] inline-flex items-center justify-start border-[1px] border-solid ${error ? "border-error" : "border-lightPrimary dark:border-[#33363E]"} bg-[rgba(0,84,69,0.1)] dark:bg-[rgba(33,33,34,0.2)]`} ref={buttonRef} onClick={() => toggleVisibility(!isVisible)}>
-        <span className={isPlaceholder ? "placeholder:[rgba(231,231,233,0.7)] dark:placeholder:text-[rgba(255,255,255,0.3)]" : undefined}>{currentOption?.label || placeholder || "Select an Option"}</span>
+        <span className={isPlaceholder ? "text:[rgba(231,231,233,0.7)] dark:text-[rgba(255,255,255,0.3)]" : undefined}>{currentOption?.label || placeholder || "Select an Option"}</span>
         <svg className="absolute right-4 top-1/2 -transform-y-1/2" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1 1L4.29289 4.29289C4.68342 4.68342 5.31658 4.68342 5.70711 4.29289L9 1" stroke="#767676" stroke-width="2" stroke-linecap="round" />
         </svg>
