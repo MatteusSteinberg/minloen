@@ -51,11 +51,6 @@ export const listMetadata = baseHandler(async ({ user }) => {
     return { data: { count: count, size: 10 }, status: StatusCodes.Ok }
 }, "user")
 
-// NOTE: What to do if the admin wants to see the list?
-// But also enable the owner of the driving to see the whole list with every org he has been with?
-
-// Currently, the user can only see the list of drivings that he has created.
-
 export const get = baseHandler(async ({ user, params }) => {
     const driving = await drivingModel.findOne({ _id: params.id, user: user._id })
 
