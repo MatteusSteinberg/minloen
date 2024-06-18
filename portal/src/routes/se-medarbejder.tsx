@@ -138,7 +138,7 @@ const SeeCoworker = () => {
         </div>
         <div className="flex flex-col w-full gap-3">
           {agreements.map((agreement: IAgreements, index: number) => (
-            <Card key={index} {...agreement} />
+            <Card userId={id} key={index} {...agreement} />
           ))}
         </div>
       </div>
