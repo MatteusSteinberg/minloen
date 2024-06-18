@@ -2,7 +2,7 @@ import * as EmailValidator from 'email-validator';
 import _ from "lodash";
 
 
-export type validators = "email" | "password" | "required" | "numberonly"
+export type validators = "email" | "password" | "required" | "numberonly" | "emptystring"
 
 export interface ValidationObject {
   [path: string]: Array<validators>
@@ -27,6 +27,9 @@ function validate(value: any, validator: validators): boolean {
     case "email": {
       if (typeof value !== "string") return false
       return EmailValidator.validate(value)
+    }
+    case "emptystring": {
+      return value !== ''
     }
     case "numberonly": {
       return _.isInteger(value * 1)

@@ -131,6 +131,39 @@ export const update = baseHandler(async ({ params, body, user }) => {
   const { id } = params as { id: string }
   const updateBody = body as Partial<IUser>
 
+  const updateUser = await userModel.findById(id)
+
+  const inValid = validateObject(
+    {
+      email: ["emptystring"],
+      firstName: ["emptystring"],
+      lastName: ["emptystring"],
+      socialSecurityNumber: ["emptystring"],
+      organizationRole: ["emptystring"],
+      ...(updateUser.organizationRole === "user"
+        ? {
+          workerNumber: ["emptystring"],
+          employmentDate: ["emptystring"],
+          position: ["emptystring"],
+          paymentArrangement: ["emptystring"],
+          bankRegistrationNumber: ["emptystring"],
+          bankAccountNumber: ["emptystring"],
+          ATP: ["emptystring"],
+          "vacation.scheme": ["emptystring"],
+          "vacation.recipient": ["emptystring"],
+        }
+        : {}),
+    },
+    updateBody
+  )
+
+  if (inValid) {
+    return { data: inValid, status: 400 }
+  }
+
+  updateBody.firstName = updateBody.firstName || updateUser.firstName
+  updateBody.lastName = updateBody.lastName || updateUser.lastName
+
   const updatedUser = await User.update(updateBody, id, user)
 
   return { data: updatedUser, status: StatusCodes.Ok }
