@@ -45,8 +45,6 @@ const ChangePassword = ({ handleClose }: IChangePassword) => {
   const samePassword = form.password !== form.repeatPassword ? "Adgangskode er ikke ens" : undefined
   const passwordLength = (form.password || "").length < 8 && !!form.password ? "Minimum 8 tegn" : undefined
 
-  console.log(form)
-
   return (
     <>
       <div className="flex flex-col items-start justify-start gap-[42px] w-full">

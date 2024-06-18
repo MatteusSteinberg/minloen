@@ -9,6 +9,7 @@ import { useAuth } from "../../../hooks/use-auth"
 import { compressImage } from "../../../lib/utils/imageCompressor"
 import { profileImage } from "../../../lib/utils/profileImage"
 import Input from "../../elements/Input"
+import toast from 'react-hot-toast'
 
 interface IChangeProfile {
   handleClose: () => void
@@ -51,7 +52,7 @@ const ChangeProfile = ({ handleClose }: IChangeProfile) => {
     if (file) {
       const compressedFile = await compressImage({ file, quality: 0.8, maxHeight: 200, maxWidth: 200 })
       if (compressedFile.size > 300 * 1000) {
-        console.log("File is too big") // set toast here
+        toast.error("Billedet er for stort")
         return
       }
 
@@ -60,7 +61,7 @@ const ChangeProfile = ({ handleClose }: IChangeProfile) => {
       await create(form)
 
       if (error) {
-        console.log(error)
+        toast.error(error)
       }
     }
   }
