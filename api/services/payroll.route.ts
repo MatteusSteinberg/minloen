@@ -54,6 +54,10 @@ export const generate = baseHandler(async ({ user, body, params }) => {
   })
   const { pdfConfig, paymentPeriod } = await generatePayrollPDF(payrollUser, payrollSetup, true, day)
 
+  if (await payrollModel.exists({ dateFrom: paymentPeriod[0], dateTo: paymentPeriod[1] })) {
+    return { data: "Den valgte måned har allerede en lønseddel", status: StatusCodes.Conflict }
+  }
+
   const payroll = await payrollModel.create({
     dateFrom: paymentPeriod[0],
     dateTo: paymentPeriod[1],

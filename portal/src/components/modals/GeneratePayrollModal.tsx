@@ -16,17 +16,22 @@ const months = ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "A
 const years = [2022, 2023, 2024, 2025, 2026]
 
 const GeneratePayrollModal = ({ isOpen, toggleModal, userId }: IGeneratePayrollModal) => {
-  const { create } = useAPI({ url: "/payroll/generate", id: userId, opts: { autoGet: false } })
+  const { create, error } = useAPI({ url: "/payroll/generate", id: userId, opts: { autoGet: false } })
 
   const [form, setForm] = useState<{ month?: string, year?: number }>({})
 
   const handleSubmit = async () => {
+    if (!form.month || !form.year) return
     const res = await create(form)
-    if (res.error) {
-
-    } else {
+    if (!res.error) {
       toggleModal(false)
+      setForm({})
     }
+  }
+
+  const handleCancel = () => {
+    setForm({})
+    toggleModal(false)
   }
 
   return (
@@ -42,11 +47,14 @@ const GeneratePayrollModal = ({ isOpen, toggleModal, userId }: IGeneratePayrollM
             value={form.year}
             name="Måned" options={years.map(v => ({ label: v.toString(), value: v }))} />
         </div>
+        {error && <div className="my-6 text-error">{error}</div>}
         <div className="my-12 flex flex-row gap-3 w-full justify-items-stretch">
           <Button background="primaryLight" onClick={handleSubmit} color="text" >
             Opret lønseddel
           </Button>
-          <Button background="secondarySupport" color="white">Annuller</Button>
+          <Button background="secondarySupport" onClick={handleCancel} color="white">
+            Annuller
+          </Button>
         </div>
       </div>
     </Base>
