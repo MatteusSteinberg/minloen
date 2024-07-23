@@ -1,4 +1,5 @@
 # MinLøn
+Svendeprøve EUX Datatekniker med speciale i Programmering - 2024
 
 ## Installation/Opsætning
 
